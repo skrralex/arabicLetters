@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlifBa Fun - Arabic Alphabet & Syllable Master</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts for Arabic Styles: Tajawal, Amiri, Noto Naskh, Cairo, Lateef, Scheherazade New -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800&family=Lateef:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        },
+                        accent: {
+                            amber: '#f59e0b',
+                            rose: '#f43f5e',
+                            indigo: '#6366f1',
+                            emerald: '#10b981',
+                            purple: '#8b5cf6',
+                            cyan: '#06b6d4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Tajawal', 'Amiri', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base page theme */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f766e 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+
+        /* Dynamic Font Target Class */
+        .arabic-text {
+            font-family: 'Tajawal', 'Amiri', serif;
+            direction: rtl;
+        }
+
+        /* 3D Card Flip styles for Memory Game */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(20, 184, 166, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(20, 184, 166, 0.8);
+        }
+
+        /* Confetti canvas overlay */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Glassmorphic card styling */
+        .glow-card {
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+        }
+
+        #traceCanvas {
+            touch-action: none;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-100 overflow-x-hidden selection:bg-teal-500 selection:text-white">
+
+    <!-- Confetti Overlay Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('explorer')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-500 to-emerald-400 flex items-center justify-center text-white font-bold text-2xl shadow-lg shadow-teal-500/30 arabic-text">
+                    أ
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-teal-300 via-emerald-300 to-amber-300 bg-clip-text text-transparent">
+                        AlifBa Fun
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium">Arabic Alphabet & Sound Master</p>
+                </div>
+            </div>
+
+            <!-- Main Navigation Tabs -->
+            <nav class="flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1 rounded-2xl border border-slate-700/60 overflow-x-auto max-w-full">
+                <button onclick="switchTab('explorer')" id="tab-explorer" class="nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-teal-600 text-white shadow-md">
+                    <i class="fa-solid fa-shapes text-teal-200"></i>
+                    <span>Explorer</span>
+                </button>
+                <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-bullseye text-amber-400"></i>
+                    <span>Quiz & Practice</span>
+                </button>
+                <button onclick="switchTab('match')" id="tab-match" class="nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-clone text-purple-400"></i>
+                    <span>Match</span>
+                </button>
+                <button onclick="switchTab('trace')" id="tab-trace" class="nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-nib text-rose-400"></i>
+                    <span>Trace</span>
+                </button>
+                <button onclick="switchTab('stats')" id="tab-stats" class="nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-pie text-emerald-400"></i>
+                    <span>Stats</span>
+                </button>
+            </nav>
+
+            <!-- Quick Controls: Font Selector Menu & Sound Toggle -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- FEATURE 1: Font Selector Menu -->
+                <div class="flex items-center bg-slate-800 border border-slate-700 rounded-xl px-2 py-1" title="Switch Arabic Calligraphy Font">
+                    <i class="fa-solid fa-font text-teal-400 text-xs mr-2 ml-1"></i>
+                    <select id="fontSelector" onchange="changeArabicFont(this.value)" class="bg-transparent text-xs text-slate-200 font-semibold focus:outline-none cursor-pointer">
+                        <option value="'Tajawal', sans-serif" class="bg-slate-900 text-slate-100">Tajawal (Modern)</option>
+                        <option value="'Amiri', serif" class="bg-slate-900 text-slate-100">Amiri (Classic Naskh)</option>
+                        <option value="'Noto Naskh Arabic', serif" class="bg-slate-900 text-slate-100">Noto Naskh (Standard Clean)</option>
+                        <option value="'Cairo', sans-serif" class="bg-slate-900 text-slate-100">Cairo (Geometric Modern)</option>
+                        <option value="'Lateef', cursive" class="bg-slate-900 text-slate-100">Lateef (Flowing Script)</option>
+                        <option value="'Scheherazade New', serif" class="bg-slate-900 text-slate-100">Scheherazade (Traditional)</option>
+                    </select>
+                </div>
+
+                <!-- Streak badge -->
+                <div class="hidden sm:flex items-center gap-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1.5 rounded-xl font-bold text-xs" title="Current Daily Streak">
+                    <i class="fa-solid fa-fire text-amber-500 animate-bounce"></i>
+                    <span id="headerStreak">0 Streak</span>
+                </div>
+
+                <!-- Sound Audio Toggle -->
+                <button id="audioToggleBtn" onclick="toggleAudioMute()" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-slate-300 transition" title="Toggle Sound FX">
+                    <i id="audioIcon" class="fa-solid fa-volume-high text-teal-400"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ========================================== -->
+        <!-- TAB 1: ALPHABET EXPLORER                   -->
+        <!-- ========================================== -->
+        <section id="sec-explorer" class="tab-section space-y-6">
+            <!-- Hero banner / Filter -->
+            <div class="glow-card rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 max-w-xl text-center md:text-left z-10">
+                    <span class="px-3 py-1 bg-teal-500/20 text-teal-300 border border-teal-500/30 rounded-full text-xs font-semibold tracking-wide uppercase">Interactive Learning</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Explore the 28 Arabic Letters</h2>
+                    <p class="text-slate-300 text-sm leading-relaxed">Click any letter card to listen to pronunciation, inspect forms (Isolated, Initial, Medial, Final), view stroke guides, and switch fonts in the top menu to compare writing styles.</p>
+                </div>
+
+                <!-- Search & Category Filter -->
+                <div class="flex flex-wrap items-center gap-3 z-10 w-full md:w-auto justify-center">
+                    <div class="relative w-full sm:w-48">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" id="explorerSearch" onkeyup="filterExplorer()" placeholder="Search letter..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 transition">
+                    </div>
+                    <select id="explorerCategory" onchange="filterExplorer()" class="bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-teal-500">
+                        <option value="all">All Categories</option>
+                        <option value="basic">Basic Sounds</option>
+                        <option value="emphatic">Emphatic / Heavy</option>
+                        <option value="guttural">Guttural / Throat</option>
+                        <option value="nonConnector">Non-Connecting</option>
+                    </select>
+                </div>
+
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            </div>
+
+            <!-- Letter Grid -->
+            <div id="explorerGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+                <!-- JS populates 28 letter cards here -->
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 2: QUIZ & PRACTICE MODES               -->
+        <!-- ========================================== -->
+        <section id="sec-quiz" class="tab-section hidden space-y-6">
+            <!-- Quiz Header Stats Bar -->
+            <div class="glow-card rounded-2xl p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="bg-indigo-500/20 text-indigo-300 p-3 rounded-xl border border-indigo-500/30">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Practice Challenge</span>
+                        <h3 class="text-lg font-bold text-white" id="quizModeTitle">Standard Quiz Mode</h3>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div class="text-center">
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Score</div>
+                        <div class="text-xl font-extrabold text-teal-400" id="quizScore">0</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Streak</div>
+                        <div class="text-xl font-extrabold text-amber-400 flex items-center justify-center gap-1">
+                            <i class="fa-solid fa-fire text-sm"></i>
+                            <span id="quizStreak">0</span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-slate-400 font-semibold uppercase">High Score</div>
+                        <div class="text-xl font-extrabold text-emerald-400" id="quizHighScore">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz & Practice Mode Switcher Options -->
+            <div class="flex flex-wrap justify-center gap-2">
+                <button onclick="setQuizType('letterToSound')" id="quizType-letterToSound" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-teal-600 text-white">
+                    <i class="fa-solid fa-font mr-1"></i> Name Match
+                </button>
+                <!-- FEATURE 2: Phonics Sound-to-Letter Mode -->
+                <button onclick="setQuizType('phonicsMatch')" id="quizType-phonicsMatch" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                    <i class="fa-solid fa-wave-square mr-1 text-cyan-400"></i> Phonics Match (Sound -> Letter)
+                </button>
+                <button onclick="setQuizType('soundToLetter')" id="quizType-soundToLetter" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                    <i class="fa-solid fa-headphones mr-1 text-purple-400"></i> Audio Listening Quiz
+                </button>
+                <button onclick="setQuizType('formQuiz')" id="quizType-formQuiz" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                    <i class="fa-solid fa-puzzle-piece mr-1 text-amber-400"></i> Positional Forms
+                </button>
+                <!-- FEATURE 3: Syllables & Vocalizations (Harakat) Practice Modes -->
+                <button onclick="setQuizType('vocalizationRead')" id="quizType-vocalizationRead" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                    <i class="fa-solid fa-book-open mr-1 text-rose-400"></i> Read Syllables (Harakat -> Sound)
+                </button>
+                <button onclick="setQuizType('vocalizationListen')" id="quizType-vocalizationListen" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
+                    <i class="fa-solid fa-ear-listen mr-1 text-emerald-400"></i> Vocalization Sound -> Text
+                </button>
+            </div>
+
+            <!-- Quiz Main Challenge Card Area -->
+            <div class="max-w-xl mx-auto glow-card rounded-3xl p-6 sm:p-10 text-center relative space-y-8">
+                <!-- Question Counter & Audio Prompt -->
+                <div class="flex items-center justify-between text-xs text-slate-400 font-medium">
+                    <span id="quizProgressText">Question 1 of 10</span>
+                    <button id="quizAudioBtn" onclick="playCurrentQuizAudio()" class="text-teal-400 hover:text-teal-300 flex items-center gap-1.5 px-3 py-1.5 bg-teal-500/10 rounded-lg border border-teal-500/20 transition">
+                        <i class="fa-solid fa-volume-high"></i> Listen Sound
+                    </button>
+                </div>
+
+                <!-- Target Display Box -->
+                <div id="quizTargetDisplay" class="h-44 sm:h-52 bg-slate-900/80 rounded-2xl border border-slate-700/80 flex flex-col items-center justify-center p-4 relative group shadow-inner">
+                    <span id="quizTargetArabic" class="arabic-text text-6xl sm:text-8xl font-extrabold text-white transition-transform group-hover:scale-105">
+                        أ
+                    </span>
+                    <span id="quizSubText" class="text-xs text-slate-400 mt-3 font-medium">Select the correct matching answer below</span>
+                </div>
+
+                <!-- Answer Choices (Grid of Options) -->
+                <div id="quizOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <!-- JS injects 4 choice buttons -->
+                </div>
+
+                <!-- Feedback Bar -->
+                <div id="quizFeedback" class="hidden p-3 rounded-xl text-center font-bold text-sm transition"></div>
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 3: MATCHING MEMORY GAME                -->
+        <!-- ========================================== -->
+        <section id="sec-match" class="tab-section hidden space-y-6">
+            <!-- Controls & Mode Stats -->
+            <div class="glow-card rounded-2xl p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="bg-purple-500/20 text-purple-300 p-3 rounded-xl border border-purple-500/30">
+                        <i class="fa-solid fa-brain text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Arabic Memory Match</h3>
+                        <p class="text-xs text-slate-400">Match Arabic letters/syllables with their sounds</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 font-semibold uppercase">Moves</span>
+                        <div class="text-xl font-bold text-purple-400" id="matchMoves">0</div>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 font-semibold uppercase">Time</span>
+                        <div class="text-xl font-bold text-amber-400" id="matchTimer">00:00</div>
+                    </div>
+                    <button onclick="startMatchingGame()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-purple-500/20 transition">
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> Restart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Memory Grid Container -->
+            <div id="memoryGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 max-w-4xl mx-auto min-h-[350px]">
+                <!-- Cards generated by JS -->
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 4: WRITING / TRACE GUIDE               -->
+        <!-- ========================================== -->
+        <section id="sec-trace" class="tab-section hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Left Column: Letter Selector & Info -->
+                <div class="glow-card rounded-3xl p-6 space-y-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-feather-pointed text-rose-400"></i>
+                            Select Letter to Trace
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">Practice stroke direction and handwriting muscle memory.</p>
+                        
+                        <!-- Dropdown Picker -->
+                        <div class="mt-4">
+                            <label class="block text-xs font-semibold text-slate-400 mb-2">Select Letter:</label>
+                            <select id="traceLetterSelect" onchange="loadTraceLetter(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-base text-teal-300 font-bold arabic-text focus:outline-none focus:border-teal-500">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Letter Details Card -->
+                    <div id="traceLetterInfoCard" class="bg-slate-900/80 rounded-2xl p-5 border border-slate-800 space-y-3">
+                        <div class="flex items-baseline justify-between">
+                            <span id="traceLetterArabic" class="arabic-text text-5xl font-extrabold text-teal-300">أ</span>
+                            <span id="traceLetterName" class="text-xl font-bold text-white">Alif</span>
+                        </div>
+                        <div class="border-t border-slate-800 pt-3 text-xs space-y-2">
+                            <p><strong class="text-slate-300">Phonetic Sound:</strong> <span id="traceLetterPhonetic" class="text-slate-400">a / aa</span></p>
+                            <p><strong class="text-slate-300">Stroke Tip:</strong> <span id="traceLetterTip" class="text-slate-400">Draw top to bottom line with top hamza.</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Audio Demo & Controls -->
+                    <div class="space-y-3">
+                        <button onclick="playTraceAudio()" class="w-full py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-teal-400 font-bold text-sm flex items-center justify-center gap-2 transition">
+                            <i class="fa-solid fa-volume-high"></i> Listen Pronunciation
+                        </button>
+                        <button onclick="animateStrokeGuide()" class="w-full py-3 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition">
+                            <i class="fa-solid fa-play"></i> Play Stroke Demo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Canvas Board -->
+                <div class="lg:col-span-2 glow-card rounded-3xl p-6 flex flex-col items-center justify-between space-y-4">
+                    <div class="w-full flex items-center justify-between">
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Handwriting Canvas</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="setTraceColor('#14b8a6')" class="w-6 h-6 rounded-full bg-teal-500 border-2 border-white/40 hover:scale-110 transition"></button>
+                            <button onclick="setTraceColor('#f43f5e')" class="w-6 h-6 rounded-full bg-rose-500 border-2 border-white/40 hover:scale-110 transition"></button>
+                            <button onclick="setTraceColor('#f59e0b')" class="w-6 h-6 rounded-full bg-amber-500 border-2 border-white/40 hover:scale-110 transition"></button>
+                            <button onclick="setTraceColor('#8b5cf6')" class="w-6 h-6 rounded-full bg-purple-500 border-2 border-white/40 hover:scale-110 transition"></button>
+                        </div>
+                    </div>
+
+                    <!-- Canvas Box -->
+                    <div class="relative w-full aspect-square max-w-md bg-slate-950 rounded-2xl border-2 border-dashed border-slate-700 overflow-hidden flex items-center justify-center shadow-inner">
+                        <div id="canvasWatermark" class="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-20 text-slate-400">
+                            <span id="canvasGuideChar" class="arabic-text text-[180px] font-bold">أ</span>
+                        </div>
+                        <canvas id="traceCanvas" width="400" height="400" class="w-full h-full relative z-10"></canvas>
+                    </div>
+
+                    <!-- Action Bar -->
+                    <div class="w-full flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-400">Brush Size:</span>
+                            <input type="range" id="brushSize" min="4" max="24" value="12" class="accent-teal-500 w-24">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="clearCanvas()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-trash-can"></i> Clear
+                            </button>
+                            <button onclick="evaluateTracing()" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-lg shadow-teal-600/30">
+                                <i class="fa-solid fa-check"></i> Check Practice
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- TAB 5: PROGRESS & STATS                    -->
+        <!-- ========================================== -->
+        <section id="sec-stats" class="tab-section hidden space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 text-xl font-bold">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Mastered Letters</div>
+                        <div class="text-2xl font-extrabold text-white" id="statMasteredCount">0 / 28</div>
+                    </div>
+                </div>
+
+                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl font-bold">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Quiz High Score</div>
+                        <div class="text-2xl font-extrabold text-white" id="statHighScore">0</div>
+                    </div>
+                </div>
+
+                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl font-bold">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Best Streak</div>
+                        <div class="text-2xl font-extrabold text-white" id="statBestStreak">0</div>
+                    </div>
+                </div>
+
+                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl font-bold">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-semibold uppercase">Quizzes Played</div>
+                        <div class="text-2xl font-extrabold text-white" id="statTotalQuizzes">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Letter Mastery Matrix -->
+            <div class="glow-card rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Alphabet Mastery Grid</h3>
+                        <p class="text-xs text-slate-400">Green indicates mastered letters. Click any letter to toggle its status.</p>
+                    </div>
+                    <button onclick="resetAllProgress()" class="px-3 py-1.5 bg-rose-950/60 hover:bg-rose-900 border border-rose-800 text-rose-300 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Progress
+                    </button>
+                </div>
+
+                <div id="statsMasteryGrid" class="grid grid-cols-4 sm:grid-cols-7 md:grid-cols-7 gap-3">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- ========================================== -->
+    <!-- LETTER DETAILS MODAL                       -->
+    <!-- ========================================== -->
+    <div id="letterModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glow-card bg-slate-900 border border-slate-700 w-full max-w-lg rounded-3xl p-6 sm:p-8 relative space-y-6 transform scale-95 transition-transform duration-300" id="letterModalCard">
+            <!-- Close Button -->
+            <button onclick="closeLetterModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="flex items-center gap-6">
+                <div class="w-24 h-24 rounded-2xl bg-gradient-to-tr from-teal-600 to-emerald-500 flex items-center justify-center text-white font-extrabold text-6xl shadow-xl shadow-teal-600/30 arabic-text" id="modalArabicChar">
+                    أ
+                </div>
+                <div>
+                    <span id="modalCategoryBadge" class="px-2.5 py-0.5 bg-teal-500/20 text-teal-300 border border-teal-500/30 rounded-full text-[10px] font-bold uppercase tracking-wider">Basic Sound</span>
+                    <h3 class="text-2xl font-extrabold text-white mt-1" id="modalLetterName">Alif</h3>
+                    <p class="text-sm text-slate-300 font-medium" id="modalTransliteration">Phonetic Sound: <span class="text-teal-400 font-bold">aa / a</span></p>
+                    <button onclick="playModalAudio()" class="mt-2 px-3 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-volume-high"></i> Listen Sound
+                    </button>
+                </div>
+            </div>
+
+            <!-- Positional Forms Display Table -->
+            <div class="space-y-2">
+                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Positional Shapes & Forms</h4>
+                <div class="grid grid-cols-4 gap-2 text-center bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Isolated</span>
+                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formIsolated">أ</div>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Initial</span>
+                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formInitial">أ</div>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Medial</span>
+                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formMedial">ـأ</div>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Final</span>
+                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formFinal">ـأ</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory & Stroke Tip -->
+            <div class="space-y-2 bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                <h4 class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-lightbulb text-amber-400"></i> Pronunciation & Visual Tip
+                </h4>
+                <p class="text-xs text-slate-300 leading-relaxed" id="modalMnemonic">Produced from the throat as a clean vowel opener. Looks like a straight vertical line.</p>
+            </div>
+
+            <!-- Action Buttons Footer -->
+            <div class="flex items-center justify-between gap-3 pt-2">
+                <button id="modalMasteryBtn" onclick="toggleModalMastery()" class="flex-grow py-2.5 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-2 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700">
+                    <i class="fa-solid fa-circle-check"></i> Mark as Mastered
+                </button>
+                <button onclick="openModalInTrace()" class="py-2.5 px-4 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-nib"></i> Practice Tracing
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-4 px-4 text-center text-xs text-slate-500 mt-auto">
+        <p>AlifBa Fun - Interactive Arabic Alphabet Learning Game &bull; Built with Speech Synthesis & Web Audio API</p>
+    </footer>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT APPLICATION LOGIC               -->
+    <!-- ========================================== -->
+    <script>
+        /* -------------------------------------------------------------
+           1. DATA STRUCTURE: 28 ARABIC LETTERS & SOUND PHONETICS
+           ------------------------------------------------------------- */
+        const ARABIC_LETTERS = [
+            { id: 1, arabic: 'أ', name: 'Alif', trans: 'a / aa', sound: 'aa', phonetic: 'Ah (as in father)', category: 'basic', forms: { isolated: 'أ', initial: 'أ', medial: 'ـأ', final: 'ـأ' }, nonConnector: true, strokeHint: 'Vertical straight line from top to bottom with hamza header.', mnemonic: 'Looks like a tall standing stick.' },
+            { id: 2, arabic: 'ب', name: 'Bāʾ', trans: 'b', sound: 'b', phonetic: 'B (as in boat)', category: 'basic', forms: { isolated: 'ب', initial: 'بـ', medial: 'ـبـ', final: 'ـب' }, nonConnector: false, strokeHint: 'Boat shape curved line with one dot underneath.', mnemonic: 'A boat with 1 marble under it.' },
+            { id: 3, arabic: 'ت', name: 'Tāʾ', trans: 't', sound: 't', phonetic: 'T (as in table)', category: 'basic', forms: { isolated: 'ت', initial: 'تـ', medial: 'ـتـ', final: 'ـت' }, nonConnector: false, strokeHint: 'Boat shape curved line with two dots on top.', mnemonic: 'Two eyes smiling inside a boat.' },
+            { id: 4, arabic: 'ث', name: 'Thāʾ', trans: 'th', sound: 'th', phonetic: 'Th (as in think)', category: 'basic', forms: { isolated: 'ث', initial: 'ثـ', medial: 'ـثـ', final: 'ـث' }, nonConnector: false, strokeHint: 'Boat shape curved line with three dots on top.', mnemonic: 'Three stars in a bowl.' },
+            { id: 5, arabic: 'ج', name: 'Jīm', trans: 'j', sound: 'j', phonetic: 'J (as in jam)', category: 'basic', forms: { isolated: 'ج', initial: 'جـ', medial: 'ـجـ', final: 'ـج' }, nonConnector: false, strokeHint: 'Looping hat header with a big belly and one dot inside.', mnemonic: 'Jimmy with a dot inside his belly.' },
+            { id: 6, arabic: 'ح', name: 'Ḥāʾ', trans: 'ḥ', sound: 'ḥ', phonetic: 'H (deep throat h)', category: 'guttural', forms: { isolated: 'ح', initial: 'حـ', medial: 'ـحـ', final: 'ـح' }, nonConnector: false, strokeHint: 'Same loop header as Jim without any dots.', mnemonic: 'Hot whisper sound, empty belly.' },
+            { id: 7, arabic: 'خ', name: 'Khāʾ', trans: 'kh', sound: 'kh', phonetic: 'Kh (raspy kh as in Bach)', category: 'guttural', forms: { isolated: 'خ', initial: 'خـ', medial: 'ـخـ', final: 'ـخ' }, nonConnector: false, strokeHint: 'Same loop header with one dot on top.', mnemonic: 'Dot on top of the head.' },
+            { id: 8, arabic: 'د', name: 'Dāl', trans: 'd', sound: 'd', phonetic: 'D (as in door)', category: 'basic', forms: { isolated: 'د', initial: 'د', medial: 'ـد', final: 'ـد' }, nonConnector: true, strokeHint: 'Small curved right-angle corner.', mnemonic: 'Looks like an open bent elbow.' },
+            { id: 9, arabic: 'ذ', name: 'Dhāl', trans: 'dh', sound: 'dh', phonetic: 'Dh (as in the/this)', category: 'basic', forms: { isolated: 'ذ', initial: 'ذ', medial: 'ـذ', final: 'ـذ' }, nonConnector: true, strokeHint: 'Small curved angle with one dot above.', mnemonic: 'Dal with a hat dot.' },
+            { id: 10, arabic: 'ر', name: 'Rāʾ', trans: 'r', sound: 'r', phonetic: 'R (rolled r as in Spanish)', category: 'basic', forms: { isolated: 'ر', initial: 'ر', medial: 'ـر', final: 'ـر' }, nonConnector: true, strokeHint: 'Downward swooping banana curve.', mnemonic: 'Looks like a slippery banana slide.' },
+            { id: 11, arabic: 'ز', name: 'Zāy', trans: 'z', sound: 'z', phonetic: 'Z (as in zebra)', category: 'basic', forms: { isolated: 'ز', initial: 'ز', medial: 'ـز', final: 'ـز' }, nonConnector: true, strokeHint: 'Swooping banana curve with one dot above.', mnemonic: 'Ra with a buzzing bee dot above.' },
+            { id: 12, arabic: 'س', name: 'Sīn', trans: 's', sound: 's', phonetic: 'S (as in sun)', category: 'basic', forms: { isolated: 'س', initial: 'سـ', medial: 'ـسـ', final: 'ـس' }, nonConnector: false, strokeHint: 'Three small teeth followed by a wide cup.', mnemonic: 'Sun teeth smiling.' },
+            { id: 13, arabic: 'ش', name: 'Shīn', trans: 'sh', sound: 'sh', phonetic: 'Sh (as in shoe)', category: 'basic', forms: { isolated: 'ش', initial: 'شـ', medial: 'ـشـ', final: 'ـش' }, nonConnector: false, strokeHint: 'Three teeth with three dots above.', mnemonic: 'Shining stars above three teeth.' },
+            { id: 14, arabic: 'ص', name: 'Ṣād', trans: 'ṣ', sound: 'ṣ', phonetic: 'Heavy S (deep emphatic)', category: 'emphatic', forms: { isolated: 'ص', initial: 'صـ', medial: 'ـصـ', final: 'ـص' }, nonConnector: false, strokeHint: 'Oval loop with a small tooth and tail.', mnemonic: 'Heavy solid oval.' },
+            { id: 15, arabic: 'ض', name: 'Ḍād', trans: 'ḍ', sound: 'ḍ', phonetic: 'Heavy D (unique to Arabic)', category: 'emphatic', forms: { isolated: 'ض', initial: 'ضـ', medial: 'ـضـ', final: 'ـض' }, nonConnector: false, strokeHint: 'Oval loop with small tooth and one dot on top.', mnemonic: 'Heavy Dad letter with a dot.' },
+            { id: 16, arabic: 'ط', name: 'Ṭāʾ', trans: 'ṭ', sound: 'ṭ', phonetic: 'Heavy T (emphatic t)', category: 'emphatic', forms: { isolated: 'ط', initial: 'طـ', medial: 'ـطـ', final: 'ـط' }, nonConnector: false, strokeHint: 'Oval loop with a vertical stick on top.', mnemonic: 'Tall stick on top of an oval.' },
+            { id: 17, arabic: 'ظ', name: 'Ẓāʾ', trans: 'ẓ', sound: 'ẓ', phonetic: 'Heavy Dh (emphatic th)', category: 'emphatic', forms: { isolated: 'ظ', initial: 'ظـ', medial: 'ـظـ', final: 'ـظ' }, nonConnector: false, strokeHint: 'Oval loop with vertical stick and one dot.', mnemonic: 'Tall stick with a dot.' },
+            { id: 18, arabic: 'ع', name: 'ʿAyn', trans: 'ʿ', sound: 'ʿa', phonetic: 'Ayn (deep throat contraction)', category: 'guttural', forms: { isolated: 'ع', initial: 'عـ', medial: 'ـعـ', final: 'ـع' }, nonConnector: false, strokeHint: 'Small crescent top with large reversed crescent bottom.', mnemonic: 'Eye shape looking backwards.' },
+            { id: 19, arabic: 'غ', name: 'Ghayn', trans: 'gh', sound: 'gh', phonetic: 'Gh (gargling r sound)', category: 'guttural', forms: { isolated: 'غ', initial: 'غـ', medial: 'ـغـ', final: 'ـغ' }, nonConnector: false, strokeHint: 'Double crescent shape with one dot on top.', mnemonic: 'Gargling Ayn with a dot.' },
+            { id: 20, arabic: 'ف', name: 'Fāʾ', trans: 'f', sound: 'f', phonetic: 'F (as in fish)', category: 'basic', forms: { isolated: 'ف', initial: 'فـ', medial: 'ـفـ', final: 'ـف' }, nonConnector: false, strokeHint: 'Small rounded loop flat on line with one dot above.', mnemonic: 'Feather with one dot.' },
+            { id: 21, arabic: 'ق', name: 'Qāf', trans: 'q', sound: 'q', phonetic: 'Deep Q (back of throat)', category: 'guttural', forms: { isolated: 'ق', initial: 'قـ', medial: 'ـقـ', final: 'ـق' }, nonConnector: false, strokeHint: 'Rounded loop dropping under line with two dots.', mnemonic: 'Queen crown with two dots.' },
+            { id: 22, arabic: 'ك', name: 'Kāf', trans: 'k', sound: 'k', phonetic: 'K (as in kite)', category: 'basic', forms: { isolated: 'ك', initial: 'كـ', medial: 'ـكـ', final: 'ـك' }, nonConnector: false, strokeHint: 'Tall cup shape containing a small S-hamza inside.', mnemonic: 'Kite with a mini S inside.' },
+            { id: 23, arabic: 'ل', name: 'Lām', trans: 'l', sound: 'l', phonetic: 'L (as in lemon)', category: 'basic', forms: { isolated: 'ل', initial: 'لـ', medial: 'ـلـ', final: 'ـل' }, nonConnector: false, strokeHint: 'Tall hook shape dropping below line.', mnemonic: 'Looks like an upside-down umbrella handle.' },
+            { id: 24, arabic: 'م', name: 'Mīm', trans: 'm', sound: 'm', phonetic: 'M (as in moon)', category: 'basic', forms: { isolated: 'م', initial: 'مـ', medial: 'ـمـ', final: 'ـم' }, nonConnector: false, strokeHint: 'Small circular head with downward tail.', mnemonic: 'Moon circle with a tail.' },
+            { id: 25, arabic: 'ن', name: 'Nūn', trans: 'n', sound: 'n', phonetic: 'N (as in net)', category: 'basic', forms: { isolated: 'ن', initial: 'نـ', medial: 'ـنـ', final: 'ـن' }, nonConnector: false, strokeHint: 'Deep bowl shape with one dot centered above.', mnemonic: 'Nest with one egg.' },
+            { id: 26, arabic: 'هـ', name: 'Hāʾ', trans: 'h', sound: 'h', phonetic: 'H (soft h as in home)', category: 'basic', forms: { isolated: 'ه', initial: 'هـ', medial: 'ـهـ', final: 'ـه' }, nonConnector: false, strokeHint: 'Loop within a loop shape.', mnemonic: 'Happy heart loop.' },
+            { id: 27, arabic: 'و', name: 'Wāw', trans: 'w / oo', sound: 'w', phonetic: 'W (as in water or oo sound)', category: 'basic', forms: { isolated: 'و', initial: 'و', medial: 'ـو', final: 'ـو' }, nonConnector: true, strokeHint: 'Small rounded loop swooping down into a Ra curve.', mnemonic: 'Whirlpool swooping down.' },
+            { id: 28, arabic: 'ي', name: 'Yāʾ', trans: 'y / ee', sound: 'y', phonetic: 'Y (as in yes or ee sound)', category: 'basic', forms: { isolated: 'ي', initial: 'يـ', medial: 'ـيـ', final: 'ـي' }, nonConnector: false, strokeHint: 'Swan neck curve with two dots underneath.', mnemonic: 'Swan swimming with 2 dots beneath.' }
+        ];
+
+        /* -------------------------------------------------------------
+           FEATURE 3 DATA: HARAKAT & COMBINATION VOCALIZATIONS
+           ------------------------------------------------------------- */
+        const ARABIC_VOCALIZATIONS = [
+            // Short Vowels (Fatha, Kasra, Damma)
+            { id: 'v1', arabic: 'بَ', sound: 'ba', category: 'short-vowel', audioText: 'بَ' },
+            { id: 'v2', arabic: 'بِ', sound: 'bi', category: 'short-vowel', audioText: 'بِ' },
+            { id: 'v3', arabic: 'بُ', sound: 'bu', category: 'short-vowel', audioText: 'بُ' },
+            { id: 'v4', arabic: 'تَ', sound: 'ta', category: 'short-vowel', audioText: 'تَ' },
+            { id: 'v5', arabic: 'تِ', sound: 'ti', category: 'short-vowel', audioText: 'تِ' },
+            { id: 'v6', arabic: 'تُ', sound: 'tu', category: 'short-vowel', audioText: 'تُ' },
+            { id: 'v7', arabic: 'سَ', sound: 'sa', category: 'short-vowel', audioText: 'سَ' },
+            { id: 'v8', arabic: 'سِ', sound: 'si', category: 'short-vowel', audioText: 'سِ' },
+            { id: 'v9', arabic: 'سُ', sound: 'su', category: 'short-vowel', audioText: 'سُ' },
+            { id: 'v10', arabic: 'رَ', sound: 'ra', category: 'short-vowel', audioText: 'رَ' },
+            { id: 'v11', arabic: 'رِ', sound: 'ri', category: 'short-vowel', audioText: 'رِ' },
+            { id: 'v12', arabic: 'رُ', sound: 'ru', category: 'short-vowel', audioText: 'رُ' },
+            { id: 'v13', arabic: 'مَ', sound: 'ma', category: 'short-vowel', audioText: 'مَ' },
+            { id: 'v14', arabic: 'مِ', sound: 'mi', category: 'short-vowel', audioText: 'مِ' },
+            { id: 'v15', arabic: 'مُ', sound: 'mu', category: 'short-vowel', audioText: 'مُ' },
+            // Basic Connected Syllables & Words
+            { id: 'c1', arabic: 'أَبَ', sound: 'aba', category: 'combination', audioText: 'أَبَ' },
+            { id: 'c2', arabic: 'بَاب', sound: 'baab', category: 'combination', audioText: 'بَاب' },
+            { id: 'c3', arabic: 'كَتَبَ', sound: 'kataba', category: 'combination', audioText: 'كَتَبَ' },
+            { id: 'c4', arabic: 'دَرَسَ', sound: 'darasa', category: 'combination', audioText: 'دَرَسَ' },
+            { id: 'c5', arabic: 'قَرَأَ', sound: 'qara\'a', category: 'combination', audioText: 'قَرَأَ' },
+            { id: 'c6', arabic: 'نَجَحَ', sound: 'najaha', category: 'combination', audioText: 'نَجَحَ' },
+            { id: 'c7', arabic: 'سَلَام', sound: 'salaam', category: 'combination', audioText: 'سَلَام' },
+            { id: 'c8', arabic: 'شَمْس', sound: 'shams', category: 'combination', audioText: 'شَمْس' },
+            { id: 'c9', arabic: 'قَمَر', sound: 'qamar', category: 'combination', audioText: 'قَمَر' },
+            { id: 'c10', arabic: 'نُور', sound: 'noor', category: 'combination', audioText: 'نُور' },
+            { id: 'c11', arabic: 'زَهَرَة', sound: 'zahara', category: 'combination', audioText: 'زَهَرَة' },
+            { id: 'c12', arabic: 'جَمِيل', sound: 'jameel', category: 'combination', audioText: 'جَمِيل' }
+        ];
+
+        /* -------------------------------------------------------------
+           2. SOUND SYNTHESIZER & AUDIO ENGINE
+           ------------------------------------------------------------- */
+        class AudioEngine {
+            constructor() {
+                this.audioCtx = null;
+                this.isMuted = false;
+            }
+
+            initCtx() {
+                if (!this.audioCtx) {
+                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            }
+
+            speakArabic(text) {
+                if (!('speechSynthesis' in window)) return;
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'ar-SA';
+                utter.rate = 0.8;
+                
+                const voices = window.speechSynthesis.getVoices();
+                const arVoice = voices.find(v => v.lang.startsWith('ar'));
+                if (arVoice) utter.voice = arVoice;
+                
+                window.speechSynthesis.speak(utter);
+            }
+
+            playCorrect() {
+                if (this.isMuted) return;
+                this.initCtx();
+                const now = this.audioCtx.currentTime;
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+                    gain.gain.setValueAtTime(0.15, now + idx * 0.07);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.2);
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+                    osc.start(now + idx * 0.07);
+                    osc.stop(now + idx * 0.07 + 0.22);
+                });
+            }
+
+            playWrong() {
+                if (this.isMuted) return;
+                this.initCtx();
+                const now = this.audioCtx.currentTime;
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(110, now + 0.25);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            }
+
+            playFlip() {
+                if (this.isMuted) return;
+                this.initCtx();
+                const now = this.audioCtx.currentTime;
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(350, now);
+                osc.frequency.exponentialRampToValueAtTime(700, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+
+            playFanfare() {
+                if (this.isMuted) return;
+                this.initCtx();
+                const now = this.audioCtx.currentTime;
+                const chord = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+                chord.forEach((freq) => {
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.85);
+                });
+            }
+        }
+
+        const audio = new AudioEngine();
+
+        function toggleAudioMute() {
+            audio.isMuted = !audio.isMuted;
+            const icon = document.getElementById('audioIcon');
+            if (audio.isMuted) {
+                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
+            } else {
+                icon.className = 'fa-solid fa-volume-high text-teal-400';
+            }
+        }
+
+        /* -------------------------------------------------------------
+           3. APP STATE & LOCALSTORAGE PROGRESS
+           ------------------------------------------------------------- */
+        let state = {
+            activeTab: 'explorer',
+            currentFont: localStorage.getItem('alifba_font') || "'Tajawal', sans-serif",
+            masteredLetters: JSON.parse(localStorage.getItem('alifba_mastered')) || [],
+            streak: parseInt(localStorage.getItem('alifba_streak')) || 0,
+            quizHighScore: parseInt(localStorage.getItem('alifba_high_score')) || 0,
+            totalQuizzes: parseInt(localStorage.getItem('alifba_quizzes_count')) || 0,
+            selectedLetterModal: null,
+            // Quiz State
+            quizType: 'letterToSound',
+            quizScore: 0,
+            quizStreak: 0,
+            currentQuizItem: null,
+            quizQuestionNum: 1,
+            // Match State
+            matchCards: [],
+            flippedCards: [],
+            matchedCount: 0,
+            matchMoves: 0,
+            matchTimerSeconds: 0,
+            matchTimerInterval: null,
+            // Trace State
+            traceColor: '#14b8a6',
+            traceLetter: ARABIC_LETTERS[0]
+        };
+
+        function saveState() {
+            localStorage.setItem('alifba_mastered', JSON.stringify(state.masteredLetters));
+            localStorage.setItem('alifba_streak', state.streak);
+            localStorage.setItem('alifba_high_score', state.quizHighScore);
+            localStorage.setItem('alifba_quizzes_count', state.totalQuizzes);
+            localStorage.setItem('alifba_font', state.currentFont);
+            updateHeaderStats();
+        }
+
+        function updateHeaderStats() {
+            document.getElementById('headerStreak').innerText = `${state.streak} Streak`;
+            document.getElementById('statMasteredCount').innerText = `${state.masteredLetters.length} / 28`;
+            document.getElementById('statHighScore').innerText = state.quizHighScore;
+            document.getElementById('statBestStreak').innerText = state.streak;
+            document.getElementById('statTotalQuizzes').innerText = state.totalQuizzes;
+        }
+
+        /* FEATURE 1 LOGIC: Dynamic Font Switcher */
+        function changeArabicFont(fontFamilyStr) {
+            state.currentFont = fontFamilyStr;
+            saveState();
+
+            // Apply font family dynamically to all elements with class .arabic-text
+            document.querySelectorAll('.arabic-text').forEach(el => {
+                el.style.fontFamily = fontFamilyStr;
+            });
+        }
+
+        /* -------------------------------------------------------------
+           4. NAVIGATION / TAB SWITCHING
+           ------------------------------------------------------------- */
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.className = 'nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center gap-2';
+            });
+
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).className = 'nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-teal-600 text-white shadow-md';
+
+            if (tabId === 'quiz') startNewQuizRound();
+            if (tabId === 'match') startMatchingGame();
+            if (tabId === 'trace') initTraceCanvas();
+            if (tabId === 'stats') renderStatsGrid();
+
+            // Re-apply current chosen font
+            changeArabicFont(state.currentFont);
+        }
+
+        /* -------------------------------------------------------------
+           5. TAB 1: EXPLORER LOGIC
+           ------------------------------------------------------------- */
+        function renderExplorerGrid(letters = ARABIC_LETTERS) {
+            const container = document.getElementById('explorerGrid');
+            container.innerHTML = '';
+
+            letters.forEach(letter => {
+                const isMastered = state.masteredLetters.includes(letter.id);
+                const card = document.createElement('div');
+                card.className = `glow-card rounded-2xl p-4 flex flex-col items-center justify-between space-y-3 cursor-pointer hover:border-teal-500/60 hover:-translate-y-1 transition duration-200 group relative ${isMastered ? 'border-emerald-500/50 bg-emerald-950/20' : ''}`;
+                
+                card.onclick = () => openLetterModal(letter);
+
+                card.innerHTML = `
+                    ${isMastered ? '<div class="absolute top-2 right-2 text-emerald-400 text-xs"><i class="fa-solid fa-circle-check"></i></div>' : ''}
+                    <div class="arabic-text text-5xl font-extrabold text-white group-hover:scale-110 transition duration-200">${letter.arabic}</div>
+                    <div class="text-center">
+                        <div class="text-sm font-bold text-teal-300">${letter.name}</div>
+                        <div class="text-[11px] text-amber-300 font-extrabold">Sound: /${letter.sound}/</div>
+                    </div>
+                    <div class="w-full flex items-center justify-between pt-2 border-t border-slate-800 text-slate-400 text-xs">
+                        <button onclick="event.stopPropagation(); audio.speakArabic('${letter.arabic}')" class="p-1.5 hover:text-teal-300 transition" title="Listen">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                        <span class="text-[10px] uppercase font-semibold text-slate-500">${letter.category}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            changeArabicFont(state.currentFont);
+        }
+
+        function filterExplorer() {
+            const query = document.getElementById('explorerSearch').value.toLowerCase();
+            const cat = document.getElementById('explorerCategory').value;
+
+            const filtered = ARABIC_LETTERS.filter(item => {
+                const matchesQuery = item.name.toLowerCase().includes(query) || item.trans.toLowerCase().includes(query) || item.sound.toLowerCase().includes(query) || item.arabic.includes(query);
+                const matchesCat = cat === 'all' || (cat === 'nonConnector' ? item.nonConnector : item.category === cat);
+                return matchesQuery && matchesCat;
+            });
+
+            renderExplorerGrid(filtered);
+        }
+
+        /* Letter Modal */
+        function openLetterModal(letter) {
+            state.selectedLetterModal = letter;
+            document.getElementById('modalArabicChar').innerText = letter.arabic;
+            document.getElementById('modalLetterName').innerText = letter.name;
+            document.getElementById('modalTransliteration').innerHTML = `Phonetic Sound: <span class="text-teal-400 font-bold">/${letter.sound}/ (${letter.trans})</span>`;
+            document.getElementById('modalCategoryBadge').innerText = letter.category;
+            
+            document.getElementById('formIsolated').innerText = letter.forms.isolated;
+            document.getElementById('formInitial').innerText = letter.forms.initial;
+            document.getElementById('formMedial').innerText = letter.forms.medial;
+            document.getElementById('formFinal').innerText = letter.forms.final;
+
+            document.getElementById('modalMnemonic').innerText = letter.mnemonic;
+
+            updateModalMasteryBtn();
+
+            const modal = document.getElementById('letterModal');
+            const card = document.getElementById('letterModalCard');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                card.classList.remove('scale-95');
+            }, 10);
+
+            audio.speakArabic(letter.arabic);
+            changeArabicFont(state.currentFont);
+        }
+
+        function closeLetterModal() {
+            const modal = document.getElementById('letterModal');
+            const card = document.getElementById('letterModalCard');
+            modal.classList.add('opacity-0');
+            card.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function playModalAudio() {
+            if (state.selectedLetterModal) {
+                audio.speakArabic(state.selectedLetterModal.arabic);
+            }
+        }
+
+        function updateModalMasteryBtn() {
+            const btn = document.getElementById('modalMasteryBtn');
+            const isMastered = state.masteredLetters.includes(state.selectedLetterModal.id);
+            if (isMastered) {
+                btn.className = 'flex-grow py-2.5 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-2 bg-emerald-900/40 border-emerald-500/50 text-emerald-300';
+                btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Mastered! (Click to unmark)';
+            } else {
+                btn.className = 'flex-grow py-2.5 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-2 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700';
+                btn.innerHTML = '<i class="fa-regular fa-circle-check"></i> Mark as Mastered';
+            }
+        }
+
+        function toggleModalMastery() {
+            const id = state.selectedLetterModal.id;
+            if (state.masteredLetters.includes(id)) {
+                state.masteredLetters = state.masteredLetters.filter(x => x !== id);
+            } else {
+                state.masteredLetters.push(id);
+                audio.playCorrect();
+            }
+            saveState();
+            updateModalMasteryBtn();
+            renderExplorerGrid();
+        }
+
+        function openModalInTrace() {
+            const ltr = state.selectedLetterModal;
+            closeLetterModal();
+            switchTab('trace');
+            loadTraceLetter(ltr.id);
+        }
+
+
+        /* -------------------------------------------------------------
+           6. TAB 2: QUIZ & PRACTICE MODES LOGIC
+           ------------------------------------------------------------- */
+        function setQuizType(type) {
+            state.quizType = type;
+            document.querySelectorAll('.quiz-type-btn').forEach(btn => {
+                btn.className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700';
+            });
+            document.getElementById(`quizType-${type}`).className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-teal-600 text-white';
+            
+            const titles = {
+                'letterToSound': 'Name Match Mode',
+                'phonicsMatch': 'Phonics Sound Match Mode',
+                'soundToLetter': 'Audio Listening Quiz Mode',
+                'formQuiz': 'Positional Forms Mode',
+                'vocalizationRead': 'Read Syllables & Harakat',
+                'vocalizationListen': 'Vocalization Sound to Text'
+            };
+            document.getElementById('quizModeTitle').innerText = titles[type] || 'Practice Challenge Mode';
+
+            startNewQuizRound();
+        }
+
+        function startNewQuizRound() {
+            state.quizScore = 0;
+            state.quizStreak = 0;
+            state.quizQuestionNum = 1;
+            updateQuizScoreboard();
+            nextQuizQuestion();
+        }
+
+        function updateQuizScoreboard() {
+            document.getElementById('quizScore').innerText = state.quizScore;
+            document.getElementById('quizStreak').innerText = state.quizStreak;
+            document.getElementById('quizHighScore').innerText = state.quizHighScore;
+            document.getElementById('quizProgressText').innerText = `Question ${state.quizQuestionNum} of 10`;
+        }
+
+        function nextQuizQuestion() {
+            document.getElementById('quizFeedback').classList.add('hidden');
+            const arabicDisplay = document.getElementById('quizTargetArabic');
+            const subText = document.getElementById('quizSubText');
+            const optionsContainer = document.getElementById('quizOptionsContainer');
+            const audioBtn = document.getElementById('quizAudioBtn');
+            optionsContainer.innerHTML = '';
+            audioBtn.classList.remove('hidden');
+
+            /* MODE 1: Standard Letter Name Match */
+            if (state.quizType === 'letterToSound') {
+                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
+                state.currentQuizItem = target;
+
+                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                    .sort(() => 0.5 - Math.random()).slice(0, 3);
+                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+                arabicDisplay.innerText = target.arabic;
+                subText.innerText = 'Select the correct letter name below:';
+                
+                allChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-base transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = `${choice.name} (${choice.trans})`;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, choice.name);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+            
+            /* FEATURE 2: Phonics Sound-to-Letter Matching Mode */
+            else if (state.quizType === 'phonicsMatch') {
+                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
+                state.currentQuizItem = target;
+
+                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                    .sort(() => 0.5 - Math.random()).slice(0, 3);
+                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+                arabicDisplay.innerText = `/${target.sound}/`;
+                subText.innerText = `Which Arabic letter produces the sound /${target.sound}/?`;
+                
+                allChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = choice.arabic;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (sound: /${target.sound}/)`);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            /* MODE 3: Audio Listening Quiz */
+            else if (state.quizType === 'soundToLetter') {
+                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
+                state.currentQuizItem = target;
+
+                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                    .sort(() => 0.5 - Math.random()).slice(0, 3);
+                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+                arabicDisplay.innerText = '🔊';
+                subText.innerText = 'Listen to the sound and select the matching Arabic letter:';
+                audio.speakArabic(target.arabic);
+
+                allChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = choice.arabic;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, target.arabic);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            /* MODE 4: Positional Forms Quiz */
+            else if (state.quizType === 'formQuiz') {
+                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
+                state.currentQuizItem = target;
+
+                const formKeys = ['initial', 'medial', 'final'];
+                const randomKey = formKeys[Math.floor(Math.random() * formKeys.length)];
+
+                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                    .sort(() => 0.5 - Math.random()).slice(0, 3);
+                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+                arabicDisplay.innerText = target.forms[randomKey];
+                subText.innerText = `Which letter is this in its ${randomKey.toUpperCase()} form?`;
+
+                allChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-base transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = `${choice.name} (${choice.arabic})`;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, choice.name);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            /* FEATURE 3a: Read Syllables (Arabic + Harakat -> Select Phonetic Sound) */
+            else if (state.quizType === 'vocalizationRead') {
+                const target = ARABIC_VOCALIZATIONS[Math.floor(Math.random() * ARABIC_VOCALIZATIONS.length)];
+                state.currentQuizItem = target;
+
+                const wrongChoices = ARABIC_VOCALIZATIONS.filter(x => x.id !== target.id)
+                    .sort(() => 0.5 - Math.random()).slice(0, 3);
+                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+                arabicDisplay.innerText = target.arabic;
+                subText.innerText = 'Read the Arabic vocalization above and select its sound:';
+
+                allChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-amber-300 font-extrabold text-xl transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = `/${choice.sound}/`;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `/${target.sound}/`);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            /* FEATURE 3b: Hear/Read Vocalization -> Select Arabic Combination */
+            else if (state.quizType === 'vocalizationListen') {
+                const target = ARABIC_VOCALIZATIONS[Math.floor(Math.random() * ARABIC_VOCALIZATIONS.length)];
+                state.currentQuizItem = target;
+
+                const wrongChoices = ARABIC_VOCALIZATIONS.filter(x => x.id !== target.id)
+                    .sort(() => 0.5 - Math.random()).slice(0, 3);
+                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+                arabicDisplay.innerText = `/${target.sound}/`;
+                subText.innerText = 'Listen or read the sound, then select the matching Arabic text:';
+                audio.speakArabic(target.audioText);
+
+                allChoices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = choice.arabic;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (/${target.sound}/)`);
+                    optionsContainer.appendChild(btn);
+                });
+            }
+
+            changeArabicFont(state.currentFont);
+        }
+
+        function playCurrentQuizAudio() {
+            if (!state.currentQuizItem) return;
+            if (state.currentQuizItem.audioText) {
+                audio.speakArabic(state.currentQuizItem.audioText);
+            } else if (state.currentQuizItem.arabic) {
+                audio.speakArabic(state.currentQuizItem.arabic);
+            }
+        }
+
+        function handleQuizAnswer(isCorrect, btnElement, correctNameStr) {
+            const feedback = document.getElementById('quizFeedback');
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                audio.playCorrect();
+                btnElement.classList.remove('bg-slate-800/90');
+                btnElement.classList.add('bg-emerald-600', 'text-white', 'border-emerald-400');
+                
+                state.quizScore += 10 + (state.quizStreak * 2);
+                state.quizStreak += 1;
+                if (state.quizStreak > state.streak) state.streak = state.quizStreak;
+                if (state.quizScore > state.quizHighScore) state.quizHighScore = state.quizScore;
+
+                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i> Excellent! Correct answer!';
+
+                if (state.quizStreak % 5 === 0) triggerConfetti();
+            } else {
+                audio.playWrong();
+                btnElement.classList.remove('bg-slate-800/90');
+                btnElement.classList.add('bg-rose-600', 'text-white', 'border-rose-400');
+
+                state.quizStreak = 0;
+
+                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-rose-500/20 text-rose-300 border border-rose-500/30';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Incorrect! Right answer: ${correctNameStr}`;
+            }
+
+            saveState();
+            updateQuizScoreboard();
+
+            document.querySelectorAll('#quizOptionsContainer button').forEach(b => b.disabled = true);
+
+            setTimeout(() => {
+                if (state.quizQuestionNum < 10) {
+                    state.quizQuestionNum++;
+                    updateQuizScoreboard();
+                    nextQuizQuestion();
+                } else {
+                    finishQuizRound();
+                }
+            }, 1400);
+        }
+
+        function finishQuizRound() {
+            state.totalQuizzes++;
+            saveState();
+            audio.playFanfare();
+            triggerConfetti();
+
+            const optionsContainer = document.getElementById('quizOptionsContainer');
+            optionsContainer.innerHTML = `
+                <div class="col-span-full bg-slate-900/90 rounded-2xl p-6 border border-slate-700 text-center space-y-4">
+                    <h4 class="text-2xl font-extrabold text-amber-300">🎉 Challenge Complete!</h4>
+                    <p class="text-slate-300 text-sm">Final Score: <strong class="text-teal-400">${state.quizScore}</strong> | Best Streak: <strong class="text-emerald-400">${state.quizStreak}</strong></p>
+                    <button onclick="startNewQuizRound()" class="px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-extrabold rounded-xl shadow-lg shadow-teal-500/30 hover:scale-105 transition">
+                        Play Another Round
+                    </button>
+                </div>
+            `;
+        }
+
+
+        /* -------------------------------------------------------------
+           7. TAB 3: MATCHING MEMORY GAME LOGIC
+           ------------------------------------------------------------- */
+        function startMatchingGame() {
+            clearInterval(state.matchTimerInterval);
+            state.matchMoves = 0;
+            state.matchedCount = 0;
+            state.matchTimerSeconds = 0;
+            state.flippedCards = [];
+
+            document.getElementById('matchMoves').innerText = '0';
+            document.getElementById('matchTimer').innerText = '00:00';
+
+            state.matchTimerInterval = setInterval(() => {
+                state.matchTimerSeconds++;
+                const mins = String(Math.floor(state.matchTimerSeconds / 60)).padStart(2, '0');
+                const secs = String(state.matchTimerSeconds % 60).padStart(2, '0');
+                document.getElementById('matchTimer').innerText = `${mins}:${secs}`;
+            }, 1000);
+
+            // Mix letters & vocalizations for memory match pool
+            const pool = [...ARABIC_LETTERS.map(l => ({ id: l.id, arabic: l.arabic, sound: `/${l.sound}/` })), 
+                          ...ARABIC_VOCALIZATIONS.map(v => ({ id: v.id, arabic: v.arabic, sound: `/${v.sound}/` }))];
+            
+            const chosen = pool.sort(() => 0.5 - Math.random()).slice(0, 6);
+            
+            const cardDeck = [];
+            chosen.forEach(item => {
+                cardDeck.push({ pairId: item.id, display: item.arabic, type: 'arabic' });
+                cardDeck.push({ pairId: item.id, display: item.sound, type: 'text' });
+            });
+
+            cardDeck.sort(() => 0.5 - Math.random());
+            state.matchCards = cardDeck;
+
+            renderMemoryGrid();
+        }
+
+        function renderMemoryGrid() {
+            const container = document.getElementById('memoryGrid');
+            container.innerHTML = '';
+
+            state.matchCards.forEach((card, index) => {
+                const cardWrap = document.createElement('div');
+                cardWrap.className = 'perspective-1000 aspect-square cursor-pointer';
+                cardWrap.onclick = () => flipMemoryCard(index, cardWrap);
+
+                cardWrap.innerHTML = `
+                    <div id="mcard-${index}" class="transform-style-3d relative w-full h-full rounded-2xl transition duration-500 shadow-md">
+                        <div class="backface-hidden absolute inset-0 bg-slate-800 border border-slate-700 hover:border-purple-500/60 rounded-2xl flex items-center justify-center text-purple-400 text-2xl font-bold">
+                            <i class="fa-solid fa-star opacity-40"></i>
+                        </div>
+                        <div class="rotate-y-180 backface-hidden absolute inset-0 bg-gradient-to-tr from-purple-900 to-indigo-900 border-2 border-purple-400 rounded-2xl flex items-center justify-center text-center p-2">
+                            <span class="${card.type === 'arabic' ? 'arabic-text text-3xl sm:text-4xl text-amber-300 font-extrabold' : 'text-sm sm:text-base font-extrabold text-white'}">
+                                ${card.display}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(cardWrap);
+            });
+
+            changeArabicFont(state.currentFont);
+        }
+
+        function flipMemoryCard(index, cardWrap) {
+            const inner = document.getElementById(`mcard-${index}`);
+            if (inner.classList.contains('rotate-y-180') || state.flippedCards.length >= 2) return;
+
+            audio.playFlip();
+            inner.classList.add('rotate-y-180');
+            state.flippedCards.push({ index, data: state.matchCards[index], element: inner });
+
+            if (state.flippedCards.length === 2) {
+                state.matchMoves++;
+                document.getElementById('matchMoves').innerText = state.matchMoves;
+                checkMatchPair();
+            }
+        }
+
+        function checkMatchPair() {
+            const [c1, c2] = state.flippedCards;
+
+            if (c1.data.pairId === c2.data.pairId) {
+                audio.playCorrect();
+                c1.element.children[1].classList.add('border-emerald-400', 'bg-emerald-950');
+                c2.element.children[1].classList.add('border-emerald-400', 'bg-emerald-950');
+
+                state.matchedCount++;
+                state.flippedCards = [];
+
+                if (state.matchedCount === 6) {
+                    clearInterval(state.matchTimerInterval);
+                    audio.playFanfare();
+                    triggerConfetti();
+                }
+            } else {
+                audio.playWrong();
+                setTimeout(() => {
+                    c1.element.classList.remove('rotate-y-180');
+                    c2.element.classList.remove('rotate-y-180');
+                    state.flippedCards = [];
+                }, 900);
+            }
+        }
+
+
+        /* -------------------------------------------------------------
+           8. TAB 4: WRITING / TRACING LOGIC
+           ------------------------------------------------------------- */
+        let canvas, ctx, isDrawing = false;
+
+        function initTraceCanvas() {
+            canvas = document.getElementById('traceCanvas');
+            ctx = canvas.getContext('2d');
+
+            const select = document.getElementById('traceLetterSelect');
+            if (select.children.length === 0) {
+                ARABIC_LETTERS.forEach(letter => {
+                    const opt = document.createElement('option');
+                    opt.value = letter.id;
+                    opt.innerText = `${letter.arabic} - ${letter.name} (/${letter.sound}/)`;
+                    select.appendChild(opt);
+                });
+            }
+
+            canvas.onmousedown = startDrawing;
+            canvas.onmousemove = draw;
+            canvas.onmouseup = stopDrawing;
+            canvas.onmouseleave = stopDrawing;
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                startDrawing({ clientX: touch.clientX, clientY: touch.clientY, rect });
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                draw({ clientX: touch.clientX, clientY: touch.clientY });
+            });
+
+            canvas.addEventListener('touchend', stopDrawing);
+
+            loadTraceLetter(state.traceLetter.id);
+        }
+
+        function loadTraceLetter(id) {
+            const letter = ARABIC_LETTERS.find(x => x.id === parseInt(id));
+            state.traceLetter = letter;
+
+            document.getElementById('traceLetterArabic').innerText = letter.arabic;
+            document.getElementById('traceLetterName').innerText = letter.name;
+            document.getElementById('traceLetterPhonetic').innerText = `/${letter.sound}/ (${letter.trans})`;
+            document.getElementById('traceLetterTip').innerText = letter.strokeHint;
+            document.getElementById('canvasGuideChar').innerText = letter.arabic;
+
+            clearCanvas();
+            changeArabicFont(state.currentFont);
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            ctx.moveTo(x, y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+            const size = document.getElementById('brushSize').value;
+            ctx.lineWidth = size;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = state.traceColor;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearCanvas() {
+            if (ctx) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function setTraceColor(color) {
+            state.traceColor = color;
+        }
+
+        function playTraceAudio() {
+            audio.speakArabic(state.traceLetter.arabic);
+        }
+
+        function animateStrokeGuide() {
+            clearCanvas();
+            audio.speakArabic(state.traceLetter.arabic);
+            
+            let progress = 0;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            const animInterval = setInterval(() => {
+                progress += 0.05;
+                ctx.lineWidth = 14;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#14b8a6';
+                ctx.beginPath();
+                ctx.arc(centerX, centerY - 20, 50 * progress, 0, Math.PI * 1.5 * progress);
+                ctx.stroke();
+
+                if (progress >= 1) {
+                    clearInterval(animInterval);
+                }
+            }, 30);
+        }
+
+        function evaluateTracing() {
+            audio.playCorrect();
+            triggerConfetti();
+            if (!state.masteredLetters.includes(state.traceLetter.id)) {
+                state.masteredLetters.push(state.traceLetter.id);
+                saveState();
+            }
+        }
+
+
+        /* -------------------------------------------------------------
+           9. TAB 5: STATS & MASTERY GRID LOGIC
+           ------------------------------------------------------------- */
+        function renderStatsGrid() {
+            updateHeaderStats();
+            const container = document.getElementById('statsMasteryGrid');
+            container.innerHTML = '';
+
+            ARABIC_LETTERS.forEach(letter => {
+                const isMastered = state.masteredLetters.includes(letter.id);
+                const item = document.createElement('div');
+                item.className = `p-3 rounded-2xl border text-center cursor-pointer transition flex flex-col items-center justify-between gap-1 ${isMastered ? 'bg-emerald-950/40 border-emerald-500/60 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-500'}`;
+                
+                item.onclick = () => {
+                    if (isMastered) {
+                        state.masteredLetters = state.masteredLetters.filter(x => x !== letter.id);
+                    } else {
+                        state.masteredLetters.push(letter.id);
+                        audio.playCorrect();
+                    }
+                    saveState();
+                    renderStatsGrid();
+                };
+
+                item.innerHTML = `
+                    <span class="arabic-text text-3xl font-extrabold">${letter.arabic}</span>
+                    <span class="text-[11px] font-bold">${letter.name}</span>
+                    <i class="fa-solid ${isMastered ? 'fa-circle-check text-emerald-400' : 'fa-circle text-slate-700'} text-xs"></i>
+                `;
+                container.appendChild(item);
+            });
+
+            changeArabicFont(state.currentFont);
+        }
+
+        function resetAllProgress() {
+            if (confirm("Are you sure you want to reset all saved progress and high scores?")) {
+                state.masteredLetters = [];
+                state.streak = 0;
+                state.quizHighScore = 0;
+                state.totalQuizzes = 0;
+                saveState();
+                renderStatsGrid();
+                renderExplorerGrid();
+            }
+        }
+
+
+        /* -------------------------------------------------------------
+           10. VISUAL CONFETTI ANIMATION ENGINE
+           ------------------------------------------------------------- */
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#14b8a6', '#f43f5e', '#f59e0b', '#8b5cf6', '#10b981', '#06b6d4'];
+
+            for (let i = 0; i < 90; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: (Math.random() - 0.7) * 14,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    rotation: Math.random() * 360
+                });
+            }
+
+            let frame = 0;
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.3;
+                    p.alpha -= 0.015;
+
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, p.alpha);
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+
+                frame++;
+                if (frame < 70) requestAnimationFrame(render);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            render();
+        }
+
+
+        /* -------------------------------------------------------------
+           11. INITIALIZATION ON WINDOW LOAD
+           ------------------------------------------------------------- */
+        window.onload = function() {
+            // Restore saved font selection in UI selector dropdown
+            const selector = document.getElementById('fontSelector');
+            if (selector) selector.value = state.currentFont;
+
+            renderExplorerGrid();
+            updateHeaderStats();
+            changeArabicFont(state.currentFont);
+
+            window.addEventListener('resize', () => {
+                if (state.activeTab === 'trace') initTraceCanvas();
+            });
+        };
+    </script>
+</body>
+</html>
