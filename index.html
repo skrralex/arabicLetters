@@ -76,6 +76,17 @@
             transform: rotateY(180deg);
         }
 
+        /* Pair Match & Quick-Tap Animations */
+        @keyframes shakeError {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+            75% { transform: translateX(-4px); }
+        }
+        .animate-shake {
+            animation: shakeError 0.35s ease-in-out;
+        }
+
         /* Custom Scrollbars */
         ::-webkit-scrollbar {
             width: 8px;
@@ -204,7 +215,7 @@
                 <div class="space-y-2 max-w-xl text-center md:text-left z-10">
                     <span class="px-3 py-1 bg-teal-500/20 text-teal-300 border border-teal-500/30 rounded-full text-xs font-semibold tracking-wide uppercase">Interactive Learning</span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Explore the 28 Arabic Letters</h2>
-                    <p class="text-slate-300 text-sm leading-relaxed">Click any letter card to listen to pronunciation, inspect forms (Isolated, Initial, Medial, Final), view stroke guides, and switch fonts in the top menu to compare writing styles.</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">Tap any letter card to hear and compare its sound right away, or click the <strong class="text-teal-300">Info</strong> button on a card to inspect its positional forms, stroke guide, and memory tips.</p>
                 </div>
 
                 <!-- Search & Category Filter -->
@@ -253,157 +264,38 @@
 
 
         <!-- ========================================== -->
-        <!-- TAB 2: QUIZ & PRACTICE MODES               -->
-        <!-- ========================================== -->
-        <section id="sec-quiz" class="tab-section hidden space-y-6">
-            <!-- Quiz Header Stats Bar -->
-            <div class="glow-card rounded-2xl p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="bg-indigo-500/20 text-indigo-300 p-3 rounded-xl border border-indigo-500/30">
-                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Practice Challenge</span>
-                        <h3 class="text-lg font-bold text-white" id="quizModeTitle">Standard Quiz Mode</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-6">
-                    <div class="text-center">
-                        <div class="text-xs text-slate-400 font-semibold uppercase">Score</div>
-                        <div class="text-xl font-extrabold text-teal-400" id="quizScore">0</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-xs text-slate-400 font-semibold uppercase">Streak</div>
-                        <div class="text-xl font-extrabold text-amber-400 flex items-center justify-center gap-1">
-                            <i class="fa-solid fa-fire text-sm"></i>
-                            <span id="quizStreak">0</span>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-xs text-slate-400 font-semibold uppercase">High Score</div>
-                        <div class="text-xl font-extrabold text-emerald-400" id="quizHighScore">0</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quiz & Practice Mode Switcher Options -->
-            <div class="flex flex-wrap justify-center gap-2">
-                <button onclick="setQuizType('letterToSound')" id="quizType-letterToSound" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-teal-600 text-white">
-                    <i class="fa-solid fa-font mr-1"></i> Name Match
-                </button>
-                <!-- FEATURE 2: Phonics Sound-to-Letter Mode -->
-                <button onclick="setQuizType('phonicsMatch')" id="quizType-phonicsMatch" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
-                    <i class="fa-solid fa-wave-square mr-1 text-cyan-400"></i> Phonics Match (Sound -> Letter)
-                </button>
-                <button onclick="setQuizType('soundToLetter')" id="quizType-soundToLetter" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
-                    <i class="fa-solid fa-headphones mr-1 text-purple-400"></i> Audio Listening Quiz
-                </button>
-                <button onclick="setQuizType('formQuiz')" id="quizType-formQuiz" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
-                    <i class="fa-solid fa-puzzle-piece mr-1 text-amber-400"></i> Positional Forms
-                </button>
-                <!-- FEATURE 3: Syllables & Vocalizations (Harakat) Practice Modes -->
-                <button onclick="setQuizType('vocalizationRead')" id="quizType-vocalizationRead" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
-                    <i class="fa-solid fa-book-open mr-1 text-rose-400"></i> Read Syllables (Harakat -> Sound)
-                </button>
-                <button onclick="setQuizType('vocalizationListen')" id="quizType-vocalizationListen" class="quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">
-                    <i class="fa-solid fa-ear-listen mr-1 text-emerald-400"></i> Vocalization Sound -> Text
-                </button>
-            </div>
-
-            <!-- Quiz Main Challenge Card Area -->
-            <div class="max-w-2xl mx-auto glow-card rounded-3xl p-6 sm:p-10 text-center relative space-y-6">
-                <!-- Question Counter & Audio Prompt -->
-                <div class="flex items-center justify-between text-xs text-slate-400 font-medium">
-                    <span id="quizProgressText">Question 1 of 10</span>
-                    <button id="quizAudioBtn" onclick="playCurrentQuizAudio()" class="text-teal-400 hover:text-teal-300 flex items-center gap-1.5 px-3 py-1.5 bg-teal-500/10 rounded-lg border border-teal-500/20 transition">
-                        <i class="fa-solid fa-volume-high"></i> Listen Sound
-                    </button>
-                </div>
-
-                <!-- Target Display Box -->
-                <div id="quizTargetDisplay" class="h-44 sm:h-52 bg-slate-900/80 rounded-2xl border border-slate-700/80 flex flex-col items-center justify-center p-4 relative group shadow-inner">
-                    <span id="quizTargetArabic" class="arabic-text text-6xl sm:text-8xl font-extrabold text-white transition-transform group-hover:scale-105">
-                        أ
-                    </span>
-                    <span id="quizSubText" class="text-xs text-slate-400 mt-3 font-medium">Select the correct matching answer below</span>
-                </div>
-
-                <!-- Vocalization & Word Complexity Filter Bar (shown in Vocalization modes) -->
-                <div id="vocalizationFilterBar" class="hidden flex flex-wrap items-center justify-center gap-2 bg-slate-900/70 p-2.5 rounded-2xl border border-slate-800">
-                    <span class="text-[11px] font-bold text-teal-300 bg-teal-500/10 border border-teal-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
-                        <i class="fa-solid fa-layer-group"></i>
-                        <span id="vocalizationCountBadge">132 Words & Syllables</span>
-                    </span>
-                    <div class="flex flex-wrap items-center justify-center gap-1.5">
-                        <button onclick="setVocalizationFilter('all')" id="vocFilter-all" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-600 text-white transition">All (132)</button>
-                        <button onclick="setVocalizationFilter('short')" id="vocFilter-short" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Short & 2-Letter</button>
-                        <button onclick="setVocalizationFilter('three')" id="vocFilter-three" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3-Letter Words</button>
-                        <button onclick="setVocalizationFilter('fourPlus')" id="vocFilter-fourPlus" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4+ Letter Words</button>
-                    </div>
-                </div>
-
-                <!-- Interactive Word & Syllable Construction Info Button -->
-                <div id="wordBreakdownControls" class="hidden flex flex-col items-center space-y-4">
-                    <button id="toggleBreakdownBtn" onclick="toggleWordBreakdown()" class="px-4 py-2.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-200 border border-indigo-500/40 text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
-                        <i class="fa-solid fa-circle-info text-indigo-400"></i>
-                        <span id="toggleBreakdownBtnText">How is this built? (Word Breakdown)</span>
-                        <i id="toggleBreakdownChevron" class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
-                    </button>
-
-                    <!-- Collapsible Right-to-Left (RTL) Word Construction Panel -->
-                    <div id="wordBreakdownPanel" class="hidden w-full text-left bg-slate-950/95 border border-indigo-500/30 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xl transition-all duration-300">
-                        <!-- Direction Banner & Syllable Equation -->
-                        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-extrabold flex items-center gap-1.5">
-                                    <span>Read Right ➔ Left</span>
-                                    <i class="fa-solid fa-arrow-left-long"></i>
-                                </span>
-                                <span class="text-[11px] text-slate-400 hidden sm:inline">Tap any tile to hear its sound</span>
-                            </div>
-                            <div id="breakdownEquation" class="text-xs font-bold text-teal-300 bg-teal-500/10 border border-teal-500/20 px-3 py-1 rounded-lg">
-                                <!-- Populated dynamically: ka + ta + ba → /kataba/ -->
-                            </div>
-                        </div>
-
-                        <!-- Right-to-Left (RTL) Letter-by-Letter Tile Grid -->
-                        <div id="breakdownTilesContainer" dir="rtl" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                            <!-- Letter breakdown tiles injected by JS in RTL order -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Answer Choices (Grid of Options) -->
-                <div id="quizOptionsContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <!-- JS injects 4 choice buttons -->
-                </div>
-
-                <!-- Feedback Bar -->
-                <div id="quizFeedback" class="hidden p-3 rounded-xl text-center font-bold text-sm transition"></div>
-            </div>
-        </section>
-
-
-        <!-- ========================================== -->
-        <!-- TAB 3: MATCHING MEMORY GAME                -->
+        <!-- TAB 3: PAIR MATCHING GAME                  -->
         <!-- ========================================== -->
         <section id="sec-match" class="tab-section hidden space-y-6">
             <!-- Controls & Mode Stats -->
             <div class="glow-card rounded-2xl p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
                     <div class="bg-purple-500/20 text-purple-300 p-3 rounded-xl border border-purple-500/30">
-                        <i class="fa-solid fa-brain text-2xl"></i>
+                        <i class="fa-solid fa-code-compare text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-white">Arabic Memory Match</h3>
-                        <p class="text-xs text-slate-400">Match Arabic letters/syllables with their sounds</p>
+                        <h3 class="text-lg font-bold text-white">Pair Matching Challenge</h3>
+                        <p class="text-xs text-slate-400">Tap an Arabic item on the left and its matching sound on the right</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4">
+                <!-- Deck Mode Switcher + Scoreboard -->
+                <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+                    <div class="flex items-center bg-slate-900/90 border border-slate-700 rounded-xl p-1">
+                        <button onclick="setMatchDeckMode('letters')" id="matchDeck-letters" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-600 text-white transition">
+                            Letters
+                        </button>
+                        <button onclick="setMatchDeckMode('syllables')" id="matchDeck-syllables" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">
+                            Syllables & Words
+                        </button>
+                    </div>
+
                     <div class="text-center">
-                        <span class="text-xs text-slate-400 font-semibold uppercase">Moves</span>
+                        <span class="text-xs text-slate-400 font-semibold uppercase">Matched</span>
+                        <div class="text-xl font-bold text-emerald-400" id="matchPairsProgress">0 / 6</div>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 font-semibold uppercase">Attempts</span>
                         <div class="text-xl font-bold text-purple-400" id="matchMoves">0</div>
                     </div>
                     <div class="text-center">
@@ -411,166 +303,45 @@
                         <div class="text-xl font-bold text-amber-400" id="matchTimer">00:00</div>
                     </div>
                     <button onclick="startMatchingGame()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-purple-500/20 transition">
-                        <i class="fa-solid fa-rotate-right mr-1.5"></i> Restart
+                        <i class="fa-solid fa-rotate-right mr-1.5"></i> New Set
                     </button>
                 </div>
             </div>
 
-            <!-- Memory Grid Container -->
-            <div id="memoryGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 max-w-4xl mx-auto min-h-[350px]">
-                <!-- Cards generated by JS -->
-            </div>
-        </section>
-
-
-        <!-- ========================================== -->
-        <!-- TAB 4: WRITING / TRACE GUIDE               -->
-        <!-- ========================================== -->
-        <section id="sec-trace" class="tab-section hidden space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                <!-- Left Column: Letter Selector & Info -->
-                <div class="glow-card rounded-3xl p-6 space-y-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                            <i class="fa-solid fa-feather-pointed text-rose-400"></i>
-                            Select Letter to Trace
-                        </h3>
-                        <p class="text-xs text-slate-400 mt-1">Practice stroke direction and handwriting muscle memory.</p>
-                        
-                        <!-- Dropdown Picker -->
-                        <div class="mt-4">
-                            <label class="block text-xs font-semibold text-slate-400 mb-2">Select Letter:</label>
-                            <select id="traceLetterSelect" onchange="loadTraceLetter(this.value)" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-base text-teal-300 font-bold arabic-text focus:outline-none focus:border-teal-500">
-                                <!-- Populated by JS -->
-                            </select>
-                        </div>
+            <!-- Two-Column Pair Matching Board -->
+            <div id="matchBoardContainer" class="max-w-3xl mx-auto glow-card rounded-3xl p-5 sm:p-8 space-y-5">
+                <div class="grid grid-cols-2 gap-4 sm:gap-8">
+                    <!-- Left Column Header -->
+                    <div class="text-center pb-2 border-b border-slate-800">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-teal-300">
+                            <i class="fa-solid fa-language mr-1.5"></i> Arabic Script
+                        </span>
                     </div>
-
-                    <!-- Letter Details Card -->
-                    <div id="traceLetterInfoCard" class="bg-slate-900/80 rounded-2xl p-5 border border-slate-800 space-y-3">
-                        <div class="flex items-baseline justify-between">
-                            <span id="traceLetterArabic" class="arabic-text text-5xl font-extrabold text-teal-300">أ</span>
-                            <span id="traceLetterName" class="text-xl font-bold text-white">Alif</span>
-                        </div>
-                        <div class="border-t border-slate-800 pt-3 text-xs space-y-2">
-                            <p><strong class="text-slate-300">Phonetic Sound:</strong> <span id="traceLetterPhonetic" class="text-slate-400">a / aa</span></p>
-                            <p><strong class="text-slate-300">Stroke Tip:</strong> <span id="traceLetterTip" class="text-slate-400">Draw top to bottom line with top hamza.</span></p>
-                        </div>
-                    </div>
-
-                    <!-- Audio Demo & Controls -->
-                    <div class="space-y-3">
-                        <button onclick="playTraceAudio()" class="w-full py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl text-teal-400 font-bold text-sm flex items-center justify-center gap-2 transition">
-                            <i class="fa-solid fa-volume-high"></i> Listen Pronunciation
-                        </button>
-                        <button onclick="animateStrokeGuide()" class="w-full py-3 bg-rose-600/20 hover:bg-rose-600/30 text-rose-300 border border-rose-500/30 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition">
-                            <i class="fa-solid fa-play"></i> Play Stroke Demo
-                        </button>
+                    <!-- Right Column Header -->
+                    <div class="text-center pb-2 border-b border-slate-800">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-amber-300">
+                            <i class="fa-solid fa-volume-high mr-1.5"></i> Phonetic Sound
+                        </span>
                     </div>
                 </div>
 
-                <!-- Interactive Canvas Board -->
-                <div class="lg:col-span-2 glow-card rounded-3xl p-6 flex flex-col items-center justify-between space-y-4">
-                    <div class="w-full flex items-center justify-between">
-                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-wide">Handwriting Canvas</span>
-                        <div class="flex items-center gap-2">
-                            <button onclick="setTraceColor('#14b8a6')" class="w-6 h-6 rounded-full bg-teal-500 border-2 border-white/40 hover:scale-110 transition"></button>
-                            <button onclick="setTraceColor('#f43f5e')" class="w-6 h-6 rounded-full bg-rose-500 border-2 border-white/40 hover:scale-110 transition"></button>
-                            <button onclick="setTraceColor('#f59e0b')" class="w-6 h-6 rounded-full bg-amber-500 border-2 border-white/40 hover:scale-110 transition"></button>
-                            <button onclick="setTraceColor('#8b5cf6')" class="w-6 h-6 rounded-full bg-purple-500 border-2 border-white/40 hover:scale-110 transition"></button>
-                        </div>
+                <!-- Two Columns of Match Tiles -->
+                <div class="grid grid-cols-2 gap-4 sm:gap-8 items-stretch">
+                    <div id="matchLeftColumn" class="flex flex-col gap-3">
+                        <!-- Arabic Letter / Syllable tiles injected by JS -->
                     </div>
-
-                    <!-- Canvas Box -->
-                    <div class="relative w-full aspect-square max-w-md bg-slate-950 rounded-2xl border-2 border-dashed border-slate-700 overflow-hidden flex items-center justify-center shadow-inner">
-                        <div id="canvasWatermark" class="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-20 text-slate-400">
-                            <span id="canvasGuideChar" class="arabic-text text-[180px] font-bold">أ</span>
-                        </div>
-                        <canvas id="traceCanvas" width="400" height="400" class="w-full h-full relative z-10"></canvas>
-                    </div>
-
-                    <!-- Action Bar -->
-                    <div class="w-full flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-slate-400">Brush Size:</span>
-                            <input type="range" id="brushSize" min="4" max="24" value="12" class="accent-teal-500 w-24">
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="clearCanvas()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-trash-can"></i> Clear
-                            </button>
-                            <button onclick="evaluateTracing()" class="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-lg shadow-teal-600/30">
-                                <i class="fa-solid fa-check"></i> Check Practice
-                            </button>
-                        </div>
+                    <div id="matchRightColumn" class="flex flex-col gap-3">
+                        <!-- Sound / Transliteration tiles injected by JS -->
                     </div>
                 </div>
 
-            </div>
-        </section>
-
-
-        <!-- ========================================== -->
-        <!-- TAB 5: PROGRESS & STATS                    -->
-        <!-- ========================================== -->
-        <section id="sec-stats" class="tab-section hidden space-y-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-400 text-xl font-bold">
-                        <i class="fa-solid fa-book-bookmark"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase">Mastered Letters</div>
-                        <div class="text-2xl font-extrabold text-white" id="statMasteredCount">0 / 28</div>
-                    </div>
-                </div>
-
-                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl font-bold">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase">Quiz High Score</div>
-                        <div class="text-2xl font-extrabold text-white" id="statHighScore">0</div>
-                    </div>
-                </div>
-
-                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl font-bold">
-                        <i class="fa-solid fa-fire"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase">Best Streak</div>
-                        <div class="text-2xl font-extrabold text-white" id="statBestStreak">0</div>
-                    </div>
-                </div>
-
-                <div class="glow-card rounded-2xl p-5 flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl font-bold">
-                        <i class="fa-solid fa-gamepad"></i>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-400 font-semibold uppercase">Quizzes Played</div>
-                        <div class="text-2xl font-extrabold text-white" id="statTotalQuizzes">0</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Letter Mastery Matrix -->
-            <div class="glow-card rounded-3xl p-6 sm:p-8 space-y-6">
-                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
-                    <div>
-                        <h3 class="text-xl font-bold text-white">Alphabet Mastery Grid</h3>
-                        <p class="text-xs text-slate-400">Green indicates mastered letters. Click any letter to toggle its status.</p>
-                    </div>
-                    <button onclick="resetAllProgress()" class="px-3 py-1.5 bg-rose-950/60 hover:bg-rose-900 border border-rose-800 text-rose-300 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate-left"></i> Reset Progress
+                <!-- Round Complete Banner (Hidden until all 6 pairs matched) -->
+                <div id="matchCompleteBanner" class="hidden bg-slate-900/95 border border-emerald-500/40 rounded-2xl p-6 text-center space-y-3">
+                    <h4 class="text-xl sm:text-2xl font-extrabold text-emerald-300">🎉 All Pairs Matched!</h4>
+                    <p id="matchSummaryText" class="text-xs sm:text-sm text-slate-300">Completed in 00:00 with 6 attempts.</p>
+                    <button onclick="startMatchingGame()" class="px-6 py-2.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-white font-extrabold rounded-xl text-sm shadow-lg shadow-teal-500/30 transition transform hover:scale-105">
+                        Play Next Set <i class="fa-solid fa-arrow-right ml-1.5"></i>
                     </button>
-                </div>
-
-                <div id="statsMasteryGrid" class="grid grid-cols-4 sm:grid-cols-7 md:grid-cols-7 gap-3">
-                    <!-- Populated by JS -->
                 </div>
             </div>
         </section>
@@ -2261,8 +2032,12 @@
             breakdownExpanded: false,
 
             // Match State
-            matchCards: [],
-            flippedIndices: [],
+            matchDeckMode: 'letters', // 'letters' or 'syllables'
+            matchLeftItems: [],
+            matchRightItems: [],
+            selectedLeftId: null,
+            selectedRightId: null,
+            matchedPairIds: [],
             matchedPairs: 0,
             matchMoves: 0,
             matchSeconds: 0,
@@ -2342,7 +2117,7 @@
                 updateQuizScoreboard();
                 if (!state.currentQuizItem) startNewQuizRound();
             } else if (tabName === 'match') {
-                if (state.matchCards.length === 0) startMatchingGame();
+                if (state.matchLeftItems.length === 0) startMatchingGame();
             } else if (tabName === 'trace') {
                 resizeTraceCanvas();
             } else if (tabName === 'stats') {
@@ -2414,6 +2189,19 @@
             audio.speakArabic(textToSpeak);
         }
 
+        function playExplorerCardAudio(letterId, cardEl) {
+            const letter = ARABIC_LETTERS.find(l => l.id === letterId);
+            if (!letter) return;
+            speakLetter(letter);
+
+            if (cardEl) {
+                cardEl.classList.add('ring-2', 'ring-teal-400', 'scale-[1.03]');
+                setTimeout(() => {
+                    cardEl.classList.remove('ring-2', 'ring-teal-400', 'scale-[1.03]');
+                }, 320);
+            }
+        }
+
         function renderExplorerGrid() {
             const grid = document.getElementById('explorerGrid');
             const query = (document.getElementById('explorerSearch')?.value || '').trim().toLowerCase();
@@ -2469,53 +2257,67 @@
             filtered.forEach(letter => {
                 const isMastered = state.masteredIds.includes(letter.id);
                 const card = document.createElement('div');
-                card.className = `glow-card rounded-2xl p-4 text-center cursor-pointer transition-all duration-200 transform hover:-translate-y-1 hover:border-teal-500/60 relative group ${isMastered ? 'border-emerald-500/40 bg-emerald-950/20' : ''}`;
-                card.onclick = () => openLetterModal(letter.id);
+                card.className = `glow-card rounded-2xl p-4 text-center cursor-pointer transition-all duration-200 transform hover:-translate-y-1 hover:border-teal-500/60 relative group flex flex-col justify-between ${isMastered ? 'border-emerald-500/40 bg-emerald-950/20' : ''}`;
+                card.title = 'Tap card to hear pronunciation';
+                card.onclick = () => playExplorerCardAudio(letter.id, card);
 
                 if (state.explorerViewMode === 'forms') {
                     card.innerHTML = `
-                        <div class="flex items-center justify-between text-xs border-b border-slate-800 pb-2 mb-3">
-                            <span class="font-extrabold text-white flex items-center gap-1.5">
-                                <span class="text-[10px] text-slate-400">#${letter.id}</span>
-                                <span>${letter.name}</span>
-                                <span class="text-teal-400 font-semibold">/${letter.sound}/</span>
-                            </span>
-                            <div class="flex items-center gap-1.5">
-                                ${letter.nonConnector ? '<span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
-                                ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
+                        <div>
+                            <div class="flex items-center justify-between text-xs border-b border-slate-800 pb-2 mb-3">
+                                <span class="font-extrabold text-white flex items-center gap-1.5">
+                                    <span class="text-[10px] text-slate-400">#${letter.id}</span>
+                                    <span>${letter.name}</span>
+                                    <span class="text-teal-400 font-semibold">/${letter.sound}/</span>
+                                </span>
+                                <div class="flex items-center gap-1.5">
+                                    ${letter.nonConnector ? '<span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
+                                    ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
+                                    <button type="button" onclick="event.stopPropagation(); openLetterModal(${letter.id})" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white border border-slate-700 text-[11px] font-bold flex items-center gap-1 transition" title="More information about ${letter.name}">
+                                        <i class="fa-solid fa-circle-info text-indigo-400 group-hover:text-white"></i> Info
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-4 gap-1.5 bg-slate-950/70 p-2 rounded-xl border border-slate-800/80">
-                            <div class="py-1">
-                                <div class="text-[9px] font-bold uppercase text-emerald-400">Final</div>
-                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.final}</div>
-                            </div>
-                            <div class="py-1">
-                                <div class="text-[9px] font-bold uppercase text-purple-400">Medial</div>
-                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.medial}</div>
-                            </div>
-                            <div class="py-1">
-                                <div class="text-[9px] font-bold uppercase text-cyan-400">Initial</div>
-                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.initial}</div>
-                            </div>
-                            <div class="py-1 bg-slate-900/90 rounded-lg">
-                                <div class="text-[9px] font-bold uppercase text-slate-400">Isol.</div>
-                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-teal-300 mt-0.5">${letter.forms.isolated}</div>
+                            <div class="grid grid-cols-4 gap-1.5 bg-slate-950/70 p-2 rounded-xl border border-slate-800/80">
+                                <div class="py-1">
+                                    <div class="text-[9px] font-bold uppercase text-emerald-400">Final</div>
+                                    <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.final}</div>
+                                </div>
+                                <div class="py-1">
+                                    <div class="text-[9px] font-bold uppercase text-purple-400">Medial</div>
+                                    <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.medial}</div>
+                                </div>
+                                <div class="py-1">
+                                    <div class="text-[9px] font-bold uppercase text-cyan-400">Initial</div>
+                                    <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.initial}</div>
+                                </div>
+                                <div class="py-1 bg-slate-900/90 rounded-lg">
+                                    <div class="text-[9px] font-bold uppercase text-slate-400">Isol.</div>
+                                    <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-teal-300 mt-0.5">${letter.forms.isolated}</div>
+                                </div>
                             </div>
                         </div>
                     `;
                 } else {
                     card.innerHTML = `
-                        <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold mb-1">
-                            <span>#${letter.id}</span>
-                            ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
+                        <div>
+                            <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold mb-1">
+                                <span class="flex items-center gap-1">
+                                    <span>#${letter.id}</span>
+                                    <i class="fa-solid fa-volume-low text-teal-400/70 group-hover:text-teal-300"></i>
+                                </span>
+                                ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
+                            </div>
+                            <div class="arabic-text text-5xl sm:text-6xl font-extrabold text-white my-2 group-hover:text-teal-300 group-hover:scale-110 transition-transform">
+                                ${letter.arabic}
+                            </div>
+                            <div class="text-sm font-bold text-slate-100">${letter.name}</div>
+                            <div class="text-xs font-semibold text-teal-400">/${letter.sound}/</div>
+                            ${letter.nonConnector ? '<span class="mt-1.5 inline-block px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
                         </div>
-                        <div class="arabic-text text-5xl sm:text-6xl font-extrabold text-white my-2 group-hover:text-teal-300 group-hover:scale-110 transition-transform">
-                            ${letter.arabic}
-                        </div>
-                        <div class="text-sm font-bold text-slate-100">${letter.name}</div>
-                        <div class="text-xs font-semibold text-teal-400">/${letter.sound}/</div>
-                        ${letter.nonConnector ? '<span class="mt-2 inline-block px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
+                        <button type="button" onclick="event.stopPropagation(); openLetterModal(${letter.id})" class="mt-3 w-full py-1.5 px-2.5 rounded-xl bg-slate-800/90 hover:bg-indigo-600/80 border border-slate-700 hover:border-indigo-400/60 text-slate-300 hover:text-white text-[11px] font-bold flex items-center justify-center gap-1.5 transition" title="View forms, stroke guide, and tips">
+                            <i class="fa-solid fa-circle-info text-indigo-400"></i> More Info
+                        </button>
                     `;
                 }
                 grid.appendChild(card);
@@ -2615,458 +2417,30 @@
         }
 
         /* -------------------------------------------------------------
-           6. TAB 2: QUIZ, PHONICS & VOCALIZATION PRACTICE MODES
+           7. TAB 3: TWO-COLUMN PAIR MATCHING GAME
            ------------------------------------------------------------- */
-        function setQuizType(type) {
-            audio.playClick();
-            state.quizType = type;
-
-            document.querySelectorAll('.quiz-type-btn').forEach(btn => {
-                btn.className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700';
-            });
-            const activeBtn = document.getElementById(`quizType-${type}`);
-            if (activeBtn) {
-                activeBtn.className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-teal-600 text-white shadow-md';
+        function setMatchDeckMode(mode) {
+            state.matchDeckMode = mode;
+            const lettersBtn = document.getElementById('matchDeck-letters');
+            const syllablesBtn = document.getElementById('matchDeck-syllables');
+            if (lettersBtn && syllablesBtn) {
+                lettersBtn.className = mode === 'letters'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-600 text-white transition'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition';
+                syllablesBtn.className = mode === 'syllables'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-600 text-white transition'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition';
             }
-
-            const titles = {
-                letterToSound: 'Standard Letter Name Match',
-                phonicsMatch: 'Phonics Match (Sound ➔ Arabic Letter)',
-                soundToLetter: 'Audio Listening Quiz',
-                formQuiz: 'Positional Letter Forms Quiz',
-                vocalizationRead: 'Read Syllables & Words (Harakat ➔ Sound)',
-                vocalizationListen: 'Vocalization Sound ➔ Arabic Word'
-            };
-            document.getElementById('quizModeTitle').innerText = titles[type] || 'Practice Challenge';
-
-            startNewQuizRound();
+            startMatchingGame();
         }
 
-        function setVocalizationFilter(filterKey) {
-            state.vocalizationFilter = filterKey;
-            document.querySelectorAll('.voc-filter-btn').forEach(btn => {
-                btn.className = 'voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
-            });
-            const activeBtn = document.getElementById(`vocFilter-${filterKey}`);
-            if (activeBtn) {
-                activeBtn.className = 'voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-600 text-white transition';
-            }
-            nextQuizQuestion();
-        }
-
-        function getFilteredVocalizations() {
-            if (state.vocalizationFilter === 'short') {
-                return ARABIC_VOCALIZATIONS.filter(item => item.parts.length <= 2);
-            }
-            if (state.vocalizationFilter === 'three') {
-                return ARABIC_VOCALIZATIONS.filter(item => item.parts.length === 3);
-            }
-            if (state.vocalizationFilter === 'fourPlus') {
-                return ARABIC_VOCALIZATIONS.filter(item => item.parts.length >= 4);
-            }
-            return ARABIC_VOCALIZATIONS;
-        }
-
-        function startNewQuizRound() {
-            state.quizScore = 0;
-            state.quizStreak = 0;
-            state.quizQuestionNum = 1;
-            updateQuizScoreboard();
-            nextQuizQuestion();
-        }
-
-        function updateQuizScoreboard() {
-            document.getElementById('quizScore').innerText = state.quizScore;
-            document.getElementById('quizStreak').innerText = state.quizStreak;
-            document.getElementById('quizHighScore').innerText = state.highScore;
-            document.getElementById('quizProgressText').innerText = `Question ${state.quizQuestionNum} of 10`;
-        }
-
-        function nextQuizQuestion() {
-            document.getElementById('quizFeedback').classList.add('hidden');
-            const arabicDisplay = document.getElementById('quizTargetArabic');
-            const subText = document.getElementById('quizSubText');
-            const optionsContainer = document.getElementById('quizOptionsContainer');
-            const audioBtn = document.getElementById('quizAudioBtn');
-            const filterBar = document.getElementById('vocalizationFilterBar');
-            const breakdownControls = document.getElementById('wordBreakdownControls');
-            const breakdownPanel = document.getElementById('wordBreakdownPanel');
-
-            optionsContainer.innerHTML = '';
-            audioBtn.classList.remove('hidden');
-
-            // Show complexity filter bar only in Vocalization modes
-            if (state.quizType === 'vocalizationRead' || state.quizType === 'vocalizationListen') {
-                filterBar.classList.remove('hidden');
-                const pool = getFilteredVocalizations();
-                document.getElementById('vocalizationCountBadge').innerText = `${pool.length} Words & Syllables`;
-            } else {
-                filterBar.classList.add('hidden');
-            }
-
-            // Reset word breakdown panel state on each new question
-            state.breakdownExpanded = false;
-            breakdownControls.classList.add('hidden');
-            breakdownPanel.classList.add('hidden');
-            document.getElementById('toggleBreakdownChevron').classList.remove('rotate-180');
-            document.getElementById('toggleBreakdownBtnText').innerText = 'How is this built? (Word Breakdown)';
-
-            /* MODE 1: Standard Letter Name Match */
-            if (state.quizType === 'letterToSound') {
-                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
-                state.currentQuizItem = target;
-
-                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
-                    .sort(() => 0.5 - Math.random()).slice(0, 3);
-                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
-
-                arabicDisplay.innerText = target.arabic;
-                subText.innerText = 'Which letter name matches this Arabic character?';
-
-                allChoices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-lg transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = `${choice.name} (/${choice.sound}/)`;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.name} (/${target.sound}/)`);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-
-            /* FEATURE 2: Phonics Match (Sound -> Arabic Letter) */
-            else if (state.quizType === 'phonicsMatch') {
-                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
-                state.currentQuizItem = target;
-
-                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
-                    .sort(() => 0.5 - Math.random()).slice(0, 3);
-                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
-
-                arabicDisplay.innerText = `/${target.sound}/`;
-                subText.innerText = `Phonetic Hint: ${target.phonetic}`;
-
-                allChoices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = choice.arabic;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (${target.name})`);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-
-            /* MODE 3: Audio Listening Quiz */
-            else if (state.quizType === 'soundToLetter') {
-                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
-                state.currentQuizItem = target;
-
-                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
-                    .sort(() => 0.5 - Math.random()).slice(0, 3);
-                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
-
-                arabicDisplay.innerHTML = '<i class="fa-solid fa-volume-high text-teal-400 animate-pulse"></i>';
-                subText.innerText = 'Listen to the pronunciation and pick the matching letter:';
-                speakLetter(target);
-
-                allChoices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = choice.arabic;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (${target.name})`);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-
-            /* MODE 4: Positional Forms Quiz */
-            else if (state.quizType === 'formQuiz') {
-                const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
-                state.currentQuizItem = target;
-                const formKeys = ['initial', 'medial', 'final'];
-                const chosenKey = formKeys[Math.floor(Math.random() * formKeys.length)];
-
-                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
-                    .sort(() => 0.5 - Math.random()).slice(0, 3);
-                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
-
-                arabicDisplay.innerText = target.forms[chosenKey];
-                subText.innerText = `Identify the isolated letter for this ${chosenKey.toUpperCase()} shape:`;
-
-                allChoices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-lg flex items-center justify-center gap-3 transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerHTML = `<span class="arabic-text text-3xl text-teal-300">${choice.arabic}</span> <span>${choice.name}</span>`;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (${target.name})`);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-
-            /* FEATURE 3a: Read Syllables (Arabic + Harakat -> Select Phonetic Sound) */
-            else if (state.quizType === 'vocalizationRead') {
-                const pool = getFilteredVocalizations();
-                const target = pool[Math.floor(Math.random() * pool.length)];
-                state.currentQuizItem = target;
-
-                const wrongChoices = ARABIC_VOCALIZATIONS.filter(x => x.id !== target.id)
-                    .sort(() => 0.5 - Math.random()).slice(0, 3);
-                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
-
-                arabicDisplay.innerText = target.arabic;
-                subText.innerText = 'Read the Arabic vocalization above and select its sound:';
-
-                // Render and show the interactive Word Breakdown button immediately
-                renderWordBreakdown(target);
-                breakdownControls.classList.remove('hidden');
-
-                allChoices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-amber-300 font-extrabold text-xl transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = `/${choice.sound}/`;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `/${target.sound}/`);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-
-            /* FEATURE 3b: Hear/Read Vocalization -> Select Arabic Combination */
-            else if (state.quizType === 'vocalizationListen') {
-                const pool = getFilteredVocalizations();
-                const target = pool[Math.floor(Math.random() * pool.length)];
-                state.currentQuizItem = target;
-
-                const wrongChoices = ARABIC_VOCALIZATIONS.filter(x => x.id !== target.id)
-                    .sort(() => 0.5 - Math.random()).slice(0, 3);
-                const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
-
-                arabicDisplay.innerText = `/${target.sound}/`;
-                subText.innerText = 'Listen or read the sound, then select the matching Arabic text:';
-                audio.speakArabic(target.audioText);
-
-                // Prepare word breakdown (revealed after answering so it doesn't spoil the prompt)
-                renderWordBreakdown(target);
-
-                allChoices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = choice.arabic;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (/${target.sound}/)`);
-                    optionsContainer.appendChild(btn);
-                });
-            }
-
-            changeArabicFont(state.currentFont);
-        }
-
-        /* -------------------------------------------------------------
-           WORD & SYLLABLE CONSTRUCTION BREAKDOWN RENDERER
-           ------------------------------------------------------------- */
-        function toggleWordBreakdown() {
-            state.breakdownExpanded = !state.breakdownExpanded;
-            const panel = document.getElementById('wordBreakdownPanel');
-            const chevron = document.getElementById('toggleBreakdownChevron');
-            const btnText = document.getElementById('toggleBreakdownBtnText');
-
-            if (state.breakdownExpanded) {
-                panel.classList.remove('hidden');
-                chevron.classList.add('rotate-180');
-                btnText.innerText = 'Hide Word Breakdown';
-            } else {
-                panel.classList.add('hidden');
-                chevron.classList.remove('rotate-180');
-                btnText.innerText = 'How is this built? (Word Breakdown)';
-            }
-        }
-
-        function renderWordBreakdown(item) {
-            if (!item || !item.parts) return;
-
-            const equationEl = document.getElementById('breakdownEquation');
-            const tilesContainer = document.getElementById('breakdownTilesContainer');
-            tilesContainer.innerHTML = '';
-
-            // Build phonetic equation: e.g. ka + ta + ba → /kataba/
-            const chunksStr = item.parts.map(p => p.chunk).join(' + ');
-            equationEl.innerHTML = `${chunksStr} &rarr; <span class="text-white underline decoration-teal-400">/${item.sound}/</span>`;
-
-            // Render RTL step tiles (Step 1 = rightmost letter, Step N = leftmost letter)
-            item.parts.forEach((part, idx) => {
-                const stepNum = idx + 1;
-                const tile = document.createElement('div');
-                tile.dir = 'ltr';
-                tile.className = 'bg-slate-900/95 hover:bg-slate-800/95 border border-slate-700/80 hover:border-teal-500/60 rounded-xl p-3.5 flex flex-col justify-between gap-2.5 cursor-pointer transition group shadow-md';
-                tile.onclick = () => audio.speakArabic(part.speak);
-
-                const posColors = {
-                    'Isolated': 'bg-slate-700/60 text-slate-300 border-slate-600',
-                    'Initial': 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
-                    'Medial': 'bg-purple-500/15 text-purple-300 border-purple-500/30',
-                    'Final': 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                };
-                const posClass = posColors[part.position] || posColors['Isolated'];
-
-                tile.innerHTML = `
-                    <!-- Top Row: Step Badge & Audio Trigger -->
-                    <div class="flex items-center justify-between">
-                        <span class="w-6 h-6 rounded-full bg-indigo-600/40 border border-indigo-400/40 text-indigo-200 text-xs font-extrabold flex items-center justify-center">
-                            ${stepNum}
-                        </span>
-                        <span class="text-[11px] text-teal-400 group-hover:text-teal-300 flex items-center gap-1 font-semibold">
-                            <i class="fa-solid fa-volume-high"></i> /${part.chunk}/
-                        </span>
-                    </div>
-
-                    <!-- Contextual Glyph in Word -->
-                    <div class="text-center py-1 bg-slate-950/70 rounded-lg border border-slate-800/80">
-                        <div class="arabic-text text-4xl sm:text-5xl font-extrabold text-white group-hover:scale-110 transition-transform">
-                            ${part.contextual}
-                        </div>
-                        <div class="text-[10px] text-slate-400 mt-1">Shape in word</div>
-                    </div>
-
-                    <!-- Isolated Base Letter Connection -->
-                    <div class="flex items-center justify-between bg-slate-800/60 px-2.5 py-1.5 rounded-lg border border-slate-700/60">
-                        <span class="text-[11px] text-slate-300 font-medium">Base Letter:</span>
-                        <span class="flex items-center gap-1.5 font-bold text-amber-300 text-xs">
-                            <span class="arabic-text text-lg leading-none">${part.base}</span>
-                            <span>(${part.name})</span>
-                        </span>
-                    </div>
-
-                    <!-- Positional Role & Non-Connector Alert -->
-                    <div class="flex flex-wrap items-center gap-1.5">
-                        <span class="px-2 py-0.5 rounded-md border text-[10px] font-bold uppercase tracking-wide ${posClass}">
-                            ${part.position}
-                        </span>
-                        ${part.nonConnector ? `
-                            <span class="px-2 py-0.5 rounded-md bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] font-bold flex items-center gap-1" title="This letter only connects on the right and leaves a visual gap to its left">
-                                <i class="fa-solid fa-link-slash text-[9px]"></i> Non-connector (breaks left)
-                            </span>
-                        ` : ''}
-                    </div>
-
-                    <!-- Vowel / Haraka Explanation -->
-                    <div class="text-[11px] text-slate-300 bg-indigo-950/40 border border-indigo-500/20 rounded-lg px-2.5 py-1.5 leading-snug">
-                        <span class="text-indigo-300 font-bold block text-[10px] uppercase tracking-wider mb-0.5">Vowel / Diacritic:</span>
-                        ${part.harakaName}
-                    </div>
-                `;
-
-                tilesContainer.appendChild(tile);
-            });
-
-            changeArabicFont(state.currentFont);
-        }
-
-        function playCurrentQuizAudio() {
-            if (!state.currentQuizItem) return;
-            if (state.currentQuizItem.audioText) {
-                audio.speakArabic(state.currentQuizItem.audioText);
-            } else {
-                const mode = state.quizType === 'letterToSound' ? 'name' : state.explorerAudioMode;
-                speakLetter(state.currentQuizItem, mode);
-            }
-        }
-
-        function handleQuizAnswer(isCorrect, btnEl, correctLabel) {
-            const feedback = document.getElementById('quizFeedback');
-            feedback.classList.remove('hidden');
-
-            if (isCorrect) {
-                audio.playSuccess();
-                state.quizStreak++;
-                const points = 10 + Math.min(state.quizStreak * 2, 20);
-                state.quizScore += points;
-                if (state.quizScore > state.highScore) state.highScore = state.quizScore;
-                if (state.quizStreak > state.bestStreak) state.bestStreak = state.quizStreak;
-
-                btnEl.classList.remove('bg-slate-800/90', 'border-slate-700');
-                btnEl.classList.add('bg-emerald-600', 'border-emerald-400', 'text-white');
-                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-emerald-500/20 border border-emerald-500/40 text-emerald-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> Correct! +${points} pts`;
-
-                if (state.currentQuizItem && state.currentQuizItem.id && typeof state.currentQuizItem.id === 'number') {
-                    if (!state.masteredIds.includes(state.currentQuizItem.id)) {
-                        state.masteredIds.push(state.currentQuizItem.id);
-                    }
-                }
-            } else {
-                audio.playError();
-                state.quizStreak = 0;
-                btnEl.classList.remove('bg-slate-800/90', 'border-slate-700');
-                btnEl.classList.add('bg-rose-600', 'border-rose-400', 'text-white');
-                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-rose-500/20 border border-rose-500/40 text-rose-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Not quite! Correct answer: <span class="text-white underline">${correctLabel}</span>`;
-            }
-
-            playCurrentQuizAudio();
-            saveState();
-            updateHeaderBadges();
-            updateQuizScoreboard();
-
-            if (state.quizType === 'vocalizationRead' || state.quizType === 'vocalizationListen') {
-                document.getElementById('wordBreakdownControls').classList.remove('hidden');
-            }
-
-            document.querySelectorAll('#quizOptionsContainer button').forEach(b => b.disabled = true);
-
-            setTimeout(() => {
-                if (state.breakdownExpanded) {
-                    const optionsContainer = document.getElementById('quizOptionsContainer');
-                    const nextLabel = state.quizQuestionNum < 10
-                        ? 'Next Question <i class="fa-solid fa-arrow-right ml-1.5"></i>'
-                        : 'View Round Results <i class="fa-solid fa-trophy ml-1.5"></i>';
-                    optionsContainer.innerHTML = `
-                        <div class="col-span-full flex justify-center pt-1">
-                            <button onclick="advanceAfterBreakdown()" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-white font-extrabold text-sm shadow-lg shadow-teal-500/30 transition transform hover:scale-105">
-                                ${nextLabel}
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-
-                if (state.quizQuestionNum < 10) {
-                    state.quizQuestionNum++;
-                    updateQuizScoreboard();
-                    nextQuizQuestion();
-                } else {
-                    finishQuizRound();
-                }
-            }, 1400);
-        }
-
-        function advanceAfterBreakdown() {
-            if (state.quizQuestionNum < 10) {
-                state.quizQuestionNum++;
-                updateQuizScoreboard();
-                nextQuizQuestion();
-            } else {
-                finishQuizRound();
-            }
-        }
-
-        function finishQuizRound() {
-            state.totalQuizzes++;
-            saveState();
-            audio.playFanfare();
-            triggerConfetti();
-
-            const optionsContainer = document.getElementById('quizOptionsContainer');
-            optionsContainer.innerHTML = `
-                <div class="col-span-full bg-slate-900/90 rounded-2xl p-6 border border-slate-700 text-center space-y-4">
-                    <h4 class="text-2xl font-extrabold text-amber-300">🎉 Challenge Complete!</h4>
-                    <p class="text-slate-300 text-sm">Final Score: <strong class="text-teal-400">${state.quizScore}</strong> | Best Streak: <strong class="text-emerald-400">${state.quizStreak}</strong></p>
-                    <button onclick="startNewQuizRound()" class="px-6 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-extrabold rounded-xl shadow-lg shadow-teal-500/30 hover:scale-105 transition">
-                        Play Another Round
-                    </button>
-                </div>
-            `;
-        }
-
-        /* -------------------------------------------------------------
-           7. TAB 3: MEMORY MATCHING GAME
-           ------------------------------------------------------------- */
         function startMatchingGame() {
             audio.playClick();
             if (state.matchTimerInterval) clearInterval(state.matchTimerInterval);
 
-            state.flippedIndices = [];
+            state.selectedLeftId = null;
+            state.selectedRightId = null;
+            state.matchedPairIds = [];
             state.matchedPairs = 0;
             state.matchMoves = 0;
             state.matchSeconds = 0;
@@ -3074,16 +2448,34 @@
 
             document.getElementById('matchMoves').innerText = '0';
             document.getElementById('matchTimer').innerText = '00:00';
+            document.getElementById('matchPairsProgress').innerText = '0 / 6';
+            document.getElementById('matchCompleteBanner').classList.add('hidden');
 
-            const sample = [...ARABIC_LETTERS].sort(() => 0.5 - Math.random()).slice(0, 6);
-            const deck = [];
-            sample.forEach(item => {
-                deck.push({ pairId: item.id, type: 'arabic', display: item.arabic, speak: item.arabic });
-                deck.push({ pairId: item.id, type: 'sound', display: `${item.name}\n/${item.sound}/`, speak: item.arabic });
-            });
-            state.matchCards = deck.sort(() => 0.5 - Math.random());
+            let pairs = [];
+            if (state.matchDeckMode === 'syllables') {
+                const sample = [...ARABIC_VOCALIZATIONS].sort(() => 0.5 - Math.random()).slice(0, 6);
+                pairs = sample.map(item => ({
+                    pairId: item.id,
+                    arabic: item.arabic,
+                    soundLabel: `/${item.sound}/`,
+                    speakText: item.audioText,
+                    letterObj: null
+                }));
+            } else {
+                const sample = [...ARABIC_LETTERS].sort(() => 0.5 - Math.random()).slice(0, 6);
+                pairs = sample.map(item => ({
+                    pairId: String(item.id),
+                    arabic: item.arabic,
+                    soundLabel: `/${item.sound}/ — ${item.name}`,
+                    speakText: item.soundAudio,
+                    letterObj: item
+                }));
+            }
 
-            renderMemoryGrid();
+            state.matchLeftItems = [...pairs].sort(() => 0.5 - Math.random());
+            state.matchRightItems = [...pairs].sort(() => 0.5 - Math.random());
+
+            renderMatchColumns();
 
             state.matchTimerInterval = setInterval(() => {
                 state.matchSeconds++;
@@ -3093,93 +2485,141 @@
             }, 1000);
         }
 
-        function renderMemoryGrid() {
-            const grid = document.getElementById('memoryGrid');
-            grid.innerHTML = '';
+        function renderMatchColumns() {
+            const leftCol = document.getElementById('matchLeftColumn');
+            const rightCol = document.getElementById('matchRightColumn');
+            leftCol.innerHTML = '';
+            rightCol.innerHTML = '';
 
-            state.matchCards.forEach((card, index) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'perspective-1000 h-28 sm:h-32 cursor-pointer select-none';
-                wrapper.onclick = () => flipMemoryCard(index);
+            // Render Left Column (Arabic Letters / Syllables)
+            state.matchLeftItems.forEach(item => {
+                const isMatched = state.matchedPairIds.includes(item.pairId);
+                const isSelected = state.selectedLeftId === item.pairId;
 
-                wrapper.innerHTML = `
-                    <div id="mem-card-${index}" class="transform-style-3d relative w-full h-full">
-                        <!-- Front (Hidden Back of Card) -->
-                        <div class="backface-hidden absolute inset-0 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 hover:border-purple-500/50 flex items-center justify-center shadow-lg">
-                            <i class="fa-solid fa-star-and-crescent text-2xl text-purple-400/60"></i>
-                        </div>
-                        <!-- Back (Revealed Content) -->
-                        <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-slate-900 border-2 border-purple-500/50 flex items-center justify-center p-2 text-center shadow-xl">
-                            ${card.type === 'arabic'
-                                ? `<span class="arabic-text text-4xl sm:text-5xl font-extrabold text-teal-300">${card.display}</span>`
-                                : `<span class="text-xs sm:text-sm font-bold text-amber-300 whitespace-pre-line">${card.display}</span>`
-                            }
-                        </div>
-                    </div>
+                const btn = document.createElement('button');
+                btn.id = `match-left-${item.pairId}`;
+                btn.disabled = isMatched;
+                btn.onclick = () => selectMatchSide('left', item.pairId);
+
+                let stateClasses = 'bg-slate-900/90 hover:bg-slate-800 border-slate-700 hover:border-teal-400/60 text-white cursor-pointer';
+                if (isMatched) {
+                    stateClasses = 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300/70 opacity-65 cursor-default';
+                } else if (isSelected) {
+                    stateClasses = 'bg-teal-600/30 border-teal-400 text-teal-200 ring-2 ring-teal-400/50 scale-[1.02]';
+                }
+
+                btn.className = `w-full min-h-[64px] sm:min-h-[72px] px-4 py-3 rounded-2xl border-2 flex items-center justify-between transition-all duration-150 shadow-md ${stateClasses}`;
+                btn.innerHTML = `
+                    <span class="text-xs text-slate-400">
+                        ${isMatched ? '<i class="fa-solid fa-circle-check text-emerald-400"></i>' : '<i class="fa-solid fa-volume-high text-teal-400/70"></i>'}
+                    </span>
+                    <span class="arabic-text text-3xl sm:text-4xl font-extrabold mx-auto">${item.arabic}</span>
+                    <span class="w-4"></span>
                 `;
-                grid.appendChild(wrapper);
+                leftCol.appendChild(btn);
+            });
+
+            // Render Right Column (Phonetic Sounds)
+            state.matchRightItems.forEach(item => {
+                const isMatched = state.matchedPairIds.includes(item.pairId);
+                const isSelected = state.selectedRightId === item.pairId;
+
+                const btn = document.createElement('button');
+                btn.id = `match-right-${item.pairId}`;
+                btn.disabled = isMatched;
+                btn.onclick = () => selectMatchSide('right', item.pairId);
+
+                let stateClasses = 'bg-slate-900/90 hover:bg-slate-800 border-slate-700 hover:border-amber-400/60 text-amber-200 cursor-pointer';
+                if (isMatched) {
+                    stateClasses = 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300/70 opacity-65 cursor-default';
+                } else if (isSelected) {
+                    stateClasses = 'bg-amber-500/25 border-amber-400 text-amber-200 ring-2 ring-amber-400/50 scale-[1.02]';
+                }
+
+                btn.className = `w-full min-h-[64px] sm:min-h-[72px] px-4 py-3 rounded-2xl border-2 flex items-center justify-center text-center font-extrabold text-sm sm:text-base transition-all duration-150 shadow-md ${stateClasses}`;
+                btn.innerHTML = `
+                    <span>${item.soundLabel}</span>
+                    ${isMatched ? '<i class="fa-solid fa-circle-check text-emerald-400 ml-2"></i>' : ''}
+                `;
+                rightCol.appendChild(btn);
             });
 
             changeArabicFont(state.currentFont);
         }
 
-        function flipMemoryCard(index) {
+        function selectMatchSide(side, pairId) {
             if (state.matchLocked) return;
-            if (state.flippedIndices.includes(index)) return;
-
-            const cardEl = document.getElementById(`mem-card-${index}`);
-            if (!cardEl || cardEl.dataset.matched === 'true') return;
+            if (state.matchedPairIds.includes(pairId)) return;
 
             audio.playClick();
-            cardEl.classList.add('rotate-y-180');
-            state.flippedIndices.push(index);
 
-            const cardData = state.matchCards[index];
-            if (cardData.type === 'arabic') {
-                const letterObj = ARABIC_LETTERS.find(l => l.id === cardData.pairId);
-                if (letterObj) {
-                    speakLetter(letterObj);
-                } else {
-                    audio.speakArabic(cardData.speak);
+            if (side === 'left') {
+                // Play the Arabic pronunciation whenever an Arabic tile on the left is tapped
+                const item = state.matchLeftItems.find(i => i.pairId === pairId);
+                if (item) {
+                    if (item.letterObj) {
+                        speakLetter(item.letterObj);
+                    } else {
+                        audio.speakArabic(item.speakText);
+                    }
                 }
+                state.selectedLeftId = (state.selectedLeftId === pairId) ? null : pairId;
+            } else {
+                state.selectedRightId = (state.selectedRightId === pairId) ? null : pairId;
             }
 
-            if (state.flippedIndices.length === 2) {
+            renderMatchColumns();
+
+            // Check if both sides now have a selection
+            if (state.selectedLeftId && state.selectedRightId) {
                 state.matchLocked = true;
                 state.matchMoves++;
                 document.getElementById('matchMoves').innerText = state.matchMoves;
 
-                const [idx1, idx2] = state.flippedIndices;
-                const c1 = state.matchCards[idx1];
-                const c2 = state.matchCards[idx2];
+                const leftId = state.selectedLeftId;
+                const rightId = state.selectedRightId;
 
-                if (c1.pairId === c2.pairId) {
-                    setTimeout(() => {
-                        audio.playSuccess();
-                        const el1 = document.getElementById(`mem-card-${idx1}`);
-                        const el2 = document.getElementById(`mem-card-${idx2}`);
-                        if (el1) el1.dataset.matched = 'true';
-                        if (el2) el2.dataset.matched = 'true';
-                        state.flippedIndices = [];
-                        state.matchedPairs++;
-                        state.matchLocked = false;
+                if (leftId === rightId) {
+                    // Correct Pair!
+                    audio.playSuccess();
+                    state.matchedPairIds.push(leftId);
+                    state.matchedPairs++;
+                    state.selectedLeftId = null;
+                    state.selectedRightId = null;
+                    state.matchLocked = false;
 
-                        if (state.matchedPairs === state.matchCards.length / 2) {
-                            clearInterval(state.matchTimerInterval);
-                            audio.playFanfare();
-                            triggerConfetti();
-                        }
-                    }, 450);
+                    document.getElementById('matchPairsProgress').innerText = `${state.matchedPairs} / ${state.matchLeftItems.length}`;
+                    renderMatchColumns();
+
+                    if (state.matchedPairs === state.matchLeftItems.length) {
+                        clearInterval(state.matchTimerInterval);
+                        audio.playFanfare();
+                        triggerConfetti();
+
+                        const banner = document.getElementById('matchCompleteBanner');
+                        const summary = document.getElementById('matchSummaryText');
+                        const timerStr = document.getElementById('matchTimer').innerText;
+                        summary.innerText = `Completed in ${timerStr} with ${state.matchMoves} attempts.`;
+                        banner.classList.remove('hidden');
+                    }
                 } else {
+                    // Wrong Pair: highlight both in rose & shake briefly
+                    audio.playError();
+                    const leftEl = document.getElementById(`match-left-${leftId}`);
+                    const rightEl = document.getElementById(`match-right-${rightId}`);
+                    [leftEl, rightEl].forEach(el => {
+                        if (el) {
+                            el.classList.remove('bg-teal-600/30', 'border-teal-400', 'bg-amber-500/25', 'border-amber-400');
+                            el.classList.add('bg-rose-600/30', 'border-rose-500', 'text-rose-200', 'animate-shake');
+                        }
+                    });
+
                     setTimeout(() => {
-                        audio.playError();
-                        const el1 = document.getElementById(`mem-card-${idx1}`);
-                        const el2 = document.getElementById(`mem-card-${idx2}`);
-                        if (el1) el1.classList.remove('rotate-y-180');
-                        if (el2) el2.classList.remove('rotate-y-180');
-                        state.flippedIndices = [];
+                        state.selectedLeftId = null;
+                        state.selectedRightId = null;
                         state.matchLocked = false;
-                    }, 900);
+                        renderMatchColumns();
+                    }, 650);
                 }
             }
         }
