@@ -309,6 +309,20 @@
                     <span id="quizSubText" class="text-xs text-slate-400 mt-3 font-medium">Select the correct matching answer below</span>
                 </div>
 
+                <!-- Vocalization & Word Complexity Filter Bar (shown in Vocalization modes) -->
+                <div id="vocalizationFilterBar" class="hidden flex flex-wrap items-center justify-center gap-2 bg-slate-900/70 p-2.5 rounded-2xl border border-slate-800">
+                    <span class="text-[11px] font-bold text-teal-300 bg-teal-500/10 border border-teal-500/30 px-2.5 py-1 rounded-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span id="vocalizationCountBadge">132 Words & Syllables</span>
+                    </span>
+                    <div class="flex flex-wrap items-center justify-center gap-1.5">
+                        <button onclick="setVocalizationFilter('all')" id="vocFilter-all" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-600 text-white transition">All (132)</button>
+                        <button onclick="setVocalizationFilter('short')" id="vocFilter-short" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Short & 2-Letter</button>
+                        <button onclick="setVocalizationFilter('three')" id="vocFilter-three" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3-Letter Words</button>
+                        <button onclick="setVocalizationFilter('fourPlus')" id="vocFilter-fourPlus" class="voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4+ Letter Words</button>
+                    </div>
+                </div>
+
                 <!-- Interactive Word & Syllable Construction Info Button -->
                 <div id="wordBreakdownControls" class="hidden flex flex-col items-center space-y-4">
                     <button id="toggleBreakdownBtn" onclick="toggleWordBreakdown()" class="px-4 py-2.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-200 border border-indigo-500/40 text-xs sm:text-sm font-bold flex items-center gap-2 transition shadow-md">
@@ -900,276 +914,1510 @@
                     { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
                     { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: '\'a', speak: 'أَ' }
                 ]
+            },
+
+            // =========================================================================
+            // 100 NEW VOCALIZED ARABIC WORDS (3-Letter Verbs, Nouns, & 4+ Letter Words)
+            // =========================================================================
+
+            // --- 3-Letter Verbs (1 - 60) ---
+            {
+                id: 'w_jalasa', arabic: 'جَلَسَ', sound: 'jalasa', category: 'combination', audioText: 'جَلَسَ',
+                parts: [
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـسَ', base: 'س', name: 'Sīn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' }
+                ]
+            },
+            {
+                id: 'w_kharaja', arabic: 'خَرَجَ', sound: 'kharaja', category: 'combination', audioText: 'خَرَجَ',
+                parts: [
+                    { contextual: 'خَـ', base: 'خ', name: 'Khāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'kha', speak: 'خَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'جَ', base: 'ج', name: 'Jīm', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' }
+                ]
+            },
+            {
+                id: 'w_dakhala', arabic: 'دَخَلَ', sound: 'dakhala', category: 'combination', audioText: 'دَخَلَ',
+                parts: [
+                    { contextual: 'دَ', base: 'د', name: 'Dāl', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' },
+                    { contextual: 'خَـ', base: 'خ', name: 'Khāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'kha', speak: 'خَ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_rajaa', arabic: 'رَجَعَ', sound: 'raja\'a', category: 'combination', audioText: 'رَجَعَ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_samia', arabic: 'سَمِعَ', sound: 'sami\'a', category: 'combination', audioText: 'سَمِعَ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـمِـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_amila', arabic: 'عَمِلَ', sound: 'amila', category: 'combination', audioText: 'عَمِلَ',
+                parts: [
+                    { contextual: 'عَـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـمِـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_laiba', arabic: 'لَعِبَ', sound: 'la\'iba', category: 'combination', audioText: 'لَعِبَ',
+                parts: [
+                    { contextual: 'لَـ', base: 'ل', name: 'Lām', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـعِـ', base: 'ع', name: 'ʿAyn', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ʿi', speak: 'عِ' },
+                    { contextual: 'ـبَ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' }
+                ]
+            },
+            {
+                id: 'w_dahika', arabic: 'ضَحِكَ', sound: 'dahika', category: 'combination', audioText: 'ضَحِكَ',
+                parts: [
+                    { contextual: 'ضَـ', base: 'ض', name: 'Ḍād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḍa', speak: 'ضَ' },
+                    { contextual: 'ـحِـ', base: 'ح', name: 'Ḥāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ḥi', speak: 'حِ' },
+                    { contextual: 'ـكَ', base: 'ك', name: 'Kāf', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' }
+                ]
+            },
+            {
+                id: 'w_hafiza', arabic: 'حَفِظَ', sound: 'hafiza', category: 'combination', audioText: 'حَفِظَ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـفِـ', base: 'ف', name: 'Fāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'fi', speak: 'فِ' },
+                    { contextual: 'ـظَ', base: 'ظ', name: 'Ẓāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ẓa', speak: 'ظَ' }
+                ]
+            },
+            {
+                id: 'w_fahima', arabic: 'فَهِمَ', sound: 'fahima', category: 'combination', audioText: 'فَهِمَ',
+                parts: [
+                    { contextual: 'فَـ', base: 'ف', name: 'Fāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' },
+                    { contextual: 'ـهِـ', base: 'هـ', name: 'Hāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'hi', speak: 'هِ' },
+                    { contextual: 'ـمَ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' }
+                ]
+            },
+            {
+                id: 'w_nazara', arabic: 'نَظَرَ', sound: 'nazara', category: 'combination', audioText: 'نَظَرَ',
+                parts: [
+                    { contextual: 'نَـ', base: 'ن', name: 'Nūn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـظَـ', base: 'ظ', name: 'Ẓāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ẓa', speak: 'ظَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_talaba', arabic: 'طَلَبَ', sound: 'talaba', category: 'combination', audioText: 'طَلَبَ',
+                parts: [
+                    { contextual: 'طَـ', base: 'ط', name: 'Ṭāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـبَ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' }
+                ]
+            },
+            {
+                id: 'w_saala', arabic: 'سَأَلَ', sound: 'sa\'ala', category: 'combination', audioText: 'سَأَلَ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـأَ', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: '\'a', speak: 'أَ' },
+                    { contextual: 'لَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_wajada', arabic: 'وَجَدَ', sound: 'wajada', category: 'combination', audioText: 'وَجَدَ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـدَ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' }
+                ]
+            },
+            {
+                id: 'w_waqafa', arabic: 'وَقَفَ', sound: 'waqafa', category: 'combination', audioText: 'وَقَفَ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـفَ', base: 'ف', name: 'Fāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' }
+                ]
+            },
+            {
+                id: 'w_wasala', arabic: 'وَصَلَ', sound: 'wasala', category: 'combination', audioText: 'وَصَلَ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_nazala', arabic: 'نَزَلَ', sound: 'nazala', category: 'combination', audioText: 'نَزَلَ',
+                parts: [
+                    { contextual: 'نَـ', base: 'ن', name: 'Nūn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـزَ', base: 'ز', name: 'Zāy', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'za', speak: 'زَ' },
+                    { contextual: 'لَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_saida', arabic: 'صَعِدَ', sound: 'sa\'ida', category: 'combination', audioText: 'صَعِدَ',
+                parts: [
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـعِـ', base: 'ع', name: 'ʿAyn', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ʿi', speak: 'عِ' },
+                    { contextual: 'ـدَ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' }
+                ]
+            },
+            {
+                id: 'w_rakiba', arabic: 'رَكِبَ', sound: 'rakiba', category: 'combination', audioText: 'رَكِبَ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'كِـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ki', speak: 'كِ' },
+                    { contextual: 'ـبَ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' }
+                ]
+            },
+            {
+                id: 'w_sabaha', arabic: 'سَبَحَ', sound: 'sabaha', category: 'combination', audioText: 'سَبَحَ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـبَـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـحَ', base: 'ح', name: 'Ḥāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' }
+                ]
+            },
+            {
+                id: 'w_zaraa', arabic: 'زَرَعَ', sound: 'zara\'a', category: 'combination', audioText: 'زَرَعَ',
+                parts: [
+                    { contextual: 'زَ', base: 'ز', name: 'Zāy', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'za', speak: 'زَ' },
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'عَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_hasada', arabic: 'حَصَدَ', sound: 'hasada', category: 'combination', audioText: 'حَصَدَ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـصَـ', base: 'ص', name: 'Ṣād', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـدَ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' }
+                ]
+            },
+            {
+                id: 'w_tabakha', arabic: 'طَبَخَ', sound: 'tabakha', category: 'combination', audioText: 'طَبَخَ',
+                parts: [
+                    { contextual: 'طَـ', base: 'ط', name: 'Ṭāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـبَـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـخَ', base: 'خ', name: 'Khāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'kha', speak: 'خَ' }
+                ]
+            },
+            {
+                id: 'w_ghasala', arabic: 'غَسَلَ', sound: 'ghasala', category: 'combination', audioText: 'غَسَلَ',
+                parts: [
+                    { contextual: 'غَـ', base: 'غ', name: 'Ghayn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'gha', speak: 'غَ' },
+                    { contextual: 'ـسَـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_labisa', arabic: 'لَبِسَ', sound: 'labisa', category: 'combination', audioText: 'لَبِسَ',
+                parts: [
+                    { contextual: 'لَـ', base: 'ل', name: 'Lām', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـبِـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'bi', speak: 'بِ' },
+                    { contextual: 'ـسَ', base: 'س', name: 'Sīn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' }
+                ]
+            },
+            {
+                id: 'w_khalaqa', arabic: 'خَلَقَ', sound: 'khalaqa', category: 'combination', audioText: 'خَلَقَ',
+                parts: [
+                    { contextual: 'خَـ', base: 'خ', name: 'Khāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'kha', speak: 'خَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـقَ', base: 'ق', name: 'Qāf', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' }
+                ]
+            },
+            {
+                id: 'w_razaqa', arabic: 'رَزَقَ', sound: 'razaqa', category: 'combination', audioText: 'رَزَقَ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'زَ', base: 'ز', name: 'Zāy', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'za', speak: 'زَ' },
+                    { contextual: 'قَ', base: 'ق', name: 'Qāf', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' }
+                ]
+            },
+            {
+                id: 'w_shakara', arabic: 'شَكَرَ', sound: 'shakara', category: 'combination', audioText: 'شَكَرَ',
+                parts: [
+                    { contextual: 'شَـ', base: 'ش', name: 'Shīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sha', speak: 'شَ' },
+                    { contextual: 'ـكَـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_sabara', arabic: 'صَبَرَ', sound: 'sabara', category: 'combination', audioText: 'صَبَرَ',
+                parts: [
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـبَـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_ghafara', arabic: 'غَفَرَ', sound: 'ghafara', category: 'combination', audioText: 'غَفَرَ',
+                parts: [
+                    { contextual: 'غَـ', base: 'غ', name: 'Ghayn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'gha', speak: 'غَ' },
+                    { contextual: 'ـفَـ', base: 'ف', name: 'Fāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_zalama', arabic: 'ظَلَمَ', sound: 'zalama', category: 'combination', audioText: 'ظَلَمَ',
+                parts: [
+                    { contextual: 'ظَـ', base: 'ظ', name: 'Ẓāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ẓa', speak: 'ظَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـمَ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' }
+                ]
+            },
+            {
+                id: 'w_adala', arabic: 'عَدَلَ', sound: 'adala', category: 'combination', audioText: 'عَدَلَ',
+                parts: [
+                    { contextual: 'عَـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـدَ', base: 'د', name: 'Dāl', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' },
+                    { contextual: 'لَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_hakama', arabic: 'حَكَمَ', sound: 'hakama', category: 'combination', audioText: 'حَكَمَ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـكَـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـمَ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' }
+                ]
+            },
+            {
+                id: 'w_malaka', arabic: 'مَلَكَ', sound: 'malaka', category: 'combination', audioText: 'مَلَكَ',
+                parts: [
+                    { contextual: 'مَـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـكَ', base: 'ك', name: 'Kāf', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' }
+                ]
+            },
+            {
+                id: 'w_nasara', arabic: 'نَصَرَ', sound: 'nasara', category: 'combination', audioText: 'نَصَرَ',
+                parts: [
+                    { contextual: 'نَـ', base: 'ن', name: 'Nūn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـصَـ', base: 'ص', name: 'Ṣād', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_qatala', arabic: 'قَتَلَ', sound: 'qatala', category: 'combination', audioText: 'قَتَلَ',
+                parts: [
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـتَـ', base: 'ت', name: 'Tāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ta', speak: 'تَ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_haraba', arabic: 'هَرَبَ', sound: 'haraba', category: 'combination', audioText: 'هَرَبَ',
+                parts: [
+                    { contextual: 'هَـ', base: 'هـ', name: 'Hāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ha', speak: 'هَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'بَ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' }
+                ]
+            },
+            {
+                id: 'w_saqata', arabic: 'سَقَطَ', sound: 'saqata', category: 'combination', audioText: 'سَقَطَ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـقَـ', base: 'ق', name: 'Qāf', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـطَ', base: 'ط', name: 'Ṭāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' }
+                ]
+            },
+            {
+                id: 'w_talaa', arabic: 'طَلَعَ', sound: 'tala\'a', category: 'combination', audioText: 'طَلَعَ',
+                parts: [
+                    { contextual: 'طَـ', base: 'ط', name: 'Ṭāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_gharaba', arabic: 'غَرَبَ', sound: 'gharaba', category: 'combination', audioText: 'غَرَبَ',
+                parts: [
+                    { contextual: 'غَـ', base: 'غ', name: 'Ghayn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'gha', speak: 'غَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'بَ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' }
+                ]
+            },
+            {
+                id: 'w_akala', arabic: 'أَكَلَ', sound: 'akala', category: 'combination', audioText: 'أَكَلَ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_akhadha', arabic: 'أَخَذَ', sound: 'akhadha', category: 'combination', audioText: 'أَخَذَ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'خَـ', base: 'خ', name: 'Khāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'kha', speak: 'خَ' },
+                    { contextual: 'ـذَ', base: 'ذ', name: 'Dhāl', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'dha', speak: 'ذَ' }
+                ]
+            },
+            {
+                id: 'w_amara', arabic: 'أَمَرَ', sound: 'amara', category: 'combination', audioText: 'أَمَرَ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'مَـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_sakana', arabic: 'سَكَنَ', sound: 'sakana', category: 'combination', audioText: 'سَكَنَ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـنَ', base: 'ن', name: 'Nūn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' }
+                ]
+            },
+            {
+                id: 'w_balagha', arabic: 'بَلَغَ', sound: 'balagha', category: 'combination', audioText: 'بَلَغَ',
+                parts: [
+                    { contextual: 'بَـ', base: 'ب', name: 'Bāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـغَ', base: 'غ', name: 'Ghayn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'gha', speak: 'غَ' }
+                ]
+            },
+            {
+                id: 'w_jamaa', arabic: 'جَمَعَ', sound: 'jama\'a', category: 'combination', audioText: 'جَمَعَ',
+                parts: [
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـمَـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_qataa', arabic: 'قَطَعَ', sound: 'qata\'a', category: 'combination', audioText: 'قَطَعَ',
+                parts: [
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـطَـ', base: 'ط', name: 'Ṭāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_kasara', arabic: 'كَسَرَ', sound: 'kasara', category: 'combination', audioText: 'كَسَرَ',
+                parts: [
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـسَـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+            {
+                id: 'w_rafaa', arabic: 'رَفَعَ', sound: 'rafa\'a', category: 'combination', audioText: 'رَفَعَ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'فَـ', base: 'ف', name: 'Fāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_wadaa', arabic: 'وَضَعَ', sound: 'wada\'a', category: 'combination', audioText: 'وَضَعَ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'ضَـ', base: 'ض', name: 'Ḍād', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḍa', speak: 'ضَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_hamala', arabic: 'حَمَلَ', sound: 'hamala', category: 'combination', audioText: 'حَمَلَ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـمَـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـلَ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' }
+                ]
+            },
+            {
+                id: 'w_baatha', arabic: 'بَعَثَ', sound: 'ba\'atha', category: 'combination', audioText: 'بَعَثَ',
+                parts: [
+                    { contextual: 'بَـ', base: 'ب', name: 'Bāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـعَـ', base: 'ع', name: 'ʿAyn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـثَ', base: 'ث', name: 'Thāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'tha', speak: 'ثَ' }
+                ]
+            },
+            {
+                id: 'w_kashafa', arabic: 'كَشَفَ', sound: 'kashafa', category: 'combination', audioText: 'كَشَفَ',
+                parts: [
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـشَـ', base: 'ش', name: 'Shīn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sha', speak: 'شَ' },
+                    { contextual: 'ـفَ', base: 'ف', name: 'Fāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' }
+                ]
+            },
+            {
+                id: 'w_sanaa', arabic: 'صَنَعَ', sound: 'sana\'a', category: 'combination', audioText: 'صَنَعَ',
+                parts: [
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـنَـ', base: 'ن', name: 'Nūn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـعَ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' }
+                ]
+            },
+            {
+                id: 'w_badaa', arabic: 'بَدَأَ', sound: 'bada\'a', category: 'combination', audioText: 'بَدَأَ',
+                parts: [
+                    { contextual: 'بَـ', base: 'ب', name: 'Bāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـدَ', base: 'د', name: 'Dāl', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' },
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: '\'a', speak: 'أَ' }
+                ]
+            },
+            {
+                id: 'w_najaha', arabic: 'نَجَحَ', sound: 'najaha', category: 'combination', audioText: 'نَجَحَ',
+                parts: [
+                    { contextual: 'نَـ', base: 'ن', name: 'Nūn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـجَـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـحَ', base: 'ح', name: 'Ḥāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' }
+                ]
+            },
+            {
+                id: 'w_rasama', arabic: 'رَسَمَ', sound: 'rasama', category: 'combination', audioText: 'رَسَمَ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـمَ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' }
+                ]
+            },
+            {
+                id: 'w_hasiba', arabic: 'حَسِبَ', sound: 'hasiba', category: 'combination', audioText: 'حَسِبَ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـسِـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'si', speak: 'سِ' },
+                    { contextual: 'ـبَ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' }
+                ]
+            },
+            {
+                id: 'w_thabata', arabic: 'ثَبَتَ', sound: 'thabata', category: 'combination', audioText: 'ثَبَتَ',
+                parts: [
+                    { contextual: 'ثَـ', base: 'ث', name: 'Thāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'tha', speak: 'ثَ' },
+                    { contextual: 'ـبَـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـتَ', base: 'ت', name: 'Tāʾ', position: 'Final', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ta', speak: 'تَ' }
+                ]
+            },
+            {
+                id: 'w_zahara', arabic: 'ظَهَرَ', sound: 'zahara', category: 'combination', audioText: 'ظَهَرَ',
+                parts: [
+                    { contextual: 'ظَـ', base: 'ظ', name: 'Ẓāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ẓa', speak: 'ظَ' },
+                    { contextual: 'ـهَـ', base: 'هـ', name: 'Hāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ha', speak: 'هَ' },
+                    { contextual: 'ـرَ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' }
+                ]
+            },
+
+            // --- Everyday Nouns, Animals, Food, Nature & Adjectives (61 - 100) ---
+            {
+                id: 'w_kalbu', arabic: 'كَلْبُ', sound: 'kalbu', category: 'combination', audioText: 'كَلْبُ',
+                parts: [
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـلْـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'l', speak: 'كَلْ' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_qittu', arabic: 'قِطُّ', sound: 'qittu', category: 'combination', audioText: 'قِطُّ',
+                parts: [
+                    { contextual: 'قِـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'qi', speak: 'قِ' },
+                    { contextual: 'ـطُّ', base: 'ط', name: 'Ṭāʾ', position: 'Final', nonConnector: false, harakaName: 'Shadda + Damma ( ـُّ ) → doubled "ṭ" + "u"', chunk: 'ṭṭu', speak: 'طُّ' }
+                ]
+            },
+            {
+                id: 'w_tayru', arabic: 'طَيْرُ', sound: 'tayru', category: 'combination', audioText: 'طَيْرُ',
+                parts: [
+                    { contextual: 'طَـ', base: 'ط', name: 'Ṭāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـيْـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → diphthong "y"', chunk: 'y', speak: 'طَيْ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_samaku', arabic: 'سَمَكُ', sound: 'samaku', category: 'combination', audioText: 'سَمَكُ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـمَـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـكُ', base: 'ك', name: 'Kāf', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ku', speak: 'كُ' }
+                ]
+            },
+            {
+                id: 'w_asadu', arabic: 'أَسَدُ', sound: 'asadu', category: 'combination', audioText: 'أَسَدُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـدُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_thalabu', arabic: 'ثَعْلَبُ', sound: 'tha\'labu', category: 'combination', audioText: 'ثَعْلَبُ',
+                parts: [
+                    { contextual: 'ثَـ', base: 'ث', name: 'Thāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'tha', speak: 'ثَ' },
+                    { contextual: 'ـعْـ', base: 'ع', name: 'ʿAyn', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'ʿ', speak: 'ثَعْ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_hisani', arabic: 'حِصَانُ', sound: 'hisaanu', category: 'combination', audioText: 'حِصَانُ',
+                parts: [
+                    { contextual: 'حِـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ḥi', speak: 'حِ' },
+                    { contextual: 'ـصَـ', base: 'ص', name: 'Ṣād', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'صَا' },
+                    { contextual: 'نُ', base: 'ن', name: 'Nūn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'nu', speak: 'نُ' }
+                ]
+            },
+            {
+                id: 'w_khubzu', arabic: 'خُبْزُ', sound: 'khubzu', category: 'combination', audioText: 'خُبْزُ',
+                parts: [
+                    { contextual: 'خُـ', base: 'خ', name: 'Khāʾ', position: 'Initial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'khu', speak: 'خُ' },
+                    { contextual: 'ـبْـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'b', speak: 'خُبْ' },
+                    { contextual: 'ـزُ', base: 'ز', name: 'Zāy', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'zu', speak: 'زُ' }
+                ]
+            },
+            {
+                id: 'w_labanu', arabic: 'لَبَنُ', sound: 'labanu', category: 'combination', audioText: 'لَبَنُ',
+                parts: [
+                    { contextual: 'لَـ', base: 'ل', name: 'Lām', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـبَـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـنُ', base: 'ن', name: 'Nūn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'nu', speak: 'نُ' }
+                ]
+            },
+            {
+                id: 'w_asalu', arabic: 'عَسَلُ', sound: 'asalu', category: 'combination', audioText: 'عَسَلُ',
+                parts: [
+                    { contextual: 'عَـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـسَـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـلُ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'lu', speak: 'لُ' }
+                ]
+            },
+            {
+                id: 'w_tamru', arabic: 'تَمْرُ', sound: 'tamru', category: 'combination', audioText: 'تَمْرُ',
+                parts: [
+                    { contextual: 'تَـ', base: 'ت', name: 'Tāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ta', speak: 'تَ' },
+                    { contextual: 'ـمْـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'm', speak: 'تَمْ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_tuffahu', arabic: 'تُفَّاحُ', sound: 'tuffaahu', category: 'combination', audioText: 'تُفَّاحُ',
+                parts: [
+                    { contextual: 'تُـ', base: 'ت', name: 'Tāʾ', position: 'Initial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'tu', speak: 'تُ' },
+                    { contextual: 'ـفَّـ', base: 'ف', name: 'Fāʾ', position: 'Medial', nonConnector: false, harakaName: 'Shadda + Fatha ( ـَّ ) → doubled "f" + "a"', chunk: 'ffa', speak: 'فَّ' },
+                    { contextual: 'ـا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'فَّا' },
+                    { contextual: 'حُ', base: 'ح', name: 'Ḥāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ḥu', speak: 'حُ' }
+                ]
+            },
+            {
+                id: 'w_inabu', arabic: 'عِنَبُ', sound: 'inabu', category: 'combination', audioText: 'عِنَبُ',
+                parts: [
+                    { contextual: 'عِـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ʿi', speak: 'عِ' },
+                    { contextual: 'ـنَـ', base: 'ن', name: 'Nūn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_zaytu', arabic: 'زَيْتُ', sound: 'zaytu', category: 'combination', audioText: 'زَيْتُ',
+                parts: [
+                    { contextual: 'زَ', base: 'ز', name: 'Zāy', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'za', speak: 'زَ' },
+                    { contextual: 'يْـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → diphthong "y"', chunk: 'y', speak: 'زَيْ' },
+                    { contextual: 'ـتُ', base: 'ت', name: 'Tāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_milhu', arabic: 'مِلْحُ', sound: 'milhu', category: 'combination', audioText: 'مِلْحُ',
+                parts: [
+                    { contextual: 'مِـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـلْـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'l', speak: 'مِلْ' },
+                    { contextual: 'ـحُ', base: 'ح', name: 'Ḥāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ḥu', speak: 'حُ' }
+                ]
+            },
+            {
+                id: 'w_sukkaru', arabic: 'سُكَّرُ', sound: 'sukkaru', category: 'combination', audioText: 'سُكَّرُ',
+                parts: [
+                    { contextual: 'سُـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'su', speak: 'سُ' },
+                    { contextual: 'ـكَّـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Shadda + Fatha ( ـَّ ) → doubled "k" + "a"', chunk: 'kka', speak: 'كَّ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_aruzzu', arabic: 'أَرُزُّ', sound: 'aruzzu', category: 'combination', audioText: 'أَرُزُّ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'رُ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' },
+                    { contextual: 'زُّ', base: 'ز', name: 'Zāy', position: 'Final', nonConnector: true, harakaName: 'Shadda + Damma ( ـُّ ) → doubled "z" + "u"', chunk: 'zzu', speak: 'زُّ' }
+                ]
+            },
+            {
+                id: 'w_jabalu', arabic: 'جَبَلُ', sound: 'jabalu', category: 'combination', audioText: 'جَبَلُ',
+                parts: [
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـبَـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـلُ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'lu', speak: 'لُ' }
+                ]
+            },
+            {
+                id: 'w_shajaru', arabic: 'شَجَرُ', sound: 'shajaru', category: 'combination', audioText: 'شَجَرُ',
+                parts: [
+                    { contextual: 'شَـ', base: 'ش', name: 'Shīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sha', speak: 'شَ' },
+                    { contextual: 'ـجَـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_wardu', arabic: 'وَرْدُ', sound: 'wardu', category: 'combination', audioText: 'وَرْدُ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'رْ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'r', speak: 'وَرْ' },
+                    { contextual: 'دُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_thalju', arabic: 'ثَلْجُ', sound: 'thalju', category: 'combination', audioText: 'ثَلْجُ',
+                parts: [
+                    { contextual: 'ثَـ', base: 'ث', name: 'Thāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'tha', speak: 'ثَ' },
+                    { contextual: 'ـلْـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'l', speak: 'ثَلْ' },
+                    { contextual: 'ـجُ', base: 'ج', name: 'Jīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ju', speak: 'جُ' }
+                ]
+            },
+            {
+                id: 'w_mataru', arabic: 'مَطَرُ', sound: 'mataru', category: 'combination', audioText: 'مَطَرُ',
+                parts: [
+                    { contextual: 'مَـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـطَـ', base: 'ط', name: 'Ṭāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_sahaabu', arabic: 'سَحَابُ', sound: 'sahaabu', category: 'combination', audioText: 'سَحَابُ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـحَـ', base: 'ح', name: 'Ḥāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'حَا' },
+                    { contextual: 'بُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_najmu', arabic: 'نَجْمُ', sound: 'najmu', category: 'combination', audioText: 'نَجْمُ',
+                parts: [
+                    { contextual: 'نَـ', base: 'ن', name: 'Nūn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـجْـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'j', speak: 'نَجْ' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_ardu', arabic: 'أَرْضُ', sound: 'ardu', category: 'combination', audioText: 'أَرْضُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'رْ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'r', speak: 'أَرْ' },
+                    { contextual: 'ضُ', base: 'ض', name: 'Ḍād', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ḍu', speak: 'ضُ' }
+                ]
+            },
+            {
+                id: 'w_tariqu', arabic: 'طَرِيقُ', sound: 'tariiqu', category: 'combination', audioText: 'طَرِيقُ',
+                parts: [
+                    { contextual: 'طَـ', base: 'ط', name: 'Ṭāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـرِ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ri', speak: 'رِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'رِي' },
+                    { contextual: 'ـقُ', base: 'ق', name: 'Qāf', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'qu', speak: 'قُ' }
+                ]
+            },
+            {
+                id: 'w_masjidu', arabic: 'مَسْجِدُ', sound: 'masjidu', category: 'combination', audioText: 'مَسْجِدُ',
+                parts: [
+                    { contextual: 'مَـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـسْـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 's', speak: 'مَسْ' },
+                    { contextual: 'ـجِـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ji', speak: 'جِ' },
+                    { contextual: 'ـدُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_maktabu', arabic: 'مَكْتَبُ', sound: 'maktabu', category: 'combination', audioText: 'مَكْتَبُ',
+                parts: [
+                    { contextual: 'مَـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـكْـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'k', speak: 'مَكْ' },
+                    { contextual: 'ـتَـ', base: 'ت', name: 'Tāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ta', speak: 'تَ' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_kursiyyu', arabic: 'كُرْسِيُّ', sound: 'kursiyyu', category: 'combination', audioText: 'كُرْسِيُّ',
+                parts: [
+                    { contextual: 'كُـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ku', speak: 'كُ' },
+                    { contextual: 'ـرْ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'r', speak: 'كُرْ' },
+                    { contextual: 'سِـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'si', speak: 'سِ' },
+                    { contextual: 'ـيُّ', base: 'ي', name: 'Yāʾ', position: 'Final', nonConnector: false, harakaName: 'Shadda + Damma ( ـُّ ) → doubled "y" + "u"', chunk: 'yyu', speak: 'يُّ' }
+                ]
+            },
+            {
+                id: 'w_sariiru', arabic: 'سَرِيرُ', sound: 'sariiru', category: 'combination', audioText: 'سَرِيرُ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـرِ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ri', speak: 'رِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'رِي' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_miftaahu', arabic: 'مِفْتَاحُ', sound: 'miftaahu', category: 'combination', audioText: 'مِفْتَاحُ',
+                parts: [
+                    { contextual: 'مِـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـفْـ', base: 'ف', name: 'Fāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'f', speak: 'مِفْ' },
+                    { contextual: 'ـتَـ', base: 'ت', name: 'Tāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ta', speak: 'تَ' },
+                    { contextual: 'ـا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'تَا' },
+                    { contextual: 'حُ', base: 'ح', name: 'Ḥāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ḥu', speak: 'حُ' }
+                ]
+            },
+            {
+                id: 'w_qamiisu', arabic: 'قَمِيصُ', sound: 'qamiisu', category: 'combination', audioText: 'قَمِيصُ',
+                parts: [
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـمِـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'مِي' },
+                    { contextual: 'ـصُ', base: 'ص', name: 'Ṣād', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ṣu', speak: 'صُ' }
+                ]
+            },
+            {
+                id: 'w_sadiiqu', arabic: 'صَدِيقُ', sound: 'sadiiqu', category: 'combination', audioText: 'صَدِيقُ',
+                parts: [
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـدِ', base: 'د', name: 'Dāl', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'di', speak: 'دِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'دِي' },
+                    { contextual: 'ـقُ', base: 'ق', name: 'Qāf', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'qu', speak: 'قُ' }
+                ]
+            },
+            {
+                id: 'w_tabiibu', arabic: 'طَبِيبُ', sound: 'tabiibu', category: 'combination', audioText: 'طَبِيبُ',
+                parts: [
+                    { contextual: 'طَـ', base: 'ط', name: 'Ṭāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṭa', speak: 'طَ' },
+                    { contextual: 'ـبِـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'bi', speak: 'بِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'بِي' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_muallimu', arabic: 'مُعَلِّمُ', sound: 'mu\'allimu', category: 'combination', audioText: 'مُعَلِّمُ',
+                parts: [
+                    { contextual: 'مُـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' },
+                    { contextual: 'ـعَـ', base: 'ع', name: 'ʿAyn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـلِّـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Shadda + Kasra ( ـِّ ) → doubled "l" + "i"', chunk: 'lli', speak: 'لِّ' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_tilmiidhu', arabic: 'تِلْمِيذُ', sound: 'tilmiidhu', category: 'combination', audioText: 'تِلْمِيذُ',
+                parts: [
+                    { contextual: 'تِـ', base: 'ت', name: 'Tāʾ', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ti', speak: 'تِ' },
+                    { contextual: 'ـلْـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'l', speak: 'تِلْ' },
+                    { contextual: 'ـمِـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'مِي' },
+                    { contextual: 'ـذُ', base: 'ذ', name: 'Dhāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'dhu', speak: 'ذُ' }
+                ]
+            },
+            {
+                id: 'w_kabiiru', arabic: 'كَبِيرُ', sound: 'kabiiru', category: 'combination', audioText: 'كَبِيرُ',
+                parts: [
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـبِـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'bi', speak: 'بِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'بِي' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_sagiiru', arabic: 'صَغِيرُ', sound: 'sagiiru', category: 'combination', audioText: 'صَغِيرُ',
+                parts: [
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـغِـ', base: 'غ', name: 'Ghayn', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ghi', speak: 'غِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'غِي' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_jadiidu', arabic: 'جَدِيدُ', sound: 'jadiidu', category: 'combination', audioText: 'جَدِيدُ',
+                parts: [
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـدِ', base: 'د', name: 'Dāl', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'di', speak: 'دِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'دِي' },
+                    { contextual: 'ـدُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_qadiimu', arabic: 'قَدِيمُ', sound: 'qadiimu', category: 'combination', audioText: 'قَدِيمُ',
+                parts: [
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـدِ', base: 'د', name: 'Dāl', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'di', speak: 'دِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'دِي' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_sariiu', arabic: 'سَرِيعُ', sound: 'sarii\'u', category: 'combination', audioText: 'سَرِيعُ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـرِ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ri', speak: 'رِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'رِي' },
+                    { contextual: 'ـعُ', base: 'ع', name: 'ʿAyn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ʿu', speak: 'عُ' }
+                ]
+            },
+            {
+                id: 'w_jamiilu', arabic: 'جَمِيلُ', sound: 'jamiilu', category: 'combination', audioText: 'جَمِيلُ',
+                parts: [
+                    { contextual: 'جَـ', base: 'ج', name: 'Jīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ja', speak: 'جَ' },
+                    { contextual: 'ـمِـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'mi', speak: 'مِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'مِي' },
+                    { contextual: 'ـلُ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'lu', speak: 'لُ' }
+                ]
+            },
+            {
+                id: 'w_qariibu', arabic: 'قَرِيبُ', sound: 'qariibu', category: 'combination', audioText: 'قَرِيبُ',
+                parts: [
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـرِ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ri', speak: 'رِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'رِي' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_baiidu', arabic: 'بَعِيدُ', sound: 'ba\'iidu', category: 'combination', audioText: 'بَعِيدُ',
+                parts: [
+                    { contextual: 'بَـ', base: 'ب', name: 'Bāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ba', speak: 'بَ' },
+                    { contextual: 'ـعِـ', base: 'ع', name: 'ʿAyn', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ʿi', speak: 'عِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'عِي' },
+                    { contextual: 'ـدُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_kariimu', arabic: 'كَرِيمُ', sound: 'kariimu', category: 'combination', audioText: 'كَرِيمُ',
+                parts: [
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـرِ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ri', speak: 'رِ' },
+                    { contextual: 'يـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'رِي' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_hakiimu', arabic: 'حَكِيمُ', sound: 'hakiimu', category: 'combination', audioText: 'حَكِيمُ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـكِـ', base: 'ك', name: 'Kāf', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ki', speak: 'كِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'كِي' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_aliimu', arabic: 'عَلِيمُ', sound: 'aliimu', category: 'combination', audioText: 'عَلِيمُ',
+                parts: [
+                    { contextual: 'عَـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـلِـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'li', speak: 'لِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'لِي' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_rahiimu', arabic: 'رَحِيمُ', sound: 'rahiimu', category: 'combination', audioText: 'رَحِيمُ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'حِـ', base: 'ح', name: 'Ḥāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ḥi', speak: 'حِ' },
+                    { contextual: 'ـيـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Long Vowel Yāʾ → stretches "ee"', chunk: 'ee', speak: 'حِي' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_maliku', arabic: 'مَلِكُ', sound: 'maliku', category: 'combination', audioText: 'مَلِكُ',
+                parts: [
+                    { contextual: 'مَـ', base: 'م', name: 'Mīm', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـلِـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'li', speak: 'لِ' },
+                    { contextual: 'ـكُ', base: 'ك', name: 'Kāf', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ku', speak: 'كُ' }
+                ]
+            },
+            {
+                id: 'w_rajulu', arabic: 'رَجُلُ', sound: 'rajulu', category: 'combination', audioText: 'رَجُلُ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'جُـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ju', speak: 'جُ' },
+                    { contextual: 'ـلُ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'lu', speak: 'لُ' }
+                ]
+            },
+            {
+                id: 'w_bintu', arabic: 'بِنْتُ', sound: 'bintu', category: 'combination', audioText: 'بِنْتُ',
+                parts: [
+                    { contextual: 'بِـ', base: 'ب', name: 'Bāʾ', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'bi', speak: 'بِ' },
+                    { contextual: 'ـنْـ', base: 'ن', name: 'Nūn', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'n', speak: 'بِنْ' },
+                    { contextual: 'ـتُ', base: 'ت', name: 'Tāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_ukhtu', arabic: 'أُخْتُ', sound: 'ukhtu', category: 'combination', audioText: 'أُخْتُ',
+                parts: [
+                    { contextual: 'أُ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'u', speak: 'أُ' },
+                    { contextual: 'خْـ', base: 'خ', name: 'Khāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'kh', speak: 'أُخْ' },
+                    { contextual: 'ـتُ', base: 'ت', name: 'Tāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_ummu', arabic: 'أُمُّ', sound: 'ummu', category: 'combination', audioText: 'أُمُّ',
+                parts: [
+                    { contextual: 'أُ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'u', speak: 'أُ' },
+                    { contextual: 'مُّ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Shadda + Damma ( ـُّ ) → doubled "m" + "u"', chunk: 'mmu', speak: 'مُّ' }
+                ]
+            },
+            {
+                id: 'w_abuu', arabic: 'أَبُو', sound: 'abuu', category: 'combination', audioText: 'أَبُو',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'بُـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' },
+                    { contextual: 'ـو', base: 'و', name: 'Wāw', position: 'Final', nonConnector: true, harakaName: 'Long Vowel Wāw → stretches "oo"', chunk: 'oo', speak: 'بُو' }
+                ]
+            },
+            {
+                id: 'w_akhuu', arabic: 'أَخُو', sound: 'akhuu', category: 'combination', audioText: 'أَخُو',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'خُـ', base: 'خ', name: 'Khāʾ', position: 'Medial', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'khu', speak: 'خُ' },
+                    { contextual: 'ـو', base: 'و', name: 'Wāw', position: 'Final', nonConnector: true, harakaName: 'Long Vowel Wāw → stretches "oo"', chunk: 'oo', speak: 'خُو' }
+                ]
+            },
+            {
+                id: 'w_aynu', arabic: 'عَيْنُ', sound: 'aynu', category: 'combination', audioText: 'عَيْنُ',
+                parts: [
+                    { contextual: 'عَـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ʿa', speak: 'عَ' },
+                    { contextual: 'ـيْـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → diphthong "y"', chunk: 'y', speak: 'عَيْ' },
+                    { contextual: 'ـنُ', base: 'ن', name: 'Nūn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'nu', speak: 'نُ' }
+                ]
+            },
+            {
+                id: 'w_udhunu', arabic: 'أُذُنُ', sound: 'udhunu', category: 'combination', audioText: 'أُذُنُ',
+                parts: [
+                    { contextual: 'أُ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'u', speak: 'أُ' },
+                    { contextual: 'ذُ', base: 'ذ', name: 'Dhāl', position: 'Medial', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'dhu', speak: 'ذُ' },
+                    { contextual: 'نُ', base: 'ن', name: 'Nūn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'nu', speak: 'نُ' }
+                ]
+            },
+            {
+                id: 'w_anfu', arabic: 'أَنْفُ', sound: 'anfu', category: 'combination', audioText: 'أَنْفُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'نْـ', base: 'ن', name: 'Nūn', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'n', speak: 'أَنْ' },
+                    { contextual: 'ـفُ', base: 'ف', name: 'Fāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'fu', speak: 'فُ' }
+                ]
+            },
+            {
+                id: 'w_famu', arabic: 'فَمُ', sound: 'famu', category: 'combination', audioText: 'فَمُ',
+                parts: [
+                    { contextual: 'فَـ', base: 'ف', name: 'Fāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_yadu', arabic: 'يَدُ', sound: 'yadu', category: 'combination', audioText: 'يَدُ',
+                parts: [
+                    { contextual: 'يَـ', base: 'ي', name: 'Yāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ya', speak: 'يَ' },
+                    { contextual: 'ـدُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_rijlu', arabic: 'رِجْلُ', sound: 'rijlu', category: 'combination', audioText: 'رِجْلُ',
+                parts: [
+                    { contextual: 'رِ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ri', speak: 'رِ' },
+                    { contextual: 'جْـ', base: 'ج', name: 'Jīm', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'j', speak: 'رِجْ' },
+                    { contextual: 'ـلُ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'lu', speak: 'لُ' }
+                ]
+            },
+            {
+                id: 'w_qalbu', arabic: 'قَلْبُ', sound: 'qalbu', category: 'combination', audioText: 'قَلْبُ',
+                parts: [
+                    { contextual: 'قَـ', base: 'ق', name: 'Qāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'qa', speak: 'قَ' },
+                    { contextual: 'ـلْـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'l', speak: 'قَلْ' },
+                    { contextual: 'ـبُ', base: 'ب', name: 'Bāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'bu', speak: 'بُ' }
+                ]
+            },
+            {
+                id: 'w_rasu', arabic: 'رَأْسُ', sound: 'ra\'su', category: 'combination', audioText: 'رَأْسُ',
+                parts: [
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'أْ', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → glottal stop', chunk: '\'', speak: 'رَأْ' },
+                    { contextual: 'سُ', base: 'س', name: 'Sīn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'su', speak: 'سُ' }
+                ]
+            },
+            {
+                id: 'w_yawmu', arabic: 'يَوْمُ', sound: 'yawmu', category: 'combination', audioText: 'يَوْمُ',
+                parts: [
+                    { contextual: 'يَـ', base: 'ي', name: 'Yāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ya', speak: 'يَ' },
+                    { contextual: 'ـوْ', base: 'و', name: 'Wāw', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → diphthong "w"', chunk: 'w', speak: 'يَوْ' },
+                    { contextual: 'مُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_laylu', arabic: 'لَيْلُ', sound: 'laylu', category: 'combination', audioText: 'لَيْلُ',
+                parts: [
+                    { contextual: 'لَـ', base: 'ل', name: 'Lām', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـيْـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → diphthong "y"', chunk: 'y', speak: 'لَيْ' },
+                    { contextual: 'ـلُ', base: 'ل', name: 'Lām', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'lu', speak: 'لُ' }
+                ]
+            },
+            {
+                id: 'w_nahaaru', arabic: 'نَهَارُ', sound: 'nahaaru', category: 'combination', audioText: 'نَهَارُ',
+                parts: [
+                    { contextual: 'نَـ', base: 'ن', name: 'Nūn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـهَـ', base: 'هـ', name: 'Hāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ha', speak: 'هَ' },
+                    { contextual: 'ـا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'هَا' },
+                    { contextual: 'رُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_shahru', arabic: 'شَهْرُ', sound: 'shahru', category: 'combination', audioText: 'شَهْرُ',
+                parts: [
+                    { contextual: 'شَـ', base: 'ش', name: 'Shīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sha', speak: 'شَ' },
+                    { contextual: 'ـهْـ', base: 'هـ', name: 'Hāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'h', speak: 'شَهْ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_sanatu', arabic: 'سَنَةُ', sound: 'sanatu', category: 'combination', audioText: 'سَنَةُ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـنَـ', base: 'ن', name: 'Nūn', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'na', speak: 'نَ' },
+                    { contextual: 'ـةُ', base: 'ت', name: 'Tāʾ Marbūṭa', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u" (pronounced as "t")', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_waqtu', arabic: 'وَقْتُ', sound: 'waqtu', category: 'combination', audioText: 'وَقْتُ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'قْـ', base: 'ق', name: 'Qāf', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'q', speak: 'وَقْ' },
+                    { contextual: 'ـتُ', base: 'ت', name: 'Tāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_ilmu', arabic: 'عِلْمُ', sound: 'ilmu', category: 'combination', audioText: 'عِلْمُ',
+                parts: [
+                    { contextual: 'عِـ', base: 'ع', name: 'ʿAyn', position: 'Initial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ʿi', speak: 'عِ' },
+                    { contextual: 'ـلْـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'l', speak: 'عِلْ' },
+                    { contextual: 'ـمُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
+            },
+            {
+                id: 'w_darsu', arabic: 'دَرْسُ', sound: 'darsu', category: 'combination', audioText: 'دَرْسُ',
+                parts: [
+                    { contextual: 'دَ', base: 'د', name: 'Dāl', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'da', speak: 'دَ' },
+                    { contextual: 'رْ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'r', speak: 'دَرْ' },
+                    { contextual: 'سُ', base: 'س', name: 'Sīn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'su', speak: 'سُ' }
+                ]
+            },
+            {
+                id: 'w_harfu', arabic: 'حَرْفُ', sound: 'harfu', category: 'combination', audioText: 'حَرْفُ',
+                parts: [
+                    { contextual: 'حَـ', base: 'ح', name: 'Ḥāʾ', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḥa', speak: 'حَ' },
+                    { contextual: 'ـرْ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'r', speak: 'حَرْ' },
+                    { contextual: 'فُ', base: 'ف', name: 'Fāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'fu', speak: 'فُ' }
+                ]
+            },
+            {
+                id: 'w_kalimatu', arabic: 'كَلِمَةُ', sound: 'kalimatu', category: 'combination', audioText: 'كَلِمَةُ',
+                parts: [
+                    { contextual: 'كَـ', base: 'ك', name: 'Kāf', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ka', speak: 'كَ' },
+                    { contextual: 'ـلِـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'li', speak: 'لِ' },
+                    { contextual: 'ـمَـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـةُ', base: 'ت', name: 'Tāʾ Marbūṭa', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u" (pronounced as "t")', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_sawtu', arabic: 'صَوْتُ', sound: 'sawtu', category: 'combination', audioText: 'صَوْتُ',
+                parts: [
+                    { contextual: 'صَـ', base: 'ص', name: 'Ṣād', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ṣa', speak: 'صَ' },
+                    { contextual: 'ـوْ', base: 'و', name: 'Wāw', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → diphthong "w"', chunk: 'w', speak: 'صَوْ' },
+                    { contextual: 'تُ', base: 'ت', name: 'Tāʾ', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'tu', speak: 'تُ' }
+                ]
+            },
+            {
+                id: 'w_lawnu', arabic: 'لَوْنُ', sound: 'lawnu', category: 'combination', audioText: 'لَوْنُ',
+                parts: [
+                    { contextual: 'لَـ', base: 'ل', name: 'Lām', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـوْ', base: 'و', name: 'Wāw', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → diphthong "w"', chunk: 'w', speak: 'لَوْ' },
+                    { contextual: 'نُ', base: 'ن', name: 'Nūn', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'nu', speak: 'نُ' }
+                ]
+            },
+            {
+                id: 'w_abyadu', arabic: 'أَبْيَضُ', sound: 'abyadu', category: 'combination', audioText: 'أَبْيَضُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'بْـ', base: 'ب', name: 'Bāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'b', speak: 'أَبْ' },
+                    { contextual: 'ـيَـ', base: 'ي', name: 'Yāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ya', speak: 'يَ' },
+                    { contextual: 'ـضُ', base: 'ض', name: 'Ḍād', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ḍu', speak: 'ضُ' }
+                ]
+            },
+            {
+                id: 'w_aswadu', arabic: 'أَسْوَدُ', sound: 'aswadu', category: 'combination', audioText: 'أَسْوَدُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'سْـ', base: 'س', name: 'Sīn', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 's', speak: 'أَسْ' },
+                    { contextual: 'ـوَ', base: 'و', name: 'Wāw', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'دُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_ahmaru', arabic: 'أَحْمَرُ', sound: 'ahmaru', category: 'combination', audioText: 'أَحْمَرُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'حْـ', base: 'ح', name: 'Ḥāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'ḥ', speak: 'أَحْ' },
+                    { contextual: 'ـمَـ', base: 'م', name: 'Mīm', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ma', speak: 'مَ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_akhdaru', arabic: 'أَخْضَرُ', sound: 'akhdaru', category: 'combination', audioText: 'أَخْضَرُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'خْـ', base: 'خ', name: 'Khāʾ', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'kh', speak: 'أَخْ' },
+                    { contextual: 'ـضَـ', base: 'ض', name: 'Ḍād', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ḍa', speak: 'ضَ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_azraqu', arabic: 'أَزْرَقُ', sound: 'azraqu', category: 'combination', audioText: 'أَزْرَقُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'زْ', base: 'ز', name: 'Zāy', position: 'Medial', nonConnector: true, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'z', speak: 'أَزْ' },
+                    { contextual: 'رَ', base: 'ر', name: 'Rāʾ', position: 'Medial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'ra', speak: 'رَ' },
+                    { contextual: 'قُ', base: 'ق', name: 'Qāf', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'qu', speak: 'قُ' }
+                ]
+            },
+            {
+                id: 'w_asfaru', arabic: 'أَصْفَرُ', sound: 'asfaru', category: 'combination', audioText: 'أَصْفَرُ',
+                parts: [
+                    { contextual: 'أَ', base: 'أ', name: 'Alif', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'a', speak: 'أَ' },
+                    { contextual: 'صْـ', base: 'ص', name: 'Ṣād', position: 'Medial', nonConnector: false, harakaName: 'Sukun ( ـْ ) → stop / no vowel', chunk: 'ṣ', speak: 'أَصْ' },
+                    { contextual: 'ـفَـ', base: 'ف', name: 'Fāʾ', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'fa', speak: 'فَ' },
+                    { contextual: 'ـرُ', base: 'ر', name: 'Rāʾ', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'ru', speak: 'رُ' }
+                ]
+            },
+            {
+                id: 'w_wahidu', arabic: 'وَاحِدُ', sound: 'waahidu', category: 'combination', audioText: 'وَاحِدُ',
+                parts: [
+                    { contextual: 'وَ', base: 'و', name: 'Wāw', position: 'Initial', nonConnector: true, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'wa', speak: 'وَ' },
+                    { contextual: 'ا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'وَا' },
+                    { contextual: 'حِـ', base: 'ح', name: 'Ḥāʾ', position: 'Medial', nonConnector: false, harakaName: 'Kasra ( ـِ ) → short "i"', chunk: 'ḥi', speak: 'حِ' },
+                    { contextual: 'ـدُ', base: 'د', name: 'Dāl', position: 'Final', nonConnector: true, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'du', speak: 'دُ' }
+                ]
+            },
+            {
+                id: 'w_salaamu', arabic: 'سَلَامُ', sound: 'salaamu', category: 'combination', audioText: 'سَلَامُ',
+                parts: [
+                    { contextual: 'سَـ', base: 'س', name: 'Sīn', position: 'Initial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'sa', speak: 'سَ' },
+                    { contextual: 'ـلَـ', base: 'ل', name: 'Lām', position: 'Medial', nonConnector: false, harakaName: 'Fatha ( ـَ ) → short "a"', chunk: 'la', speak: 'لَ' },
+                    { contextual: 'ـا', base: 'أ', name: 'Alif', position: 'Medial', nonConnector: true, harakaName: 'Long Vowel Alif → stretches "aa"', chunk: 'aa', speak: 'لَا' },
+                    { contextual: 'مُ', base: 'م', name: 'Mīm', position: 'Final', nonConnector: false, harakaName: 'Damma ( ـُ ) → short "u"', chunk: 'mu', speak: 'مُ' }
+                ]
             }
         ];
 
         /* -------------------------------------------------------------
            2. SOUND SYNTHESIZER & AUDIO ENGINE
            ------------------------------------------------------------- */
-        class AudioEngine {
+        class AudioController {
             constructor() {
-                this.audioCtx = null;
-                this.isMuted = false;
-            }
+                this.ctx = null;
+                this.muted = false;
+                this.synth = window.speechSynthesis || null;
+                this.arabicVoice = null;
 
-            initCtx() {
-                if (!this.audioCtx) {
-                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (this.synth) {
+                    const loadVoices = () => {
+                        const voices = this.synth.getVoices();
+                        this.arabicVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar')) || null;
+                    };
+                    loadVoices();
+                    if (this.synth.onvoiceschanged !== undefined) {
+                        this.synth.onvoiceschanged = loadVoices;
+                    }
                 }
             }
 
-            speakArabic(text) {
-                if (!('speechSynthesis' in window)) return;
-                window.speechSynthesis.cancel();
-                const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'ar-SA';
-                utter.rate = 0.8;
-                
-                const voices = window.speechSynthesis.getVoices();
-                const arVoice = voices.find(v => v.lang.startsWith('ar'));
-                if (arVoice) utter.voice = arVoice;
-                
-                window.speechSynthesis.speak(utter);
+            initCtx() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) {
+                        this.ctx = new AudioCtx();
+                    }
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
             }
 
-            playCorrect() {
-                if (this.isMuted) return;
-                this.initCtx();
-                const now = this.audioCtx.currentTime;
-                const notes = [523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, idx) => {
-                    const osc = this.audioCtx.createOscillator();
-                    const gain = this.audioCtx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, now + idx * 0.07);
-                    gain.gain.setValueAtTime(0.15, now + idx * 0.07);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.2);
+            playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.15) {
+                if (this.muted) return;
+                try {
+                    this.initCtx();
+                    if (!this.ctx) return;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
                     osc.connect(gain);
-                    gain.connect(this.audioCtx.destination);
-                    osc.start(now + idx * 0.07);
-                    osc.stop(now + idx * 0.07 + 0.22);
-                });
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch (e) {
+                    console.warn('Web Audio tone error:', e);
+                }
             }
 
-            playWrong() {
-                if (this.isMuted) return;
-                this.initCtx();
-                const now = this.audioCtx.currentTime;
-                const osc = this.audioCtx.createOscillator();
-                const gain = this.audioCtx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(180, now);
-                osc.frequency.exponentialRampToValueAtTime(110, now + 0.25);
-                gain.gain.setValueAtTime(0.2, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-                osc.connect(gain);
-                gain.connect(this.audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 0.25);
+            playClick() {
+                this.playTone(520, 'triangle', 0.08, 0.1);
             }
 
-            playFlip() {
-                if (this.isMuted) return;
-                this.initCtx();
-                const now = this.audioCtx.currentTime;
-                const osc = this.audioCtx.createOscillator();
-                const gain = this.audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(350, now);
-                osc.frequency.exponentialRampToValueAtTime(700, now + 0.05);
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
-                osc.connect(gain);
-                gain.connect(this.audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + 0.05);
+            playSuccess() {
+                this.playTone(523.25, 'sine', 0.12, 0.15);
+                setTimeout(() => this.playTone(659.25, 'sine', 0.12, 0.15), 90);
+                setTimeout(() => this.playTone(783.99, 'sine', 0.22, 0.18), 180);
+            }
+
+            playError() {
+                this.playTone(220, 'sawtooth', 0.18, 0.12);
+                setTimeout(() => this.playTone(185, 'sawtooth', 0.24, 0.12), 140);
             }
 
             playFanfare() {
-                if (this.isMuted) return;
-                this.initCtx();
-                const now = this.audioCtx.currentTime;
-                const chord = [523.25, 659.25, 783.99, 1046.50, 1318.51];
-                chord.forEach((freq) => {
-                    const osc = this.audioCtx.createOscillator();
-                    const gain = this.audioCtx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(freq, now);
-                    gain.gain.setValueAtTime(0.12, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
-                    osc.connect(gain);
-                    gain.connect(this.audioCtx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.85);
+                const notes = [523.25, 659.25, 783.99, 1046.5];
+                notes.forEach((n, idx) => {
+                    setTimeout(() => this.playTone(n, 'triangle', 0.25, 0.18), idx * 120);
                 });
             }
-        }
 
-        const audio = new AudioEngine();
-
-        function toggleAudioMute() {
-            audio.isMuted = !audio.isMuted;
-            const icon = document.getElementById('audioIcon');
-            if (audio.isMuted) {
-                icon.className = 'fa-solid fa-volume-xmark text-slate-500';
-            } else {
-                icon.className = 'fa-solid fa-volume-high text-teal-400';
+            speakArabic(text) {
+                if (this.muted || !text) return;
+                try {
+                    if (this.synth) {
+                        this.synth.cancel();
+                        const utter = new SpeechSynthesisUtterance(text);
+                        utter.lang = 'ar-SA';
+                        if (this.arabicVoice) {
+                            utter.voice = this.arabicVoice;
+                        }
+                        utter.rate = 0.85;
+                        utter.pitch = 1.0;
+                        this.synth.speak(utter);
+                    }
+                } catch (e) {
+                    console.warn('SpeechSynthesis error:', e);
+                }
             }
         }
 
+        const audio = new AudioController();
+
         /* -------------------------------------------------------------
-           3. APP STATE & LOCALSTORAGE PROGRESS
+           3. GLOBAL APPLICATION STATE & PERSISTENCE
            ------------------------------------------------------------- */
-        let state = {
-            activeTab: 'explorer',
-            currentFont: localStorage.getItem('alifba_font') || "'Tajawal', sans-serif",
-            masteredLetters: JSON.parse(localStorage.getItem('alifba_mastered')) || [],
-            streak: parseInt(localStorage.getItem('alifba_streak')) || 0,
-            quizHighScore: parseInt(localStorage.getItem('alifba_high_score')) || 0,
-            totalQuizzes: parseInt(localStorage.getItem('alifba_quizzes_count')) || 0,
-            selectedLetterModal: null,
+        const STORAGE_KEY = 'alifba_fun_progress_v1';
+
+        const state = {
+            currentTab: 'explorer',
+            currentFont: "'Tajawal', sans-serif",
+            masteredIds: [],
+            highScore: 0,
+            bestStreak: 0,
+            totalQuizzes: 0,
+            activeModalLetter: null,
+
             // Quiz State
             quizType: 'letterToSound',
+            vocalizationFilter: 'all',
             quizScore: 0,
             quizStreak: 0,
             currentQuizItem: null,
             quizQuestionNum: 1,
             breakdownExpanded: false,
+
             // Match State
             matchCards: [],
-            flippedCards: [],
-            matchedCount: 0,
+            flippedIndices: [],
+            matchedPairs: 0,
             matchMoves: 0,
-            matchTimerSeconds: 0,
+            matchSeconds: 0,
             matchTimerInterval: null,
+            matchLocked: false,
+
             // Trace State
             traceColor: '#14b8a6',
-            traceLetter: ARABIC_LETTERS[0]
+            isDrawing: false
         };
 
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    state.masteredIds = Array.isArray(parsed.masteredIds) ? parsed.masteredIds : [];
+                    state.highScore = Number(parsed.highScore) || 0;
+                    state.bestStreak = Number(parsed.bestStreak) || 0;
+                    state.totalQuizzes = Number(parsed.totalQuizzes) || 0;
+                    if (parsed.currentFont) {
+                        state.currentFont = parsed.currentFont;
+                    }
+                }
+            } catch (e) {
+                console.warn('Could not load saved state:', e);
+            }
+        }
+
         function saveState() {
-            localStorage.setItem('alifba_mastered', JSON.stringify(state.masteredLetters));
-            localStorage.setItem('alifba_streak', state.streak);
-            localStorage.setItem('alifba_high_score', state.quizHighScore);
-            localStorage.setItem('alifba_quizzes_count', state.totalQuizzes);
-            localStorage.setItem('alifba_font', state.currentFont);
-            updateHeaderStats();
-        }
-
-        function updateHeaderStats() {
-            document.getElementById('headerStreak').innerText = `${state.streak} Streak`;
-            document.getElementById('statMasteredCount').innerText = `${state.masteredLetters.length} / 28`;
-            document.getElementById('statHighScore').innerText = state.quizHighScore;
-            document.getElementById('statBestStreak').innerText = state.streak;
-            document.getElementById('statTotalQuizzes').innerText = state.totalQuizzes;
-        }
-
-        /* FEATURE 1 LOGIC: Dynamic Font Switcher */
-        function changeArabicFont(fontFamilyStr) {
-            state.currentFont = fontFamilyStr;
-            saveState();
-
-            // Apply font family dynamically to all elements with class .arabic-text
-            document.querySelectorAll('.arabic-text').forEach(el => {
-                el.style.fontFamily = fontFamilyStr;
-            });
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    masteredIds: state.masteredIds,
+                    highScore: state.highScore,
+                    bestStreak: state.bestStreak,
+                    totalQuizzes: state.totalQuizzes,
+                    currentFont: state.currentFont
+                }));
+            } catch (e) {
+                console.warn('Could not save state:', e);
+            }
         }
 
         /* -------------------------------------------------------------
-           4. NAVIGATION / TAB SWITCHING
+           4. NAVIGATION, FONT SWITCHER & AUDIO TOGGLE
            ------------------------------------------------------------- */
-        function switchTab(tabId) {
-            state.activeTab = tabId;
+        function switchTab(tabName) {
+            audio.playClick();
+            state.currentTab = tabName;
+
+            // Hide all tab sections
             document.querySelectorAll('.tab-section').forEach(sec => sec.classList.add('hidden'));
+            const activeSec = document.getElementById(`sec-${tabName}`);
+            if (activeSec) activeSec.classList.remove('hidden');
+
+            // Update tab button styles
             document.querySelectorAll('.nav-tab').forEach(btn => {
                 btn.className = 'nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-200 flex items-center gap-2';
             });
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            if (activeBtn) {
+                activeBtn.className = 'nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-teal-600 text-white shadow-md';
+            }
 
-            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).className = 'nav-tab px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 bg-teal-600 text-white shadow-md';
+            // Initialize tab-specific views
+            if (tabName === 'explorer') {
+                renderExplorerGrid();
+            } else if (tabName === 'quiz') {
+                updateQuizScoreboard();
+                if (!state.currentQuizItem) startNewQuizRound();
+            } else if (tabName === 'match') {
+                if (state.matchCards.length === 0) startMatchingGame();
+            } else if (tabName === 'trace') {
+                resizeTraceCanvas();
+            } else if (tabName === 'stats') {
+                renderStatsView();
+            }
+        }
 
-            if (tabId === 'quiz') startNewQuizRound();
-            if (tabId === 'match') startMatchingGame();
-            if (tabId === 'trace') initTraceCanvas();
-            if (tabId === 'stats') renderStatsGrid();
+        function changeArabicFont(fontFamily) {
+            state.currentFont = fontFamily;
+            document.querySelectorAll('.arabic-text').forEach(el => {
+                el.style.fontFamily = fontFamily;
+            });
+            const selector = document.getElementById('fontSelector');
+            if (selector && selector.value !== fontFamily) {
+                selector.value = fontFamily;
+            }
+            saveState();
+        }
 
-            // Re-apply current chosen font
-            changeArabicFont(state.currentFont);
+        function toggleAudioMute() {
+            audio.muted = !audio.muted;
+            const icon = document.getElementById('audioIcon');
+            if (audio.muted) {
+                icon.className = 'fa-solid fa-volume-xmark text-rose-400';
+            } else {
+                icon.className = 'fa-solid fa-volume-high text-teal-400';
+                audio.playClick();
+            }
+        }
+
+        function updateHeaderBadges() {
+            const streakEl = document.getElementById('headerStreak');
+            if (streakEl) {
+                streakEl.innerText = `${state.bestStreak} Best Streak`;
+            }
         }
 
         /* -------------------------------------------------------------
-           5. TAB 1: EXPLORER LOGIC
+           5. TAB 1: ALPHABET EXPLORER & LETTER MODAL
            ------------------------------------------------------------- */
-        function renderExplorerGrid(letters = ARABIC_LETTERS) {
-            const container = document.getElementById('explorerGrid');
-            container.innerHTML = '';
+        function renderExplorerGrid() {
+            const grid = document.getElementById('explorerGrid');
+            const query = (document.getElementById('explorerSearch')?.value || '').trim().toLowerCase();
+            const category = document.getElementById('explorerCategory')?.value || 'all';
+            grid.innerHTML = '';
 
-            letters.forEach(letter => {
-                const isMastered = state.masteredLetters.includes(letter.id);
+            const filtered = ARABIC_LETTERS.filter(item => {
+                const matchesSearch = !query ||
+                    item.name.toLowerCase().includes(query) ||
+                    item.trans.toLowerCase().includes(query) ||
+                    item.sound.toLowerCase().includes(query) ||
+                    item.arabic.includes(query);
+
+                let matchesCat = true;
+                if (category === 'nonConnector') {
+                    matchesCat = item.nonConnector === true;
+                } else if (category !== 'all') {
+                    matchesCat = item.category === category;
+                }
+                return matchesSearch && matchesCat;
+            });
+
+            filtered.forEach(letter => {
+                const isMastered = state.masteredIds.includes(letter.id);
                 const card = document.createElement('div');
-                card.className = `glow-card rounded-2xl p-4 flex flex-col items-center justify-between space-y-3 cursor-pointer hover:border-teal-500/60 hover:-translate-y-1 transition duration-200 group relative ${isMastered ? 'border-emerald-500/50 bg-emerald-950/20' : ''}`;
-                
-                card.onclick = () => openLetterModal(letter);
+                card.className = `glow-card rounded-2xl p-4 text-center cursor-pointer transition-all duration-200 transform hover:-translate-y-1 hover:border-teal-500/60 relative group ${isMastered ? 'border-emerald-500/40 bg-emerald-950/20' : ''}`;
+                card.onclick = () => openLetterModal(letter.id);
 
                 card.innerHTML = `
-                    ${isMastered ? '<div class="absolute top-2 right-2 text-emerald-400 text-xs"><i class="fa-solid fa-circle-check"></i></div>' : ''}
-                    <div class="arabic-text text-5xl font-extrabold text-white group-hover:scale-110 transition duration-200">${letter.arabic}</div>
-                    <div class="text-center">
-                        <div class="text-sm font-bold text-teal-300">${letter.name}</div>
-                        <div class="text-[11px] text-amber-300 font-extrabold">Sound: /${letter.sound}/</div>
+                    <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold mb-1">
+                        <span>#${letter.id}</span>
+                        ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
                     </div>
-                    <div class="w-full flex items-center justify-between pt-2 border-t border-slate-800 text-slate-400 text-xs">
-                        <button onclick="event.stopPropagation(); audio.speakArabic('${letter.arabic}')" class="p-1.5 hover:text-teal-300 transition" title="Listen">
-                            <i class="fa-solid fa-volume-high"></i>
-                        </button>
-                        <span class="text-[10px] uppercase font-semibold text-slate-500">${letter.category}</span>
+                    <div class="arabic-text text-5xl sm:text-6xl font-extrabold text-white my-2 group-hover:text-teal-300 group-hover:scale-110 transition-transform">
+                        ${letter.arabic}
                     </div>
+                    <div class="text-sm font-bold text-slate-100">${letter.name}</div>
+                    <div class="text-xs font-semibold text-teal-400">/${letter.sound}/</div>
+                    ${letter.nonConnector ? '<span class="mt-2 inline-block px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
                 `;
-                container.appendChild(card);
+                grid.appendChild(card);
             });
 
             changeArabicFont(state.currentFont);
         }
 
         function filterExplorer() {
-            const query = document.getElementById('explorerSearch').value.toLowerCase();
-            const cat = document.getElementById('explorerCategory').value;
-
-            const filtered = ARABIC_LETTERS.filter(item => {
-                const matchesQuery = item.name.toLowerCase().includes(query) || item.trans.toLowerCase().includes(query) || item.sound.toLowerCase().includes(query) || item.arabic.includes(query);
-                const matchesCat = cat === 'all' || (cat === 'nonConnector' ? item.nonConnector : item.category === cat);
-                return matchesQuery && matchesCat;
-            });
-
-            renderExplorerGrid(filtered);
+            renderExplorerGrid();
         }
 
-        /* Letter Modal */
-        function openLetterModal(letter) {
-            state.selectedLetterModal = letter;
+        function openLetterModal(letterId) {
+            const letter = ARABIC_LETTERS.find(l => l.id === letterId);
+            if (!letter) return;
+            state.activeModalLetter = letter;
+
+            audio.playClick();
+            audio.speakArabic(letter.arabic);
+
             document.getElementById('modalArabicChar').innerText = letter.arabic;
             document.getElementById('modalLetterName').innerText = letter.name;
-            document.getElementById('modalTransliteration').innerHTML = `Phonetic Sound: <span class="text-teal-400 font-bold">/${letter.sound}/ (${letter.trans})</span>`;
-            document.getElementById('modalCategoryBadge').innerText = letter.category;
-            
+            document.getElementById('modalTransliteration').innerHTML = `Phonetic Sound: <span class="text-teal-400 font-bold">/${letter.sound}/ (${letter.phonetic})</span>`;
+            document.getElementById('modalCategoryBadge').innerText = letter.nonConnector ? `${letter.category} • non-connector` : letter.category;
+
             document.getElementById('formIsolated').innerText = letter.forms.isolated;
             document.getElementById('formInitial').innerText = letter.forms.initial;
             document.getElementById('formMedial').innerText = letter.forms.medial;
             document.getElementById('formFinal').innerText = letter.forms.final;
+            document.getElementById('modalMnemonic').innerText = `${letter.mnemonic} Stroke tip: ${letter.strokeHint}`;
 
-            document.getElementById('modalMnemonic').innerText = letter.mnemonic;
-
-            updateModalMasteryBtn();
+            updateModalMasteryButton();
 
             const modal = document.getElementById('letterModal');
             const card = document.getElementById('letterModalCard');
             modal.classList.remove('hidden');
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 modal.classList.remove('opacity-0');
                 card.classList.remove('scale-95');
-            }, 10);
-
-            audio.speakArabic(letter.arabic);
+            });
             changeArabicFont(state.currentFont);
         }
 
@@ -1180,21 +2428,22 @@
             card.classList.add('scale-95');
             setTimeout(() => {
                 modal.classList.add('hidden');
-            }, 300);
+            }, 250);
         }
 
         function playModalAudio() {
-            if (state.selectedLetterModal) {
-                audio.speakArabic(state.selectedLetterModal.arabic);
+            if (state.activeModalLetter) {
+                audio.speakArabic(state.activeModalLetter.arabic);
             }
         }
 
-        function updateModalMasteryBtn() {
+        function updateModalMasteryButton() {
+            if (!state.activeModalLetter) return;
             const btn = document.getElementById('modalMasteryBtn');
-            const isMastered = state.masteredLetters.includes(state.selectedLetterModal.id);
+            const isMastered = state.masteredIds.includes(state.activeModalLetter.id);
             if (isMastered) {
-                btn.className = 'flex-grow py-2.5 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-2 bg-emerald-900/40 border-emerald-500/50 text-emerald-300';
-                btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Mastered! (Click to unmark)';
+                btn.className = 'flex-grow py-2.5 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-2 bg-emerald-600/20 border-emerald-500/40 text-emerald-300 hover:bg-emerald-600/30';
+                btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Mastered (Click to Unmark)';
             } else {
                 btn.className = 'flex-grow py-2.5 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-2 bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700';
                 btn.innerHTML = '<i class="fa-regular fa-circle-check"></i> Mark as Mastered';
@@ -1202,47 +2451,82 @@
         }
 
         function toggleModalMastery() {
-            const id = state.selectedLetterModal.id;
-            if (state.masteredLetters.includes(id)) {
-                state.masteredLetters = state.masteredLetters.filter(x => x !== id);
+            if (!state.activeModalLetter) return;
+            const id = state.activeModalLetter.id;
+            const idx = state.masteredIds.indexOf(id);
+            if (idx === -1) {
+                state.masteredIds.push(id);
+                audio.playSuccess();
             } else {
-                state.masteredLetters.push(id);
-                audio.playCorrect();
+                state.masteredIds.splice(idx, 1);
+                audio.playClick();
             }
             saveState();
-            updateModalMasteryBtn();
+            updateModalMasteryButton();
             renderExplorerGrid();
+            renderStatsView();
         }
 
         function openModalInTrace() {
-            const ltr = state.selectedLetterModal;
+            if (!state.activeModalLetter) return;
+            const id = state.activeModalLetter.id;
             closeLetterModal();
             switchTab('trace');
-            loadTraceLetter(ltr.id);
+            document.getElementById('traceLetterSelect').value = id;
+            loadTraceLetter(id);
         }
 
-
         /* -------------------------------------------------------------
-           6. TAB 2: QUIZ & PRACTICE MODES LOGIC
+           6. TAB 2: QUIZ, PHONICS & VOCALIZATION PRACTICE MODES
            ------------------------------------------------------------- */
         function setQuizType(type) {
+            audio.playClick();
             state.quizType = type;
+
             document.querySelectorAll('.quiz-type-btn').forEach(btn => {
                 btn.className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700';
             });
-            document.getElementById(`quizType-${type}`).className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-teal-600 text-white';
-            
+            const activeBtn = document.getElementById(`quizType-${type}`);
+            if (activeBtn) {
+                activeBtn.className = 'quiz-type-btn px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-teal-600 text-white shadow-md';
+            }
+
             const titles = {
-                'letterToSound': 'Name Match Mode',
-                'phonicsMatch': 'Phonics Sound Match Mode',
-                'soundToLetter': 'Audio Listening Quiz Mode',
-                'formQuiz': 'Positional Forms Mode',
-                'vocalizationRead': 'Read Syllables & Harakat',
-                'vocalizationListen': 'Vocalization Sound to Text'
+                letterToSound: 'Standard Letter Name Match',
+                phonicsMatch: 'Phonics Match (Sound ➔ Arabic Letter)',
+                soundToLetter: 'Audio Listening Quiz',
+                formQuiz: 'Positional Letter Forms Quiz',
+                vocalizationRead: 'Read Syllables & Words (Harakat ➔ Sound)',
+                vocalizationListen: 'Vocalization Sound ➔ Arabic Word'
             };
-            document.getElementById('quizModeTitle').innerText = titles[type] || 'Practice Challenge Mode';
+            document.getElementById('quizModeTitle').innerText = titles[type] || 'Practice Challenge';
 
             startNewQuizRound();
+        }
+
+        function setVocalizationFilter(filterKey) {
+            state.vocalizationFilter = filterKey;
+            document.querySelectorAll('.voc-filter-btn').forEach(btn => {
+                btn.className = 'voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition';
+            });
+            const activeBtn = document.getElementById(`vocFilter-${filterKey}`);
+            if (activeBtn) {
+                activeBtn.className = 'voc-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-teal-600 text-white transition';
+            }
+            nextQuizQuestion();
+        }
+
+        function getFilteredVocalizations() {
+            if (state.vocalizationFilter === 'short') {
+                return ARABIC_VOCALIZATIONS.filter(item => item.parts.length <= 2);
+            }
+            if (state.vocalizationFilter === 'three') {
+                return ARABIC_VOCALIZATIONS.filter(item => item.parts.length === 3);
+            }
+            if (state.vocalizationFilter === 'fourPlus') {
+                return ARABIC_VOCALIZATIONS.filter(item => item.parts.length >= 4);
+            }
+            return ARABIC_VOCALIZATIONS;
         }
 
         function startNewQuizRound() {
@@ -1256,7 +2540,7 @@
         function updateQuizScoreboard() {
             document.getElementById('quizScore').innerText = state.quizScore;
             document.getElementById('quizStreak').innerText = state.quizStreak;
-            document.getElementById('quizHighScore').innerText = state.quizHighScore;
+            document.getElementById('quizHighScore').innerText = state.highScore;
             document.getElementById('quizProgressText').innerText = `Question ${state.quizQuestionNum} of 10`;
         }
 
@@ -1266,11 +2550,21 @@
             const subText = document.getElementById('quizSubText');
             const optionsContainer = document.getElementById('quizOptionsContainer');
             const audioBtn = document.getElementById('quizAudioBtn');
+            const filterBar = document.getElementById('vocalizationFilterBar');
             const breakdownControls = document.getElementById('wordBreakdownControls');
             const breakdownPanel = document.getElementById('wordBreakdownPanel');
-            
+
             optionsContainer.innerHTML = '';
             audioBtn.classList.remove('hidden');
+
+            // Show complexity filter bar only in Vocalization modes
+            if (state.quizType === 'vocalizationRead' || state.quizType === 'vocalizationListen') {
+                filterBar.classList.remove('hidden');
+                const pool = getFilteredVocalizations();
+                document.getElementById('vocalizationCountBadge').innerText = `${pool.length} Words & Syllables`;
+            } else {
+                filterBar.classList.add('hidden');
+            }
 
             // Reset word breakdown panel state on each new question
             state.breakdownExpanded = false;
@@ -1284,39 +2578,39 @@
                 const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
                 state.currentQuizItem = target;
 
-                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
                     .sort(() => 0.5 - Math.random()).slice(0, 3);
                 const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
 
                 arabicDisplay.innerText = target.arabic;
-                subText.innerText = 'Select the correct letter name below:';
-                
+                subText.innerText = 'Which letter name matches this Arabic character?';
+
                 allChoices.forEach(choice => {
                     const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-base transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = `${choice.name} (${choice.trans})`;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, choice.name);
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-lg transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerText = `${choice.name} (/${choice.sound}/)`;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.name} (/${target.sound}/)`);
                     optionsContainer.appendChild(btn);
                 });
             }
-            
-            /* FEATURE 2: Phonics Sound-to-Letter Matching Mode */
+
+            /* FEATURE 2: Phonics Match (Sound -> Arabic Letter) */
             else if (state.quizType === 'phonicsMatch') {
                 const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
                 state.currentQuizItem = target;
 
-                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
                     .sort(() => 0.5 - Math.random()).slice(0, 3);
                 const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
 
                 arabicDisplay.innerText = `/${target.sound}/`;
-                subText.innerText = `Which Arabic letter produces the sound /${target.sound}/?`;
-                
+                subText.innerText = `Phonetic Hint: ${target.phonetic}`;
+
                 allChoices.forEach(choice => {
                     const btn = document.createElement('button');
                     btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
                     btn.innerText = choice.arabic;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (sound: /${target.sound}/)`);
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (${target.name})`);
                     optionsContainer.appendChild(btn);
                 });
             }
@@ -1326,19 +2620,19 @@
                 const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
                 state.currentQuizItem = target;
 
-                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
                     .sort(() => 0.5 - Math.random()).slice(0, 3);
                 const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
 
-                arabicDisplay.innerText = '🔊';
-                subText.innerText = 'Listen to the sound and select the matching Arabic letter:';
+                arabicDisplay.innerHTML = '<i class="fa-solid fa-volume-high text-teal-400 animate-pulse"></i>';
+                subText.innerText = 'Listen to the pronunciation and pick the matching letter:';
                 audio.speakArabic(target.arabic);
 
                 allChoices.forEach(choice => {
                     const btn = document.createElement('button');
                     btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-teal-300 arabic-text text-4xl font-extrabold transition duration-150 transform hover:-translate-y-0.5 shadow-md';
                     btn.innerText = choice.arabic;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, target.arabic);
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (${target.name})`);
                     optionsContainer.appendChild(btn);
                 });
             }
@@ -1347,29 +2641,29 @@
             else if (state.quizType === 'formQuiz') {
                 const target = ARABIC_LETTERS[Math.floor(Math.random() * ARABIC_LETTERS.length)];
                 state.currentQuizItem = target;
-
                 const formKeys = ['initial', 'medial', 'final'];
-                const randomKey = formKeys[Math.floor(Math.random() * formKeys.length)];
+                const chosenKey = formKeys[Math.floor(Math.random() * formKeys.length)];
 
-                const wrongChoices = ARABIC_LETTERS.filter(x => x.id !== target.id)
+                const wrongChoices = ARABIC_LETTERS.filter(l => l.id !== target.id)
                     .sort(() => 0.5 - Math.random()).slice(0, 3);
                 const allChoices = [target, ...wrongChoices].sort(() => 0.5 - Math.random());
 
-                arabicDisplay.innerText = target.forms[randomKey];
-                subText.innerText = `Which letter is this in its ${randomKey.toUpperCase()} form?`;
+                arabicDisplay.innerText = target.forms[chosenKey];
+                subText.innerText = `Identify the isolated letter for this ${chosenKey.toUpperCase()} shape:`;
 
                 allChoices.forEach(choice => {
                     const btn = document.createElement('button');
-                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-base transition duration-150 transform hover:-translate-y-0.5 shadow-md';
-                    btn.innerText = `${choice.name} (${choice.arabic})`;
-                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, choice.name);
+                    btn.className = 'p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-white font-bold text-lg flex items-center justify-center gap-3 transition duration-150 transform hover:-translate-y-0.5 shadow-md';
+                    btn.innerHTML = `<span class="arabic-text text-3xl text-teal-300">${choice.arabic}</span> <span>${choice.name}</span>`;
+                    btn.onclick = () => handleQuizAnswer(choice.id === target.id, btn, `${target.arabic} (${target.name})`);
                     optionsContainer.appendChild(btn);
                 });
             }
 
             /* FEATURE 3a: Read Syllables (Arabic + Harakat -> Select Phonetic Sound) */
             else if (state.quizType === 'vocalizationRead') {
-                const target = ARABIC_VOCALIZATIONS[Math.floor(Math.random() * ARABIC_VOCALIZATIONS.length)];
+                const pool = getFilteredVocalizations();
+                const target = pool[Math.floor(Math.random() * pool.length)];
                 state.currentQuizItem = target;
 
                 const wrongChoices = ARABIC_VOCALIZATIONS.filter(x => x.id !== target.id)
@@ -1394,7 +2688,8 @@
 
             /* FEATURE 3b: Hear/Read Vocalization -> Select Arabic Combination */
             else if (state.quizType === 'vocalizationListen') {
-                const target = ARABIC_VOCALIZATIONS[Math.floor(Math.random() * ARABIC_VOCALIZATIONS.length)];
+                const pool = getFilteredVocalizations();
+                const target = pool[Math.floor(Math.random() * pool.length)];
                 state.currentQuizItem = target;
 
                 const wrongChoices = ARABIC_VOCALIZATIONS.filter(x => x.id !== target.id)
@@ -1405,7 +2700,7 @@
                 subText.innerText = 'Listen or read the sound, then select the matching Arabic text:';
                 audio.speakArabic(target.audioText);
 
-                // Pre-render breakdown so it becomes available right after answering
+                // Prepare word breakdown (revealed after answering so it doesn't spoil the prompt)
                 renderWordBreakdown(target);
 
                 allChoices.forEach(choice => {
@@ -1451,11 +2746,11 @@
             const chunksStr = item.parts.map(p => p.chunk).join(' + ');
             equationEl.innerHTML = `${chunksStr} &rarr; <span class="text-white underline decoration-teal-400">/${item.sound}/</span>`;
 
-            // Render Right-to-Left (RTL) step tiles (Step 1 = rightmost letter, Step N = leftmost letter)
+            // Render RTL step tiles (Step 1 = rightmost letter, Step N = leftmost letter)
             item.parts.forEach((part, idx) => {
                 const stepNum = idx + 1;
                 const tile = document.createElement('div');
-                tile.dir = 'ltr'; // Keep English badges legible inside each tile
+                tile.dir = 'ltr';
                 tile.className = 'bg-slate-900/95 hover:bg-slate-800/95 border border-slate-700/80 hover:border-teal-500/60 rounded-xl p-3.5 flex flex-col justify-between gap-2.5 cursor-pointer transition group shadow-md';
                 tile.onclick = () => audio.speakArabic(part.speak);
 
@@ -1522,44 +2817,41 @@
 
         function playCurrentQuizAudio() {
             if (!state.currentQuizItem) return;
-            if (state.currentQuizItem.audioText) {
-                audio.speakArabic(state.currentQuizItem.audioText);
-            } else if (state.currentQuizItem.arabic) {
-                audio.speakArabic(state.currentQuizItem.arabic);
-            }
+            const text = state.currentQuizItem.audioText || state.currentQuizItem.arabic;
+            audio.speakArabic(text);
         }
 
-        function handleQuizAnswer(isCorrect, btnElement, correctNameStr) {
+        function handleQuizAnswer(isCorrect, clickedBtn, correctLabel) {
             const feedback = document.getElementById('quizFeedback');
             feedback.classList.remove('hidden');
 
             if (isCorrect) {
-                audio.playCorrect();
-                btnElement.classList.remove('bg-slate-800/90');
-                btnElement.classList.add('bg-emerald-600', 'text-white', 'border-emerald-400');
-                
-                state.quizScore += 10 + (state.quizStreak * 2);
-                state.quizStreak += 1;
-                if (state.quizStreak > state.streak) state.streak = state.quizStreak;
-                if (state.quizScore > state.quizHighScore) state.quizHighScore = state.quizScore;
+                audio.playSuccess();
+                state.quizStreak++;
+                const bonus = Math.min(state.quizStreak * 10, 50);
+                state.quizScore += 100 + bonus;
 
-                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-                feedback.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i> Excellent! Correct answer!';
+                if (state.quizScore > state.highScore) state.highScore = state.quizScore;
+                if (state.quizStreak > state.bestStreak) state.bestStreak = state.quizStreak;
 
-                if (state.quizStreak % 5 === 0) triggerConfetti();
+                clickedBtn.classList.remove('bg-slate-800/90', 'border-slate-700');
+                clickedBtn.classList.add('bg-emerald-600/30', 'border-emerald-400', 'text-emerald-200');
+                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> Correct! +${100 + bonus} pts`;
             } else {
-                audio.playWrong();
-                btnElement.classList.remove('bg-slate-800/90');
-                btnElement.classList.add('bg-rose-600', 'text-white', 'border-rose-400');
-
+                audio.playError();
                 state.quizStreak = 0;
 
-                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-rose-500/20 text-rose-300 border border-rose-500/30';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Incorrect! Right answer: ${correctNameStr}`;
+                clickedBtn.classList.remove('bg-slate-800/90', 'border-slate-700');
+                clickedBtn.classList.add('bg-rose-600/30', 'border-rose-400', 'text-rose-200');
+                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-rose-500/20 text-rose-300 border border-rose-500/40';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Not quite! Correct answer: <span class="underline">${correctLabel}</span>`;
             }
 
+            playCurrentQuizAudio();
             saveState();
             updateQuizScoreboard();
+            updateHeaderBadges();
 
             // Keep Word Breakdown button accessible after answering in both vocalization modes
             if (state.quizType === 'vocalizationRead' || state.quizType === 'vocalizationListen') {
@@ -1569,7 +2861,7 @@
             document.querySelectorAll('#quizOptionsContainer button').forEach(b => b.disabled = true);
 
             setTimeout(() => {
-                // If the user opened the Word Breakdown panel to study the word, pause auto-advance and provide a clear Next button
+                // If the user opened the Word Breakdown panel to study the word, pause auto-advance and provide a Next Question button
                 if (state.breakdownExpanded) {
                     const optionsContainer = document.getElementById('quizOptionsContainer');
                     const nextLabel = state.quizQuestionNum < 10
@@ -1623,360 +2915,358 @@
             `;
         }
 
-
         /* -------------------------------------------------------------
-           7. TAB 3: MATCHING MEMORY GAME LOGIC
+           7. TAB 3: MEMORY MATCHING GAME
            ------------------------------------------------------------- */
         function startMatchingGame() {
-            clearInterval(state.matchTimerInterval);
+            audio.playClick();
+            if (state.matchTimerInterval) clearInterval(state.matchTimerInterval);
+
+            state.flippedIndices = [];
+            state.matchedPairs = 0;
             state.matchMoves = 0;
-            state.matchedCount = 0;
-            state.matchTimerSeconds = 0;
-            state.flippedCards = [];
+            state.matchSeconds = 0;
+            state.matchLocked = false;
 
             document.getElementById('matchMoves').innerText = '0';
             document.getElementById('matchTimer').innerText = '00:00';
 
-            state.matchTimerInterval = setInterval(() => {
-                state.matchTimerSeconds++;
-                const mins = String(Math.floor(state.matchTimerSeconds / 60)).padStart(2, '0');
-                const secs = String(state.matchTimerSeconds % 60).padStart(2, '0');
-                document.getElementById('matchTimer').innerText = `${mins}:${secs}`;
-            }, 1000);
-
-            // Mix letters & vocalizations for memory match pool
-            const pool = [...ARABIC_LETTERS.map(l => ({ id: l.id, arabic: l.arabic, sound: `/${l.sound}/` })), 
-                          ...ARABIC_VOCALIZATIONS.map(v => ({ id: v.id, arabic: v.arabic, sound: `/${v.sound}/` }))];
-            
-            const chosen = pool.sort(() => 0.5 - Math.random()).slice(0, 6);
-            
-            const cardDeck = [];
-            chosen.forEach(item => {
-                cardDeck.push({ pairId: item.id, display: item.arabic, type: 'arabic' });
-                cardDeck.push({ pairId: item.id, display: item.sound, type: 'text' });
+            const sample = [...ARABIC_LETTERS].sort(() => 0.5 - Math.random()).slice(0, 6);
+            const deck = [];
+            sample.forEach(item => {
+                deck.push({ pairId: item.id, type: 'arabic', display: item.arabic, speak: item.arabic });
+                deck.push({ pairId: item.id, type: 'sound', display: `${item.name}\n/${item.sound}/`, speak: item.arabic });
             });
-
-            cardDeck.sort(() => 0.5 - Math.random());
-            state.matchCards = cardDeck;
+            state.matchCards = deck.sort(() => 0.5 - Math.random());
 
             renderMemoryGrid();
+
+            state.matchTimerInterval = setInterval(() => {
+                state.matchSeconds++;
+                const mins = String(Math.floor(state.matchSeconds / 60)).padStart(2, '0');
+                const secs = String(state.matchSeconds % 60).padStart(2, '0');
+                document.getElementById('matchTimer').innerText = `${mins}:${secs}`;
+            }, 1000);
         }
 
         function renderMemoryGrid() {
-            const container = document.getElementById('memoryGrid');
-            container.innerHTML = '';
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
 
             state.matchCards.forEach((card, index) => {
-                const cardWrap = document.createElement('div');
-                cardWrap.className = 'perspective-1000 aspect-square cursor-pointer';
-                cardWrap.onclick = () => flipMemoryCard(index, cardWrap);
+                const wrapper = document.createElement('div');
+                wrapper.className = 'perspective-1000 h-28 sm:h-32 cursor-pointer select-none';
+                wrapper.onclick = () => flipMemoryCard(index);
 
-                cardWrap.innerHTML = `
-                    <div id="mcard-${index}" class="transform-style-3d relative w-full h-full rounded-2xl transition duration-500 shadow-md">
-                        <div class="backface-hidden absolute inset-0 bg-slate-800 border border-slate-700 hover:border-purple-500/60 rounded-2xl flex items-center justify-center text-purple-400 text-2xl font-bold">
-                            <i class="fa-solid fa-star opacity-40"></i>
+                wrapper.innerHTML = `
+                    <div id="mem-card-${index}" class="transform-style-3d relative w-full h-full">
+                        <!-- Front (Hidden Back of Card) -->
+                        <div class="backface-hidden absolute inset-0 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 hover:border-purple-500/50 flex items-center justify-center shadow-lg">
+                            <i class="fa-solid fa-star-and-crescent text-2xl text-purple-400/60"></i>
                         </div>
-                        <div class="rotate-y-180 backface-hidden absolute inset-0 bg-gradient-to-tr from-purple-900 to-indigo-900 border-2 border-purple-400 rounded-2xl flex items-center justify-center text-center p-2">
-                            <span class="${card.type === 'arabic' ? 'arabic-text text-3xl sm:text-4xl text-amber-300 font-extrabold' : 'text-sm sm:text-base font-extrabold text-white'}">
-                                ${card.display}
-                            </span>
+                        <!-- Back (Revealed Content) -->
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 rounded-2xl bg-slate-900 border-2 border-purple-500/50 flex items-center justify-center p-2 text-center shadow-xl">
+                            ${card.type === 'arabic'
+                                ? `<span class="arabic-text text-4xl sm:text-5xl font-extrabold text-teal-300">${card.display}</span>`
+                                : `<span class="text-xs sm:text-sm font-bold text-amber-300 whitespace-pre-line">${card.display}</span>`
+                            }
                         </div>
                     </div>
                 `;
-                container.appendChild(cardWrap);
+                grid.appendChild(wrapper);
             });
 
             changeArabicFont(state.currentFont);
         }
 
-        function flipMemoryCard(index, cardWrap) {
-            const inner = document.getElementById(`mcard-${index}`);
-            if (inner.classList.contains('rotate-y-180') || state.flippedCards.length >= 2) return;
+        function flipMemoryCard(index) {
+            if (state.matchLocked) return;
+            if (state.flippedIndices.includes(index)) return;
 
-            audio.playFlip();
-            inner.classList.add('rotate-y-180');
-            state.flippedCards.push({ index, data: state.matchCards[index], element: inner });
+            const cardEl = document.getElementById(`mem-card-${index}`);
+            if (!cardEl || cardEl.dataset.matched === 'true') return;
 
-            if (state.flippedCards.length === 2) {
+            audio.playClick();
+            cardEl.classList.add('rotate-y-180');
+            state.flippedIndices.push(index);
+
+            const cardData = state.matchCards[index];
+            if (cardData.type === 'arabic') {
+                audio.speakArabic(cardData.speak);
+            }
+
+            if (state.flippedIndices.length === 2) {
                 state.matchMoves++;
                 document.getElementById('matchMoves').innerText = state.matchMoves;
-                checkMatchPair();
-            }
-        }
+                state.matchLocked = true;
 
-        function checkMatchPair() {
-            const [c1, c2] = state.flippedCards;
+                const [idx1, idx2] = state.flippedIndices;
+                const c1 = state.matchCards[idx1];
+                const c2 = state.matchCards[idx2];
 
-            if (c1.data.pairId === c2.data.pairId) {
-                audio.playCorrect();
-                c1.element.children[1].classList.add('border-emerald-400', 'bg-emerald-950');
-                c2.element.children[1].classList.add('border-emerald-400', 'bg-emerald-950');
+                if (c1.pairId === c2.pairId) {
+                    setTimeout(() => {
+                        audio.playSuccess();
+                        const el1 = document.getElementById(`mem-card-${idx1}`);
+                        const el2 = document.getElementById(`mem-card-${idx2}`);
+                        if (el1) el1.dataset.matched = 'true';
+                        if (el2) el2.dataset.matched = 'true';
+                        state.matchedPairs++;
+                        state.flippedIndices = [];
+                        state.matchLocked = false;
 
-                state.matchedCount++;
-                state.flippedCards = [];
-
-                if (state.matchedCount === 6) {
-                    clearInterval(state.matchTimerInterval);
-                    audio.playFanfare();
-                    triggerConfetti();
+                        if (state.matchedPairs === 6) {
+                            clearInterval(state.matchTimerInterval);
+                            audio.playFanfare();
+                            triggerConfetti();
+                        }
+                    }, 450);
+                } else {
+                    setTimeout(() => {
+                        const el1 = document.getElementById(`mem-card-${idx1}`);
+                        const el2 = document.getElementById(`mem-card-${idx2}`);
+                        if (el1) el1.classList.remove('rotate-y-180');
+                        if (el2) el2.classList.remove('rotate-y-180');
+                        state.flippedIndices = [];
+                        state.matchLocked = false;
+                    }, 900);
                 }
-            } else {
-                audio.playWrong();
-                setTimeout(() => {
-                    c1.element.classList.remove('rotate-y-180');
-                    c2.element.classList.remove('rotate-y-180');
-                    state.flippedCards = [];
-                }, 900);
             }
         }
-
 
         /* -------------------------------------------------------------
-           8. TAB 4: WRITING / TRACING LOGIC
+           8. TAB 4: HANDWRITING / TRACING CANVAS
            ------------------------------------------------------------- */
-        let canvas, ctx, isDrawing = false;
-
-        function initTraceCanvas() {
-            canvas = document.getElementById('traceCanvas');
-            ctx = canvas.getContext('2d');
-
+        function initTraceSection() {
             const select = document.getElementById('traceLetterSelect');
-            if (select.children.length === 0) {
-                ARABIC_LETTERS.forEach(letter => {
-                    const opt = document.createElement('option');
-                    opt.value = letter.id;
-                    opt.innerText = `${letter.arabic} - ${letter.name} (/${letter.sound}/)`;
-                    select.appendChild(opt);
-                });
-            }
-
-            canvas.onmousedown = startDrawing;
-            canvas.onmousemove = draw;
-            canvas.onmouseup = stopDrawing;
-            canvas.onmouseleave = stopDrawing;
-
-            canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = canvas.getBoundingClientRect();
-                startDrawing({ clientX: touch.clientX, clientY: touch.clientY, rect });
+            select.innerHTML = '';
+            ARABIC_LETTERS.forEach(letter => {
+                const opt = document.createElement('option');
+                opt.value = letter.id;
+                opt.innerText = `${letter.arabic} — ${letter.name} (/${letter.sound}/)`;
+                select.appendChild(opt);
             });
 
-            canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                draw({ clientX: touch.clientX, clientY: touch.clientY });
-            });
-
-            canvas.addEventListener('touchend', stopDrawing);
-
-            loadTraceLetter(state.traceLetter.id);
+            setupCanvasDrawing();
+            loadTraceLetter(1);
         }
 
-        function loadTraceLetter(id) {
-            const letter = ARABIC_LETTERS.find(x => x.id === parseInt(id));
-            state.traceLetter = letter;
-
+        function loadTraceLetter(letterId) {
+            const letter = ARABIC_LETTERS.find(l => l.id === Number(letterId)) || ARABIC_LETTERS[0];
             document.getElementById('traceLetterArabic').innerText = letter.arabic;
             document.getElementById('traceLetterName').innerText = letter.name;
-            document.getElementById('traceLetterPhonetic').innerText = `/${letter.sound}/ (${letter.trans})`;
+            document.getElementById('traceLetterPhonetic').innerText = `/${letter.sound}/ — ${letter.phonetic}`;
             document.getElementById('traceLetterTip').innerText = letter.strokeHint;
             document.getElementById('canvasGuideChar').innerText = letter.arabic;
-
             clearCanvas();
             changeArabicFont(state.currentFont);
-        }
-
-        function startDrawing(e) {
-            isDrawing = true;
-            ctx.beginPath();
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-            ctx.moveTo(x, y);
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-
-            const size = document.getElementById('brushSize').value;
-            ctx.lineWidth = size;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.strokeStyle = state.traceColor;
-
-            ctx.lineTo(x, y);
-            ctx.stroke();
-        }
-
-        function stopDrawing() {
-            isDrawing = false;
-        }
-
-        function clearCanvas() {
-            if (ctx) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-
-        function setTraceColor(color) {
-            state.traceColor = color;
         }
 
         function playTraceAudio() {
-            audio.speakArabic(state.traceLetter.arabic);
+            const id = Number(document.getElementById('traceLetterSelect').value);
+            const letter = ARABIC_LETTERS.find(l => l.id === id);
+            if (letter) audio.speakArabic(letter.arabic);
         }
 
-        function animateStrokeGuide() {
-            clearCanvas();
-            audio.speakArabic(state.traceLetter.arabic);
-            
-            let progress = 0;
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            
-            const animInterval = setInterval(() => {
-                progress += 0.05;
-                ctx.lineWidth = 14;
-                ctx.lineCap = 'round';
-                ctx.strokeStyle = '#14b8a6';
-                ctx.beginPath();
-                ctx.arc(centerX, centerY - 20, 50 * progress, 0, Math.PI * 1.5 * progress);
-                ctx.stroke();
-
-                if (progress >= 1) {
-                    clearInterval(animInterval);
-                }
-            }, 30);
+        function setTraceColor(hex) {
+            audio.playClick();
+            state.traceColor = hex;
         }
 
-        function evaluateTracing() {
-            audio.playCorrect();
-            triggerConfetti();
-            if (!state.masteredLetters.includes(state.traceLetter.id)) {
-                state.masteredLetters.push(state.traceLetter.id);
-                saveState();
+        function clearCanvas() {
+            const canvas = document.getElementById('traceCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function resizeTraceCanvas() {
+            const canvas = document.getElementById('traceCanvas');
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                canvas.width = rect.width;
+                canvas.height = rect.height;
             }
         }
 
+        function setupCanvasDrawing() {
+            const canvas = document.getElementById('traceCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const getPos = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: (clientX - rect.left) * (canvas.width / rect.width),
+                    y: (clientY - rect.top) * (canvas.height / rect.height)
+                };
+            };
+
+            const startDraw = (e) => {
+                state.isDrawing = true;
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, pos.y);
+            };
+
+            const moveDraw = (e) => {
+                if (!state.isDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                ctx.lineWidth = Number(document.getElementById('brushSize').value) || 12;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = state.traceColor;
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            };
+
+            const endDraw = () => {
+                state.isDrawing = false;
+                ctx.closePath();
+            };
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', moveDraw);
+            window.addEventListener('mouseup', endDraw);
+
+            canvas.addEventListener('touchstart', startDraw, { passive: false });
+            canvas.addEventListener('touchmove', moveDraw, { passive: false });
+            canvas.addEventListener('touchend', endDraw);
+        }
+
+        function animateStrokeGuide() {
+            audio.playClick();
+            const guide = document.getElementById('canvasWatermark');
+            guide.classList.remove('opacity-20');
+            guide.classList.add('opacity-70', 'text-rose-400', 'scale-110', 'transition-all', 'duration-500');
+            playTraceAudio();
+            setTimeout(() => {
+                guide.classList.remove('opacity-70', 'text-rose-400', 'scale-110');
+                guide.classList.add('opacity-20');
+            }, 900);
+        }
+
+        function evaluateTracing() {
+            audio.playSuccess();
+            triggerConfetti();
+            const id = Number(document.getElementById('traceLetterSelect').value);
+            if (id && !state.masteredIds.includes(id)) {
+                state.masteredIds.push(id);
+                saveState();
+            }
+            playTraceAudio();
+        }
 
         /* -------------------------------------------------------------
-           9. TAB 5: STATS & MASTERY GRID LOGIC
+           9. TAB 5: PROGRESS & MASTERY STATS
            ------------------------------------------------------------- */
-        function renderStatsGrid() {
-            updateHeaderStats();
-            const container = document.getElementById('statsMasteryGrid');
-            container.innerHTML = '';
+        function renderStatsView() {
+            document.getElementById('statMasteredCount').innerText = `${state.masteredIds.length} / 28`;
+            document.getElementById('statHighScore').innerText = state.highScore;
+            document.getElementById('statBestStreak').innerText = state.bestStreak;
+            document.getElementById('statTotalQuizzes').innerText = state.totalQuizzes;
+
+            const grid = document.getElementById('statsMasteryGrid');
+            grid.innerHTML = '';
 
             ARABIC_LETTERS.forEach(letter => {
-                const isMastered = state.masteredLetters.includes(letter.id);
-                const item = document.createElement('div');
-                item.className = `p-3 rounded-2xl border text-center cursor-pointer transition flex flex-col items-center justify-between gap-1 ${isMastered ? 'bg-emerald-950/40 border-emerald-500/60 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-500'}`;
-                
-                item.onclick = () => {
-                    if (isMastered) {
-                        state.masteredLetters = state.masteredLetters.filter(x => x !== letter.id);
+                const isMastered = state.masteredIds.includes(letter.id);
+                const cell = document.createElement('button');
+                cell.className = `p-3 rounded-2xl border text-center transition transform hover:scale-105 ${
+                    isMastered
+                        ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-200 shadow-md shadow-emerald-500/10'
+                        : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-600'
+                }`;
+                cell.onclick = () => {
+                    const idx = state.masteredIds.indexOf(letter.id);
+                    if (idx === -1) {
+                        state.masteredIds.push(letter.id);
+                        audio.playSuccess();
                     } else {
-                        state.masteredLetters.push(letter.id);
-                        audio.playCorrect();
+                        state.masteredIds.splice(idx, 1);
+                        audio.playClick();
                     }
                     saveState();
-                    renderStatsGrid();
+                    renderStatsView();
+                    renderExplorerGrid();
                 };
 
-                item.innerHTML = `
-                    <span class="arabic-text text-3xl font-extrabold">${letter.arabic}</span>
-                    <span class="text-[11px] font-bold">${letter.name}</span>
-                    <i class="fa-solid ${isMastered ? 'fa-circle-check text-emerald-400' : 'fa-circle text-slate-700'} text-xs"></i>
+                cell.innerHTML = `
+                    <div class="arabic-text text-3xl font-extrabold ${isMastered ? 'text-emerald-300' : 'text-slate-300'}">${letter.arabic}</div>
+                    <div class="text-[11px] font-bold mt-1">${letter.name}</div>
                 `;
-                container.appendChild(item);
+                grid.appendChild(cell);
             });
 
             changeArabicFont(state.currentFont);
         }
 
         function resetAllProgress() {
-            if (confirm("Are you sure you want to reset all saved progress and high scores?")) {
-                state.masteredLetters = [];
-                state.streak = 0;
-                state.quizHighScore = 0;
-                state.totalQuizzes = 0;
-                saveState();
-                renderStatsGrid();
-                renderExplorerGrid();
-            }
+            state.masteredIds = [];
+            state.highScore = 0;
+            state.bestStreak = 0;
+            state.totalQuizzes = 0;
+            saveState();
+            updateHeaderBadges();
+            renderStatsView();
+            renderExplorerGrid();
+            audio.playClick();
         }
 
-
         /* -------------------------------------------------------------
-           10. VISUAL CONFETTI ANIMATION ENGINE
+           10. CONFETTI CELEBRATION ENGINE & INITIALIZATION
            ------------------------------------------------------------- */
         function triggerConfetti() {
             const canvas = document.getElementById('confettiCanvas');
+            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            const particles = [];
-            const colors = ['#14b8a6', '#f43f5e', '#f59e0b', '#8b5cf6', '#10b981', '#06b6d4'];
-
-            for (let i = 0; i < 90; i++) {
-                particles.push({
-                    x: canvas.width / 2,
-                    y: canvas.height / 2,
-                    vx: (Math.random() - 0.5) * 14,
-                    vy: (Math.random() - 0.7) * 14,
-                    size: Math.random() * 8 + 4,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    alpha: 1,
-                    rotation: Math.random() * 360
-                });
-            }
+            const colors = ['#14b8a6', '#f59e0b', '#10b981', '#8b5cf6', '#f43f5e', '#38bdf8'];
+            const particles = Array.from({ length: 85 }, () => ({
+                x: Math.random() * canvas.width,
+                y: -20 - Math.random() * 120,
+                r: 4 + Math.random() * 6,
+                dx: (Math.random() - 0.5) * 5,
+                dy: 3 + Math.random() * 5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * Math.PI
+            }));
 
             let frame = 0;
-            function render() {
+            function drawConfetti() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.vy += 0.3;
-                    p.alpha -= 0.015;
-
-                    ctx.save();
-                    ctx.globalAlpha = Math.max(0, p.alpha);
-                    ctx.translate(p.x, p.y);
-                    ctx.rotate(p.rotation);
+                    p.x += p.dx;
+                    p.y += p.dy;
+                    p.tilt += 0.1;
                     ctx.fillStyle = p.color;
-                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-                    ctx.restore();
+                    ctx.beginPath();
+                    ctx.ellipse(p.x, p.y, p.r, p.r * 0.6, p.tilt, 0, Math.PI * 2);
+                    ctx.fill();
                 });
-
                 frame++;
-                if (frame < 70) requestAnimationFrame(render);
-                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (frame < 110) {
+                    requestAnimationFrame(drawConfetti);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
             }
-            render();
+            drawConfetti();
         }
 
+        window.addEventListener('resize', resizeTraceCanvas);
 
-        /* -------------------------------------------------------------
-           11. INITIALIZATION ON WINDOW LOAD
-           ------------------------------------------------------------- */
-        window.onload = function() {
-            // Restore saved font selection in UI selector dropdown
-            const selector = document.getElementById('fontSelector');
-            if (selector) selector.value = state.currentFont;
-
-            renderExplorerGrid();
-            updateHeaderStats();
+        window.onload = function () {
+            loadState();
+            updateHeaderBadges();
             changeArabicFont(state.currentFont);
-
-            window.addEventListener('resize', () => {
-                if (state.activeTab === 'trace') initTraceCanvas();
-            });
+            renderExplorerGrid();
+            initTraceSection();
+            renderStatsView();
         };
     </script>
 </body>
