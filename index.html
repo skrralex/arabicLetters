@@ -209,6 +209,26 @@
 
                 <!-- Search & Category Filter -->
                 <div class="flex flex-wrap items-center gap-3 z-10 w-full md:w-auto justify-center">
+                    <!-- Explorer View Mode Toggle: Standard Cards vs Positional Forms -->
+                    <div class="flex items-center bg-slate-900/90 border border-slate-700 rounded-xl p-1" title="Switch between standard letter cards and 4-position connected forms view">
+                        <button onclick="setExplorerViewMode('standard')" id="explorerView-standard" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-grid-2"></i> Cards
+                        </button>
+                        <button onclick="setExplorerViewMode('forms')" id="explorerView-forms" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-link"></i> Letter Forms
+                        </button>
+                    </div>
+
+                    <!-- Explorer Audio Mode Toggle: Sound vs Name -->
+                    <div class="flex items-center bg-slate-900/90 border border-slate-700 rounded-xl p-1" title="Choose whether clicking letters plays their phonetic sound or alphabet name">
+                        <button onclick="setExplorerAudioMode('sound')" id="explorerAudio-sound" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-wave-square"></i> Sound (/a, b, t/)
+                        </button>
+                        <button onclick="setExplorerAudioMode('name')" id="explorerAudio-name" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-tag"></i> Name (Alif, Bāʾ)
+                        </button>
+                    </div>
+
                     <div class="relative w-full sm:w-48">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
                         <input type="text" id="explorerSearch" onkeyup="filterExplorer()" placeholder="Search letter..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-9 pr-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 transition">
@@ -577,32 +597,34 @@
                     <span id="modalCategoryBadge" class="px-2.5 py-0.5 bg-teal-500/20 text-teal-300 border border-teal-500/30 rounded-full text-[10px] font-bold uppercase tracking-wider">Basic Sound</span>
                     <h3 class="text-2xl font-extrabold text-white mt-1" id="modalLetterName">Alif</h3>
                     <p class="text-sm text-slate-300 font-medium" id="modalTransliteration">Phonetic Sound: <span class="text-teal-400 font-bold">aa / a</span></p>
-                    <button onclick="playModalAudio()" class="mt-2 px-3 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-volume-high"></i> Listen Sound
-                    </button>
+                    <div class="mt-2 flex flex-wrap items-center gap-2">
+                        <button onclick="playModalAudio('sound')" class="px-3 py-1 bg-teal-600 hover:bg-teal-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-volume-high"></i> Letter Sound
+                        </button>
+                        <button onclick="playModalAudio('name')" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-tag text-amber-400"></i> Letter Name
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Positional Forms Display Table -->
-            <div class="space-y-2">
-                <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Positional Shapes & Forms</h4>
-                <div class="grid grid-cols-4 gap-2 text-center bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Isolated</span>
-                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formIsolated">أ</div>
-                    </div>
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Initial</span>
-                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formInitial">أ</div>
-                    </div>
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Medial</span>
-                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formMedial">ـأ</div>
-                    </div>
-                    <div class="space-y-1">
-                        <span class="text-[10px] text-slate-400 uppercase font-semibold">Final</span>
-                        <div class="arabic-text text-2xl font-bold text-teal-300" id="formFinal">ـأ</div>
-                    </div>
+            <!-- 4 Positional Forms Showcase in Modal -->
+            <div class="grid grid-cols-4 gap-2 sm:gap-3 bg-slate-950/70 p-3.5 rounded-2xl border border-slate-800 text-center">
+                <div class="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">Final</div>
+                    <div id="formFinal" class="arabic-text text-3xl sm:text-4xl font-extrabold text-white">ـأ</div>
+                </div>
+                <div class="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-purple-400 mb-1">Medial</div>
+                    <div id="formMedial" class="arabic-text text-3xl sm:text-4xl font-extrabold text-white">ـأ</div>
+                </div>
+                <div class="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-cyan-400 mb-1">Initial</div>
+                    <div id="formInitial" class="arabic-text text-3xl sm:text-4xl font-extrabold text-white">أ</div>
+                </div>
+                <div class="bg-slate-900/90 rounded-xl p-2.5 border border-slate-800">
+                    <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Isolated</div>
+                    <div id="formIsolated" class="arabic-text text-3xl sm:text-4xl font-extrabold text-teal-300">أ</div>
                 </div>
             </div>
 
@@ -638,36 +660,38 @@
     <script>
         /* -------------------------------------------------------------
            1. DATA STRUCTURE: 28 ARABIC LETTERS & SOUND PHONETICS
+           Includes explicit `soundAudio` (pure consonant+vowel sound)
+           and `nameAudio` (clean Arabic name without Unicode descriptions)
            ------------------------------------------------------------- */
         const ARABIC_LETTERS = [
-            { id: 1, arabic: 'أ', name: 'Alif', trans: 'a / aa', sound: 'aa', phonetic: 'Ah (as in father)', category: 'basic', forms: { isolated: 'أ', initial: 'أ', medial: 'ـأ', final: 'ـأ' }, nonConnector: true, strokeHint: 'Vertical straight line from top to bottom with hamza header.', mnemonic: 'Looks like a tall standing stick.' },
-            { id: 2, arabic: 'ب', name: 'Bāʾ', trans: 'b', sound: 'b', phonetic: 'B (as in boat)', category: 'basic', forms: { isolated: 'ب', initial: 'بـ', medial: 'ـبـ', final: 'ـب' }, nonConnector: false, strokeHint: 'Boat shape curved line with one dot underneath.', mnemonic: 'A boat with 1 marble under it.' },
-            { id: 3, arabic: 'ت', name: 'Tāʾ', trans: 't', sound: 't', phonetic: 'T (as in table)', category: 'basic', forms: { isolated: 'ت', initial: 'تـ', medial: 'ـتـ', final: 'ـت' }, nonConnector: false, strokeHint: 'Boat shape curved line with two dots on top.', mnemonic: 'Two eyes smiling inside a boat.' },
-            { id: 4, arabic: 'ث', name: 'Thāʾ', trans: 'th', sound: 'th', phonetic: 'Th (as in think)', category: 'basic', forms: { isolated: 'ث', initial: 'ثـ', medial: 'ـثـ', final: 'ـث' }, nonConnector: false, strokeHint: 'Boat shape curved line with three dots on top.', mnemonic: 'Three stars in a bowl.' },
-            { id: 5, arabic: 'ج', name: 'Jīm', trans: 'j', sound: 'j', phonetic: 'J (as in jam)', category: 'basic', forms: { isolated: 'ج', initial: 'جـ', medial: 'ـجـ', final: 'ـج' }, nonConnector: false, strokeHint: 'Looping hat header with a big belly and one dot inside.', mnemonic: 'Jimmy with a dot inside his belly.' },
-            { id: 6, arabic: 'ح', name: 'Ḥāʾ', trans: 'ḥ', sound: 'ḥ', phonetic: 'H (deep throat h)', category: 'guttural', forms: { isolated: 'ح', initial: 'حـ', medial: 'ـحـ', final: 'ـح' }, nonConnector: false, strokeHint: 'Same loop header as Jim without any dots.', mnemonic: 'Hot whisper sound, empty belly.' },
-            { id: 7, arabic: 'خ', name: 'Khāʾ', trans: 'kh', sound: 'kh', phonetic: 'Kh (raspy kh as in Bach)', category: 'guttural', forms: { isolated: 'خ', initial: 'خـ', medial: 'ـخـ', final: 'ـخ' }, nonConnector: false, strokeHint: 'Same loop header with one dot on top.', mnemonic: 'Dot on top of the head.' },
-            { id: 8, arabic: 'د', name: 'Dāl', trans: 'd', sound: 'd', phonetic: 'D (as in door)', category: 'basic', forms: { isolated: 'د', initial: 'د', medial: 'ـد', final: 'ـد' }, nonConnector: true, strokeHint: 'Small curved right-angle corner.', mnemonic: 'Looks like an open bent elbow.' },
-            { id: 9, arabic: 'ذ', name: 'Dhāl', trans: 'dh', sound: 'dh', phonetic: 'Dh (as in the/this)', category: 'basic', forms: { isolated: 'ذ', initial: 'ذ', medial: 'ـذ', final: 'ـذ' }, nonConnector: true, strokeHint: 'Small curved angle with one dot above.', mnemonic: 'Dal with a hat dot.' },
-            { id: 10, arabic: 'ر', name: 'Rāʾ', trans: 'r', sound: 'r', phonetic: 'R (rolled r as in Spanish)', category: 'basic', forms: { isolated: 'ر', initial: 'ر', medial: 'ـر', final: 'ـر' }, nonConnector: true, strokeHint: 'Downward swooping banana curve.', mnemonic: 'Looks like a slippery banana slide.' },
-            { id: 11, arabic: 'ز', name: 'Zāy', trans: 'z', sound: 'z', phonetic: 'Z (as in zebra)', category: 'basic', forms: { isolated: 'ز', initial: 'ز', medial: 'ـز', final: 'ـز' }, nonConnector: true, strokeHint: 'Swooping banana curve with one dot above.', mnemonic: 'Ra with a buzzing bee dot above.' },
-            { id: 12, arabic: 'س', name: 'Sīn', trans: 's', sound: 's', phonetic: 'S (as in sun)', category: 'basic', forms: { isolated: 'س', initial: 'سـ', medial: 'ـسـ', final: 'ـس' }, nonConnector: false, strokeHint: 'Three small teeth followed by a wide cup.', mnemonic: 'Sun teeth smiling.' },
-            { id: 13, arabic: 'ش', name: 'Shīn', trans: 'sh', sound: 'sh', phonetic: 'Sh (as in shoe)', category: 'basic', forms: { isolated: 'ش', initial: 'شـ', medial: 'ـشـ', final: 'ـش' }, nonConnector: false, strokeHint: 'Three teeth with three dots above.', mnemonic: 'Shining stars above three teeth.' },
-            { id: 14, arabic: 'ص', name: 'Ṣād', trans: 'ṣ', sound: 'ṣ', phonetic: 'Heavy S (deep emphatic)', category: 'emphatic', forms: { isolated: 'ص', initial: 'صـ', medial: 'ـصـ', final: 'ـص' }, nonConnector: false, strokeHint: 'Oval loop with a small tooth and tail.', mnemonic: 'Heavy solid oval.' },
-            { id: 15, arabic: 'ض', name: 'Ḍād', trans: 'ḍ', sound: 'ḍ', phonetic: 'Heavy D (unique to Arabic)', category: 'emphatic', forms: { isolated: 'ض', initial: 'ضـ', medial: 'ـضـ', final: 'ـض' }, nonConnector: false, strokeHint: 'Oval loop with small tooth and one dot on top.', mnemonic: 'Heavy Dad letter with a dot.' },
-            { id: 16, arabic: 'ط', name: 'Ṭāʾ', trans: 'ṭ', sound: 'ṭ', phonetic: 'Heavy T (emphatic t)', category: 'emphatic', forms: { isolated: 'ط', initial: 'طـ', medial: 'ـطـ', final: 'ـط' }, nonConnector: false, strokeHint: 'Oval loop with a vertical stick on top.', mnemonic: 'Tall stick on top of an oval.' },
-            { id: 17, arabic: 'ظ', name: 'Ẓāʾ', trans: 'ẓ', sound: 'ẓ', phonetic: 'Heavy Dh (emphatic th)', category: 'emphatic', forms: { isolated: 'ظ', initial: 'ظـ', medial: 'ـظـ', final: 'ـظ' }, nonConnector: false, strokeHint: 'Oval loop with vertical stick and one dot.', mnemonic: 'Tall stick with a dot.' },
-            { id: 18, arabic: 'ع', name: 'ʿAyn', trans: 'ʿ', sound: 'ʿa', phonetic: 'Ayn (deep throat contraction)', category: 'guttural', forms: { isolated: 'ع', initial: 'عـ', medial: 'ـعـ', final: 'ـع' }, nonConnector: false, strokeHint: 'Small crescent top with large reversed crescent bottom.', mnemonic: 'Eye shape looking backwards.' },
-            { id: 19, arabic: 'غ', name: 'Ghayn', trans: 'gh', sound: 'gh', phonetic: 'Gh (gargling r sound)', category: 'guttural', forms: { isolated: 'غ', initial: 'غـ', medial: 'ـغـ', final: 'ـغ' }, nonConnector: false, strokeHint: 'Double crescent shape with one dot on top.', mnemonic: 'Gargling Ayn with a dot.' },
-            { id: 20, arabic: 'ف', name: 'Fāʾ', trans: 'f', sound: 'f', phonetic: 'F (as in fish)', category: 'basic', forms: { isolated: 'ف', initial: 'فـ', medial: 'ـفـ', final: 'ـف' }, nonConnector: false, strokeHint: 'Small rounded loop flat on line with one dot above.', mnemonic: 'Feather with one dot.' },
-            { id: 21, arabic: 'ق', name: 'Qāf', trans: 'q', sound: 'q', phonetic: 'Deep Q (back of throat)', category: 'guttural', forms: { isolated: 'ق', initial: 'قـ', medial: 'ـقـ', final: 'ـق' }, nonConnector: false, strokeHint: 'Rounded loop dropping under line with two dots.', mnemonic: 'Queen crown with two dots.' },
-            { id: 22, arabic: 'ك', name: 'Kāf', trans: 'k', sound: 'k', phonetic: 'K (as in kite)', category: 'basic', forms: { isolated: 'ك', initial: 'كـ', medial: 'ـكـ', final: 'ـك' }, nonConnector: false, strokeHint: 'Tall cup shape containing a small S-hamza inside.', mnemonic: 'Kite with a mini S inside.' },
-            { id: 23, arabic: 'ل', name: 'Lām', trans: 'l', sound: 'l', phonetic: 'L (as in lemon)', category: 'basic', forms: { isolated: 'ل', initial: 'لـ', medial: 'ـلـ', final: 'ـل' }, nonConnector: false, strokeHint: 'Tall hook shape dropping below line.', mnemonic: 'Looks like an upside-down umbrella handle.' },
-            { id: 24, arabic: 'م', name: 'Mīm', trans: 'm', sound: 'm', phonetic: 'M (as in moon)', category: 'basic', forms: { isolated: 'م', initial: 'مـ', medial: 'ـمـ', final: 'ـم' }, nonConnector: false, strokeHint: 'Small circular head with downward tail.', mnemonic: 'Moon circle with a tail.' },
-            { id: 25, arabic: 'ن', name: 'Nūn', trans: 'n', sound: 'n', phonetic: 'N (as in net)', category: 'basic', forms: { isolated: 'ن', initial: 'نـ', medial: 'ـنـ', final: 'ـن' }, nonConnector: false, strokeHint: 'Deep bowl shape with one dot centered above.', mnemonic: 'Nest with one egg.' },
-            { id: 26, arabic: 'هـ', name: 'Hāʾ', trans: 'h', sound: 'h', phonetic: 'H (soft h as in home)', category: 'basic', forms: { isolated: 'ه', initial: 'هـ', medial: 'ـهـ', final: 'ـه' }, nonConnector: false, strokeHint: 'Loop within a loop shape.', mnemonic: 'Happy heart loop.' },
-            { id: 27, arabic: 'و', name: 'Wāw', trans: 'w / oo', sound: 'w', phonetic: 'W (as in water or oo sound)', category: 'basic', forms: { isolated: 'و', initial: 'و', medial: 'ـو', final: 'ـو' }, nonConnector: true, strokeHint: 'Small rounded loop swooping down into a Ra curve.', mnemonic: 'Whirlpool swooping down.' },
-            { id: 28, arabic: 'ي', name: 'Yāʾ', trans: 'y / ee', sound: 'y', phonetic: 'Y (as in yes or ee sound)', category: 'basic', forms: { isolated: 'ي', initial: 'يـ', medial: 'ـيـ', final: 'ـي' }, nonConnector: false, strokeHint: 'Swan neck curve with two dots underneath.', mnemonic: 'Swan swimming with 2 dots beneath.' }
+            { id: 1, arabic: 'أ', soundAudio: 'أَ', nameAudio: 'أَلِف', name: 'Alif', trans: 'a / aa', sound: 'aa', phonetic: 'Ah (as in father)', category: 'basic', forms: { isolated: 'أ', initial: 'أ', medial: 'ـأ', final: 'ـأ' }, nonConnector: true, strokeHint: 'Vertical straight line from top to bottom with hamza header.', mnemonic: 'Looks like a tall standing stick.' },
+            { id: 2, arabic: 'ب', soundAudio: 'بَ', nameAudio: 'بَاء', name: 'Bāʾ', trans: 'b', sound: 'b', phonetic: 'B (as in boat)', category: 'basic', forms: { isolated: 'ب', initial: 'بـ', medial: 'ـبـ', final: 'ـب' }, nonConnector: false, strokeHint: 'Boat shape curved line with one dot underneath.', mnemonic: 'A boat with 1 marble under it.' },
+            { id: 3, arabic: 'ت', soundAudio: 'تَ', nameAudio: 'تَاء', name: 'Tāʾ', trans: 't', sound: 't', phonetic: 'T (as in table)', category: 'basic', forms: { isolated: 'ت', initial: 'تـ', medial: 'ـتـ', final: 'ـت' }, nonConnector: false, strokeHint: 'Boat shape curved line with two dots on top.', mnemonic: 'Two eyes smiling inside a boat.' },
+            { id: 4, arabic: 'ث', soundAudio: 'ثَ', nameAudio: 'ثَاء', name: 'Thāʾ', trans: 'th', sound: 'th', phonetic: 'Th (as in think)', category: 'basic', forms: { isolated: 'ث', initial: 'ثـ', medial: 'ـثـ', final: 'ـث' }, nonConnector: false, strokeHint: 'Boat shape curved line with three dots on top.', mnemonic: 'Three stars in a bowl.' },
+            { id: 5, arabic: 'ج', soundAudio: 'جَ', nameAudio: 'جِيم', name: 'Jīm', trans: 'j', sound: 'j', phonetic: 'J (as in jam)', category: 'basic', forms: { isolated: 'ج', initial: 'جـ', medial: 'ـجـ', final: 'ـج' }, nonConnector: false, strokeHint: 'Looping hat header with a big belly and one dot inside.', mnemonic: 'Jimmy with a dot inside his belly.' },
+            { id: 6, arabic: 'ح', soundAudio: 'حَ', nameAudio: 'حَاء', name: 'Ḥāʾ', trans: 'ḥ', sound: 'ḥ', phonetic: 'H (deep throat h)', category: 'guttural', forms: { isolated: 'ح', initial: 'حـ', medial: 'ـحـ', final: 'ـح' }, nonConnector: false, strokeHint: 'Same loop header as Jim without any dots.', mnemonic: 'Hot whisper sound, empty belly.' },
+            { id: 7, arabic: 'خ', soundAudio: 'خَ', nameAudio: 'خَاء', name: 'Khāʾ', trans: 'kh', sound: 'kh', phonetic: 'Kh (raspy kh as in Bach)', category: 'guttural', forms: { isolated: 'خ', initial: 'خـ', medial: 'ـخـ', final: 'ـخ' }, nonConnector: false, strokeHint: 'Same loop header with one dot on top.', mnemonic: 'Dot on top of the head.' },
+            { id: 8, arabic: 'د', soundAudio: 'دَ', nameAudio: 'دَال', name: 'Dāl', trans: 'd', sound: 'd', phonetic: 'D (as in door)', category: 'basic', forms: { isolated: 'د', initial: 'د', medial: 'ـد', final: 'ـد' }, nonConnector: true, strokeHint: 'Small curved right-angle corner.', mnemonic: 'Looks like an open bent elbow.' },
+            { id: 9, arabic: 'ذ', soundAudio: 'ذَ', nameAudio: 'ذَال', name: 'Dhāl', trans: 'dh', sound: 'dh', phonetic: 'Dh (as in the/this)', category: 'basic', forms: { isolated: 'ذ', initial: 'ذ', medial: 'ـذ', final: 'ـذ' }, nonConnector: true, strokeHint: 'Small curved angle with one dot above.', mnemonic: 'Dal with a hat dot.' },
+            { id: 10, arabic: 'ر', soundAudio: 'رَ', nameAudio: 'رَاء', name: 'Rāʾ', trans: 'r', sound: 'r', phonetic: 'R (rolled r as in Spanish)', category: 'basic', forms: { isolated: 'ر', initial: 'ر', medial: 'ـر', final: 'ـر' }, nonConnector: true, strokeHint: 'Downward swooping banana curve.', mnemonic: 'Looks like a slippery banana slide.' },
+            { id: 11, arabic: 'ز', soundAudio: 'زَ', nameAudio: 'زَاي', name: 'Zāy', trans: 'z', sound: 'z', phonetic: 'Z (as in zebra)', category: 'basic', forms: { isolated: 'ز', initial: 'ز', medial: 'ـز', final: 'ـز' }, nonConnector: true, strokeHint: 'Swooping banana curve with one dot above.', mnemonic: 'Ra with a buzzing bee dot above.' },
+            { id: 12, arabic: 'س', soundAudio: 'سَ', nameAudio: 'سِين', name: 'Sīn', trans: 's', sound: 's', phonetic: 'S (as in sun)', category: 'basic', forms: { isolated: 'س', initial: 'سـ', medial: 'ـسـ', final: 'ـس' }, nonConnector: false, strokeHint: 'Three small teeth followed by a wide cup.', mnemonic: 'Sun teeth smiling.' },
+            { id: 13, arabic: 'ش', soundAudio: 'شَ', nameAudio: 'شِين', name: 'Shīn', trans: 'sh', sound: 'sh', phonetic: 'Sh (as in shoe)', category: 'basic', forms: { isolated: 'ش', initial: 'شـ', medial: 'ـشـ', final: 'ـش' }, nonConnector: false, strokeHint: 'Three teeth with three dots above.', mnemonic: 'Shining stars above three teeth.' },
+            { id: 14, arabic: 'ص', soundAudio: 'صَ', nameAudio: 'صَاد', name: 'Ṣād', trans: 'ṣ', sound: 'ṣ', phonetic: 'Heavy S (deep emphatic)', category: 'emphatic', forms: { isolated: 'ص', initial: 'صـ', medial: 'ـصـ', final: 'ـص' }, nonConnector: false, strokeHint: 'Oval loop with a small tooth and tail.', mnemonic: 'Heavy solid oval.' },
+            { id: 15, arabic: 'ض', soundAudio: 'ضَ', nameAudio: 'ضَاد', name: 'Ḍād', trans: 'ḍ', sound: 'ḍ', phonetic: 'Heavy D (unique to Arabic)', category: 'emphatic', forms: { isolated: 'ض', initial: 'ضـ', medial: 'ـضـ', final: 'ـض' }, nonConnector: false, strokeHint: 'Oval loop with small tooth and one dot on top.', mnemonic: 'Heavy Dad letter with a dot.' },
+            { id: 16, arabic: 'ط', soundAudio: 'طَ', nameAudio: 'طَاء', name: 'Ṭāʾ', trans: 'ṭ', sound: 'ṭ', phonetic: 'Heavy T (emphatic t)', category: 'emphatic', forms: { isolated: 'ط', initial: 'طـ', medial: 'ـطـ', final: 'ـط' }, nonConnector: false, strokeHint: 'Oval loop with a vertical stick on top.', mnemonic: 'Tall stick on top of an oval.' },
+            { id: 17, arabic: 'ظ', soundAudio: 'ظَ', nameAudio: 'ظَاء', name: 'Ẓāʾ', trans: 'ẓ', sound: 'ẓ', phonetic: 'Heavy Dh (emphatic th)', category: 'emphatic', forms: { isolated: 'ظ', initial: 'ظـ', medial: 'ـظـ', final: 'ـظ' }, nonConnector: false, strokeHint: 'Oval loop with vertical stick and one dot.', mnemonic: 'Tall stick with a dot.' },
+            { id: 18, arabic: 'ع', soundAudio: 'عَ', nameAudio: 'عَيْن', name: 'ʿAyn', trans: 'ʿ', sound: 'ʿa', phonetic: 'Ayn (deep throat contraction)', category: 'guttural', forms: { isolated: 'ع', initial: 'عـ', medial: 'ـعـ', final: 'ـع' }, nonConnector: false, strokeHint: 'Small crescent top with large reversed crescent bottom.', mnemonic: 'Eye shape looking backwards.' },
+            { id: 19, arabic: 'غ', soundAudio: 'غَ', nameAudio: 'غَيْن', name: 'Ghayn', trans: 'gh', sound: 'gh', phonetic: 'Gh (gargling r sound)', category: 'guttural', forms: { isolated: 'غ', initial: 'غـ', medial: 'ـغـ', final: 'ـغ' }, nonConnector: false, strokeHint: 'Double crescent shape with one dot on top.', mnemonic: 'Gargling Ayn with a dot.' },
+            { id: 20, arabic: 'ف', soundAudio: 'فَ', nameAudio: 'فَاء', name: 'Fāʾ', trans: 'f', sound: 'f', phonetic: 'F (as in fish)', category: 'basic', forms: { isolated: 'ف', initial: 'فـ', medial: 'ـفـ', final: 'ـف' }, nonConnector: false, strokeHint: 'Small rounded loop flat on line with one dot above.', mnemonic: 'Feather with one dot.' },
+            { id: 21, arabic: 'ق', soundAudio: 'قَ', nameAudio: 'قَاف', name: 'Qāf', trans: 'q', sound: 'q', phonetic: 'Deep Q (back of throat)', category: 'guttural', forms: { isolated: 'ق', initial: 'قـ', medial: 'ـقـ', final: 'ـق' }, nonConnector: false, strokeHint: 'Rounded loop dropping under line with two dots.', mnemonic: 'Queen crown with two dots.' },
+            { id: 22, arabic: 'ك', soundAudio: 'كَ', nameAudio: 'كَاف', name: 'Kāf', trans: 'k', sound: 'k', phonetic: 'K (as in kite)', category: 'basic', forms: { isolated: 'ك', initial: 'كـ', medial: 'ـكـ', final: 'ـك' }, nonConnector: false, strokeHint: 'Tall cup shape containing a small S-hamza inside.', mnemonic: 'Kite with a mini S inside.' },
+            { id: 23, arabic: 'ل', soundAudio: 'لَ', nameAudio: 'لَام', name: 'Lām', trans: 'l', sound: 'l', phonetic: 'L (as in lemon)', category: 'basic', forms: { isolated: 'ل', initial: 'لـ', medial: 'ـلـ', final: 'ـل' }, nonConnector: false, strokeHint: 'Tall hook shape dropping below line.', mnemonic: 'Looks like an upside-down umbrella handle.' },
+            { id: 24, arabic: 'م', soundAudio: 'مَ', nameAudio: 'مِيم', name: 'Mīm', trans: 'm', sound: 'm', phonetic: 'M (as in moon)', category: 'basic', forms: { isolated: 'م', initial: 'مـ', medial: 'ـمـ', final: 'ـم' }, nonConnector: false, strokeHint: 'Small circular head with downward tail.', mnemonic: 'Moon circle with a tail.' },
+            { id: 25, arabic: 'ن', soundAudio: 'نَ', nameAudio: 'نُون', name: 'Nūn', trans: 'n', sound: 'n', phonetic: 'N (as in net)', category: 'basic', forms: { isolated: 'ن', initial: 'نـ', medial: 'ـنـ', final: 'ـن' }, nonConnector: false, strokeHint: 'Deep bowl shape with one dot centered above.', mnemonic: 'Nest with one egg.' },
+            { id: 26, arabic: 'هـ', soundAudio: 'هَ', nameAudio: 'هَاء', name: 'Hāʾ', trans: 'h', sound: 'h', phonetic: 'H (soft h as in home)', category: 'basic', forms: { isolated: 'ه', initial: 'هـ', medial: 'ـهـ', final: 'ـه' }, nonConnector: false, strokeHint: 'Loop within a loop shape.', mnemonic: 'Happy heart loop.' },
+            { id: 27, arabic: 'و', soundAudio: 'وَ', nameAudio: 'وَاو', name: 'Wāw', trans: 'w / oo', sound: 'w', phonetic: 'W (as in water or oo sound)', category: 'basic', forms: { isolated: 'و', initial: 'و', medial: 'ـو', final: 'ـو' }, nonConnector: true, strokeHint: 'Small rounded loop swooping down into a Ra curve.', mnemonic: 'Whirlpool swooping down.' },
+            { id: 28, arabic: 'ي', soundAudio: 'يَ', nameAudio: 'يَاء', name: 'Yāʾ', trans: 'y / ee', sound: 'y', phonetic: 'Y (as in yes or ee sound)', category: 'basic', forms: { isolated: 'ي', initial: 'يـ', medial: 'ـيـ', final: 'ـي' }, nonConnector: false, strokeHint: 'Swan neck curve with two dots underneath.', mnemonic: 'Swan swimming with 2 dots beneath.' }
         ];
 
         /* -------------------------------------------------------------
@@ -2185,7 +2209,16 @@
                 try {
                     if (this.synth) {
                         this.synth.cancel();
-                        const utter = new SpeechSynthesisUtterance(text);
+                        // Apply Arabic Ha' al-Sakt (\u0647\u0652) when a word ends with a short vowel
+                        // (Fatha \u064E, Damma \u064F, Kasra \u0650) so neural TTS engines articulate
+                        // the final short vowel instead of dropping it via pausal waqf rules.
+                        let preparedText = text.trim();
+                        if (/ة([\u064E\u064F\u0650])$/.test(preparedText)) {
+                            preparedText = preparedText.replace(/ة([\u064E\u064F\u0650])$/, 'ت$1\u0647\u0652');
+                        } else if (/[\u064E\u064F\u0650]$/.test(preparedText)) {
+                            preparedText = `${preparedText}\u0647\u0652`;
+                        }
+                        const utter = new SpeechSynthesisUtterance(preparedText);
                         utter.lang = 'ar-SA';
                         if (this.arabicVoice) {
                             utter.voice = this.arabicVoice;
@@ -2210,6 +2243,8 @@
         const state = {
             currentTab: 'explorer',
             currentFont: "'Tajawal', sans-serif",
+            explorerViewMode: 'standard', // 'standard' (single letter card) or 'forms' (4 positional shapes)
+            explorerAudioMode: 'sound', // 'sound' (/a, b, t/) or 'name' (Alif, Bāʾ, Tāʾ)
             masteredIds: [],
             highScore: 0,
             bestStreak: 0,
@@ -2251,6 +2286,12 @@
                     if (parsed.currentFont) {
                         state.currentFont = parsed.currentFont;
                     }
+                    if (parsed.explorerAudioMode === 'sound' || parsed.explorerAudioMode === 'name') {
+                        state.explorerAudioMode = parsed.explorerAudioMode;
+                    }
+                    if (parsed.explorerViewMode === 'standard' || parsed.explorerViewMode === 'forms') {
+                        state.explorerViewMode = parsed.explorerViewMode;
+                    }
                 }
             } catch (e) {
                 console.warn('Could not load saved state:', e);
@@ -2264,7 +2305,9 @@
                     highScore: state.highScore,
                     bestStreak: state.bestStreak,
                     totalQuizzes: state.totalQuizzes,
-                    currentFont: state.currentFont
+                    currentFont: state.currentFont,
+                    explorerAudioMode: state.explorerAudioMode,
+                    explorerViewMode: state.explorerViewMode
                 }));
             } catch (e) {
                 console.warn('Could not save state:', e);
@@ -2340,11 +2383,72 @@
         /* -------------------------------------------------------------
            5. TAB 1: ALPHABET EXPLORER & LETTER MODAL
            ------------------------------------------------------------- */
+        function setExplorerViewMode(mode) {
+            state.explorerViewMode = mode;
+            audio.playClick();
+            saveState();
+            renderExplorerGrid();
+        }
+
+        function setExplorerAudioMode(mode) {
+            state.explorerAudioMode = mode;
+            const soundBtn = document.getElementById('explorerAudio-sound');
+            const nameBtn = document.getElementById('explorerAudio-name');
+            if (soundBtn && nameBtn) {
+                if (mode === 'sound') {
+                    soundBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5';
+                    nameBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5';
+                } else {
+                    nameBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5';
+                    soundBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5';
+                }
+            }
+            audio.playClick();
+            saveState();
+        }
+
+        function speakLetter(letter, overrideMode = null) {
+            if (!letter) return;
+            const mode = overrideMode || state.explorerAudioMode;
+            const textToSpeak = mode === 'name' ? letter.nameAudio : letter.soundAudio;
+            audio.speakArabic(textToSpeak);
+        }
+
         function renderExplorerGrid() {
             const grid = document.getElementById('explorerGrid');
             const query = (document.getElementById('explorerSearch')?.value || '').trim().toLowerCase();
             const category = document.getElementById('explorerCategory')?.value || 'all';
             grid.innerHTML = '';
+
+            // Sync view & audio toggle button visual states
+            const viewStdBtn = document.getElementById('explorerView-standard');
+            const viewFormsBtn = document.getElementById('explorerView-forms');
+            if (viewStdBtn && viewFormsBtn) {
+                viewStdBtn.className = state.explorerViewMode === 'standard'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5';
+                viewFormsBtn.className = state.explorerViewMode === 'forms'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5';
+            }
+
+            // Adjust grid column density for Letter Forms mode vs Standard Cards mode
+            if (state.explorerViewMode === 'forms') {
+                grid.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4';
+            } else {
+                grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4';
+            }
+
+            const soundBtn = document.getElementById('explorerAudio-sound');
+            const nameBtn = document.getElementById('explorerAudio-name');
+            if (soundBtn && nameBtn) {
+                soundBtn.className = state.explorerAudioMode === 'sound'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5';
+                nameBtn.className = state.explorerAudioMode === 'name'
+                    ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-teal-600 text-white transition flex items-center gap-1.5'
+                    : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5';
+            }
 
             const filtered = ARABIC_LETTERS.filter(item => {
                 const matchesSearch = !query ||
@@ -2368,18 +2472,52 @@
                 card.className = `glow-card rounded-2xl p-4 text-center cursor-pointer transition-all duration-200 transform hover:-translate-y-1 hover:border-teal-500/60 relative group ${isMastered ? 'border-emerald-500/40 bg-emerald-950/20' : ''}`;
                 card.onclick = () => openLetterModal(letter.id);
 
-                card.innerHTML = `
-                    <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold mb-1">
-                        <span>#${letter.id}</span>
-                        ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
-                    </div>
-                    <div class="arabic-text text-5xl sm:text-6xl font-extrabold text-white my-2 group-hover:text-teal-300 group-hover:scale-110 transition-transform">
-                        ${letter.arabic}
-                    </div>
-                    <div class="text-sm font-bold text-slate-100">${letter.name}</div>
-                    <div class="text-xs font-semibold text-teal-400">/${letter.sound}/</div>
-                    ${letter.nonConnector ? '<span class="mt-2 inline-block px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
-                `;
+                if (state.explorerViewMode === 'forms') {
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between text-xs border-b border-slate-800 pb-2 mb-3">
+                            <span class="font-extrabold text-white flex items-center gap-1.5">
+                                <span class="text-[10px] text-slate-400">#${letter.id}</span>
+                                <span>${letter.name}</span>
+                                <span class="text-teal-400 font-semibold">/${letter.sound}/</span>
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                ${letter.nonConnector ? '<span class="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
+                                ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-1.5 bg-slate-950/70 p-2 rounded-xl border border-slate-800/80">
+                            <div class="py-1">
+                                <div class="text-[9px] font-bold uppercase text-emerald-400">Final</div>
+                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.final}</div>
+                            </div>
+                            <div class="py-1">
+                                <div class="text-[9px] font-bold uppercase text-purple-400">Medial</div>
+                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.medial}</div>
+                            </div>
+                            <div class="py-1">
+                                <div class="text-[9px] font-bold uppercase text-cyan-400">Initial</div>
+                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-white mt-0.5">${letter.forms.initial}</div>
+                            </div>
+                            <div class="py-1 bg-slate-900/90 rounded-lg">
+                                <div class="text-[9px] font-bold uppercase text-slate-400">Isol.</div>
+                                <div class="arabic-text text-2xl sm:text-3xl font-extrabold text-teal-300 mt-0.5">${letter.forms.isolated}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between text-[10px] text-slate-400 font-bold mb-1">
+                            <span>#${letter.id}</span>
+                            ${isMastered ? '<i class="fa-solid fa-circle-check text-emerald-400" title="Mastered"></i>' : ''}
+                        </div>
+                        <div class="arabic-text text-5xl sm:text-6xl font-extrabold text-white my-2 group-hover:text-teal-300 group-hover:scale-110 transition-transform">
+                            ${letter.arabic}
+                        </div>
+                        <div class="text-sm font-bold text-slate-100">${letter.name}</div>
+                        <div class="text-xs font-semibold text-teal-400">/${letter.sound}/</div>
+                        ${letter.nonConnector ? '<span class="mt-2 inline-block px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[9px] font-bold">Non-connector</span>' : ''}
+                    `;
+                }
                 grid.appendChild(card);
             });
 
@@ -2396,7 +2534,7 @@
             state.activeModalLetter = letter;
 
             audio.playClick();
-            audio.speakArabic(letter.arabic);
+            speakLetter(letter);
 
             document.getElementById('modalArabicChar').innerText = letter.arabic;
             document.getElementById('modalLetterName').innerText = letter.name;
@@ -2431,9 +2569,9 @@
             }, 250);
         }
 
-        function playModalAudio() {
+        function playModalAudio(mode = null) {
             if (state.activeModalLetter) {
-                audio.speakArabic(state.activeModalLetter.arabic);
+                speakLetter(state.activeModalLetter, mode);
             }
         }
 
@@ -2626,7 +2764,7 @@
 
                 arabicDisplay.innerHTML = '<i class="fa-solid fa-volume-high text-teal-400 animate-pulse"></i>';
                 subText.innerText = 'Listen to the pronunciation and pick the matching letter:';
-                audio.speakArabic(target.arabic);
+                speakLetter(target);
 
                 allChoices.forEach(choice => {
                     const btn = document.createElement('button');
@@ -2817,43 +2955,50 @@
 
         function playCurrentQuizAudio() {
             if (!state.currentQuizItem) return;
-            const text = state.currentQuizItem.audioText || state.currentQuizItem.arabic;
-            audio.speakArabic(text);
+            if (state.currentQuizItem.audioText) {
+                audio.speakArabic(state.currentQuizItem.audioText);
+            } else {
+                const mode = state.quizType === 'letterToSound' ? 'name' : state.explorerAudioMode;
+                speakLetter(state.currentQuizItem, mode);
+            }
         }
 
-        function handleQuizAnswer(isCorrect, clickedBtn, correctLabel) {
+        function handleQuizAnswer(isCorrect, btnEl, correctLabel) {
             const feedback = document.getElementById('quizFeedback');
             feedback.classList.remove('hidden');
 
             if (isCorrect) {
                 audio.playSuccess();
                 state.quizStreak++;
-                const bonus = Math.min(state.quizStreak * 10, 50);
-                state.quizScore += 100 + bonus;
-
+                const points = 10 + Math.min(state.quizStreak * 2, 20);
+                state.quizScore += points;
                 if (state.quizScore > state.highScore) state.highScore = state.quizScore;
                 if (state.quizStreak > state.bestStreak) state.bestStreak = state.quizStreak;
 
-                clickedBtn.classList.remove('bg-slate-800/90', 'border-slate-700');
-                clickedBtn.classList.add('bg-emerald-600/30', 'border-emerald-400', 'text-emerald-200');
-                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> Correct! +${100 + bonus} pts`;
+                btnEl.classList.remove('bg-slate-800/90', 'border-slate-700');
+                btnEl.classList.add('bg-emerald-600', 'border-emerald-400', 'text-white');
+                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-emerald-500/20 border border-emerald-500/40 text-emerald-300';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> Correct! +${points} pts`;
+
+                if (state.currentQuizItem && state.currentQuizItem.id && typeof state.currentQuizItem.id === 'number') {
+                    if (!state.masteredIds.includes(state.currentQuizItem.id)) {
+                        state.masteredIds.push(state.currentQuizItem.id);
+                    }
+                }
             } else {
                 audio.playError();
                 state.quizStreak = 0;
-
-                clickedBtn.classList.remove('bg-slate-800/90', 'border-slate-700');
-                clickedBtn.classList.add('bg-rose-600/30', 'border-rose-400', 'text-rose-200');
-                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-rose-500/20 text-rose-300 border border-rose-500/40';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Not quite! Correct answer: <span class="underline">${correctLabel}</span>`;
+                btnEl.classList.remove('bg-slate-800/90', 'border-slate-700');
+                btnEl.classList.add('bg-rose-600', 'border-rose-400', 'text-white');
+                feedback.className = 'p-3 rounded-xl text-center font-bold text-sm bg-rose-500/20 border border-rose-500/40 text-rose-300';
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i> Not quite! Correct answer: <span class="text-white underline">${correctLabel}</span>`;
             }
 
             playCurrentQuizAudio();
             saveState();
-            updateQuizScoreboard();
             updateHeaderBadges();
+            updateQuizScoreboard();
 
-            // Keep Word Breakdown button accessible after answering in both vocalization modes
             if (state.quizType === 'vocalizationRead' || state.quizType === 'vocalizationListen') {
                 document.getElementById('wordBreakdownControls').classList.remove('hidden');
             }
@@ -2861,7 +3006,6 @@
             document.querySelectorAll('#quizOptionsContainer button').forEach(b => b.disabled = true);
 
             setTimeout(() => {
-                // If the user opened the Word Breakdown panel to study the word, pause auto-advance and provide a Next Question button
                 if (state.breakdownExpanded) {
                     const optionsContainer = document.getElementById('quizOptionsContainer');
                     const nextLabel = state.quizQuestionNum < 10
@@ -2992,13 +3136,18 @@
 
             const cardData = state.matchCards[index];
             if (cardData.type === 'arabic') {
-                audio.speakArabic(cardData.speak);
+                const letterObj = ARABIC_LETTERS.find(l => l.id === cardData.pairId);
+                if (letterObj) {
+                    speakLetter(letterObj);
+                } else {
+                    audio.speakArabic(cardData.speak);
+                }
             }
 
             if (state.flippedIndices.length === 2) {
+                state.matchLocked = true;
                 state.matchMoves++;
                 document.getElementById('matchMoves').innerText = state.matchMoves;
-                state.matchLocked = true;
 
                 const [idx1, idx2] = state.flippedIndices;
                 const c1 = state.matchCards[idx1];
@@ -3011,11 +3160,11 @@
                         const el2 = document.getElementById(`mem-card-${idx2}`);
                         if (el1) el1.dataset.matched = 'true';
                         if (el2) el2.dataset.matched = 'true';
-                        state.matchedPairs++;
                         state.flippedIndices = [];
+                        state.matchedPairs++;
                         state.matchLocked = false;
 
-                        if (state.matchedPairs === 6) {
+                        if (state.matchedPairs === state.matchCards.length / 2) {
                             clearInterval(state.matchTimerInterval);
                             audio.playFanfare();
                             triggerConfetti();
@@ -3023,6 +3172,7 @@
                     }, 450);
                 } else {
                     setTimeout(() => {
+                        audio.playError();
                         const el1 = document.getElementById(`mem-card-${idx1}`);
                         const el2 = document.getElementById(`mem-card-${idx2}`);
                         if (el1) el1.classList.remove('rotate-y-180');
@@ -3065,7 +3215,7 @@
         function playTraceAudio() {
             const id = Number(document.getElementById('traceLetterSelect').value);
             const letter = ARABIC_LETTERS.find(l => l.id === id);
-            if (letter) audio.speakArabic(letter.arabic);
+            if (letter) speakLetter(letter);
         }
 
         function setTraceColor(hex) {
